@@ -187,9 +187,9 @@ hr { border: 0; height: 1px; background: var(--line); margin: 0; }
 .btn--on-teal {
   background: var(--terracotta);
   border-color: var(--terracotta);
-  color: var(--teal);
+  color: #FFF8F1;
 }
-.btn--on-teal:hover { background: #B66E48; border-color: #B66E48; color: var(--teal); }
+.btn--on-teal:hover { background: var(--rust); border-color: var(--rust); color: #FFF8F1; }
 
 .link-arrow {
   display: inline-flex;
@@ -237,12 +237,20 @@ hr { border: 0; height: 1px; background: var(--line); margin: 0; }
   text-decoration: none;
 }
 .brand:hover { text-decoration: none; }
-.brand img {
+.brand img,
+.brand .logo-svg {
   height: 52px;
   width: auto;
   transition: height .2s ease;
 }
-.site-header.is-scrolled .brand img { height: 42px; }
+.site-header.is-scrolled .brand img,
+.site-header.is-scrolled .brand .logo-svg { height: 42px; }
+/* On dark surfaces the teal lines need a soft-cream cast so they read clearly */
+.logo-svg--footer path[stroke="#183B3F"],
+.logo-svg--footer line[stroke="#183B3F"] { stroke: #F6F2EA; }
+.logo-svg--footer rect[fill="#183B3F"] { fill: #F6F2EA; }
+.logo-svg--footer text[fill="#183B3F"] { fill: #F6F2EA; }
+.logo-svg--footer text[fill="#3A5761"] { fill: rgba(246,242,234,0.7); }
 
 .nav-primary {
   display: flex;
@@ -281,7 +289,8 @@ hr { border: 0; height: 1px; background: var(--line); margin: 0; }
   .nav-primary { display: none; }
   .header-cta .btn { display: none; }
   .hamburger { display: inline-flex; }
-  .brand img { height: 44px; }
+  .brand img,
+  .brand .logo-svg { height: 44px; }
 }
 
 /* ============================================================
@@ -1379,13 +1388,13 @@ hr { border: 0; height: 1px; background: var(--line); margin: 0; }
   font-size: 15px;
 }
 .footer-grid a:hover { color: var(--terracotta); text-decoration: underline; }
-.footer-grid .footer-brand img {
-  height: 48px;
+.footer-grid .footer-brand img,
+.footer-grid .footer-brand .logo-svg {
+  height: 56px;
   width: auto;
   margin-bottom: 18px;
-  filter: brightness(0) invert(1);
-  opacity: 0.92;
 }
+.footer-grid .footer-brand img { filter: brightness(0) invert(1); opacity: 0.92; }
 .footer-bottom {
   max-width: var(--maxw);
   margin: 44px auto 0;
@@ -1412,9 +1421,291 @@ hr { border: 0; height: 1px; background: var(--line); margin: 0; }
   clip: rect(0,0,0,0); white-space: nowrap; border: 0;
 }
 .center { text-align: center; }
+
+/* ============================================================
+   ANIMATION & INTERACTIVITY LAYER
+   Everything below is gated by prefers-reduced-motion.
+   ============================================================ */
+
+/* Scroll-reveal — elements with .reveal start invisible & translated, then settle. */
+.reveal { opacity: 0; transform: translateY(22px); transition: opacity .7s ease, transform .7s cubic-bezier(.2,.7,.2,1); will-change: opacity, transform; }
+.reveal.is-revealed { opacity: 1; transform: none; }
+.reveal--left { transform: translateX(-24px); }
+.reveal--right { transform: translateX(24px); }
+.reveal--scale { transform: scale(.96); }
+.reveal-stagger > * { opacity: 0; transform: translateY(22px); transition: opacity .55s ease, transform .55s cubic-bezier(.2,.7,.2,1); }
+.reveal-stagger.is-revealed > *:nth-child(1) { transition-delay: .04s; }
+.reveal-stagger.is-revealed > *:nth-child(2) { transition-delay: .12s; }
+.reveal-stagger.is-revealed > *:nth-child(3) { transition-delay: .20s; }
+.reveal-stagger.is-revealed > *:nth-child(4) { transition-delay: .28s; }
+.reveal-stagger.is-revealed > *:nth-child(5) { transition-delay: .36s; }
+.reveal-stagger.is-revealed > *:nth-child(6) { transition-delay: .44s; }
+.reveal-stagger.is-revealed > *:nth-child(7) { transition-delay: .52s; }
+.reveal-stagger.is-revealed > * { opacity: 1; transform: none; }
+
+/* Floating "D & D" hero badge — gentle hand-drawn drift. */
+@keyframes ddFloat {
+  0%,100% { transform: rotate(-8deg) translateY(0); }
+  50%     { transform: rotate(-6deg) translateY(-6px); }
+}
+.hero .badge { animation: ddFloat 6s ease-in-out infinite; }
+
+/* Hero stat triplet — small kpi strip below the hero CTA. */
+.hero-stats { display: flex; gap: 28px; margin-top: 26px; flex-wrap: wrap; }
+.hero-stat { line-height: 1.1; }
+.hero-stat .num {
+  font-family: var(--mark); font-size: 44px; color: var(--rust);
+  display: block; margin-bottom: 2px;
+}
+.hero-stat .lbl { font-size: 13px; color: var(--ink-mute); letter-spacing: .08em; text-transform: uppercase; }
+
+/* Service tier card lift on hover (works for both home preview cards and Services tier rows). */
+.svc-card, .tier { transition: transform .25s cubic-bezier(.2,.7,.2,1), box-shadow .25s ease, border-color .25s ease; }
+.svc-card:hover, .tier:hover { transform: translateY(-4px); box-shadow: 0 18px 40px -22px rgba(20, 40, 43, 0.35); border-color: var(--terracotta); }
+.tier:has(.tag.popular) .price { animation: pricePulse 3.5s ease-in-out infinite; }
+@keyframes pricePulse { 0%,100% { transform: none; } 50% { transform: scale(1.04); } }
+
+/* Process phase numerals — hand-drawn write-in effect. */
+.phase .phase-n { display: inline-block; }
+.reveal.is-revealed .phase-n {
+  animation: writeIn .9s cubic-bezier(.2,.7,.2,1) both;
+}
+@keyframes writeIn {
+  0%   { opacity: 0; transform: translateY(8px) rotate(-6deg) scale(.7); }
+  60%  { opacity: 1; transform: translateY(-2px) rotate(2deg) scale(1.06); }
+  100% { opacity: 1; transform: none; }
+}
+
+/* Underline grow effect on h2/h1 with the rust delimiter */
+.eyebrow + h1::before,
+.eyebrow + h2::before { transition: width .8s cubic-bezier(.2,.7,.2,1) .15s; }
+
+/* ============================================================
+   GARAGE DOOR INTRO OVERLAY
+   Full-screen panels rolling up to reveal the hero on first visit.
+   ============================================================ */
+.garage-intro {
+  position: fixed; inset: 0; z-index: 1000;
+  background: var(--paper);
+  display: grid;
+  grid-template-rows: repeat(6, 1fr);
+  pointer-events: none;
+  overflow: hidden;
+}
+.garage-intro__panel {
+  background: linear-gradient(180deg, var(--teal) 0%, #1f4549 100%);
+  border-bottom: 2px solid rgba(246,242,234,0.12);
+  transform: translateY(0);
+  transition: transform 1s cubic-bezier(.6,.04,.2,1);
+}
+.garage-intro__panel:nth-child(1) { transition-delay: .60s; background: linear-gradient(180deg, #14282B 0%, #183B3F 100%); }
+.garage-intro__panel:nth-child(2) { transition-delay: .50s; }
+.garage-intro__panel:nth-child(3) { transition-delay: .40s; }
+.garage-intro__panel:nth-child(4) { transition-delay: .30s; }
+.garage-intro__panel:nth-child(5) { transition-delay: .20s; }
+.garage-intro__panel:nth-child(6) { transition-delay: .10s; background: linear-gradient(180deg, #183B3F 0%, #14282B 100%); }
+.garage-intro__mark {
+  position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
+  width: min(220px, 35vw); height: auto;
+  opacity: 0; transition: opacity .45s ease;
+}
+.garage-intro__mark.is-visible { opacity: 1; }
+.garage-intro__caption {
+  position: absolute; left: 50%; top: calc(50% + 130px); transform: translateX(-50%);
+  font-family: var(--mark); color: var(--terracotta-soft); font-size: clamp(20px, 3vw, 28px);
+  opacity: 0; transition: opacity .5s ease .25s;
+  white-space: nowrap;
+}
+.garage-intro__caption.is-visible { opacity: 1; }
+.garage-intro__skip {
+  position: absolute; top: 18px; right: 18px;
+  background: transparent; border: 1px solid rgba(246,242,234,0.4); color: var(--paper);
+  padding: 8px 14px; border-radius: 4px; font-size: 13px; cursor: pointer;
+  opacity: 0; transition: opacity .3s ease .4s;
+  font-family: var(--sans);
+}
+.garage-intro__skip.is-visible { opacity: 1; }
+.garage-intro__skip:hover { background: rgba(246,242,234,0.1); }
+.garage-intro.is-opening .garage-intro__mark,
+.garage-intro.is-opening .garage-intro__caption,
+.garage-intro.is-opening .garage-intro__skip { opacity: 0; transition-duration: .2s; }
+.garage-intro.is-opening .garage-intro__panel { transform: translateY(-100%); }
+.garage-intro.is-done { display: none; }
+body.intro-locked { overflow: hidden; }
+
+/* ============================================================
+   BEFORE / AFTER INTERACTIVE SLIDER
+   Drag the handle to reveal "after" over "before".
+   ============================================================ */
+.ba-slider {
+  position: relative; aspect-ratio: 4 / 3; border-radius: 6px; overflow: hidden;
+  background: var(--paper-2); cursor: ew-resize; user-select: none;
+  border: 1px solid var(--line);
+}
+.ba-slider__layer {
+  position: absolute; inset: 0; display: grid; place-items: center;
+  font-family: var(--sans); font-size: 13px; letter-spacing: .08em; text-transform: uppercase;
+  text-align: center; padding: 24px;
+}
+.ba-slider__before {
+  background: repeating-linear-gradient(135deg, var(--paper-2) 0 14px, #DCD3BC 14px 28px);
+  color: #6B5F40;
+}
+.ba-slider__after {
+  background: repeating-linear-gradient(135deg, var(--terracotta-soft) 0 14px, #EBC7A8 14px 28px);
+  color: var(--rust-deep);
+  clip-path: inset(0 0 0 50%);
+  transition: clip-path .05s linear;
+}
+.ba-slider__label-text { max-width: 28ch; }
+.ba-slider__tag {
+  position: absolute; top: 14px; padding: 5px 12px; font-size: 11px;
+  font-family: var(--sans); font-weight: 600; letter-spacing: .12em; text-transform: uppercase;
+  background: var(--teal); color: var(--paper); border-radius: 99px;
+}
+.ba-slider__tag--before { left: 14px; }
+.ba-slider__tag--after  { right: 14px; background: var(--rust); }
+.ba-slider__handle {
+  position: absolute; top: 0; bottom: 0; left: 50%; width: 3px;
+  background: var(--paper); transform: translateX(-50%);
+  box-shadow: 0 0 0 1px rgba(20,40,43,0.2);
+}
+.ba-slider__handle::before {
+  content: ""; position: absolute; top: 50%; left: 50%;
+  width: 40px; height: 40px; background: var(--paper); border-radius: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 4px 14px rgba(20,40,43,0.25), 0 0 0 1px rgba(20,40,43,0.1);
+}
+.ba-slider__handle::after {
+  content: "⇆"; position: absolute; top: 50%; left: 50%;
+  transform: translate(-50%, -50%); color: var(--rust); font-size: 18px; font-weight: 700;
+}
+
+/* ============================================================
+   INTERACTIVE GARAGE ZONE DIAGRAM (Process page Phase 5)
+   ============================================================ */
+.zone-diagram {
+  background: var(--paper-cool); border: 1px solid var(--line-cool);
+  border-radius: 8px; padding: 22px; margin: 22px 0;
+  display: grid; grid-template-columns: 1.2fr 1fr; gap: 26px; align-items: start;
+}
+@media (max-width: 720px) { .zone-diagram { grid-template-columns: 1fr; } }
+.zone-svg { width: 100%; height: auto; display: block; }
+.zone-svg .zone { fill: var(--paper); stroke: var(--teal-3); stroke-width: 1.5; cursor: pointer; transition: fill .25s ease, stroke .25s ease; }
+.zone-svg .zone-label {
+  font-family: var(--sans); font-size: 12px; font-weight: 600;
+  letter-spacing: .04em; fill: var(--ink-soft); pointer-events: none;
+  text-anchor: middle;
+}
+.zone-svg .zone:hover, .zone-svg .zone.is-active { fill: var(--terracotta-soft); stroke: var(--rust); }
+.zone-svg .zone.is-active + .zone-label { fill: var(--rust-deep); }
+.zone-detail { padding-top: 6px; }
+.zone-detail__title { font-family: var(--serif); color: var(--teal); font-size: 22px; margin: 0 0 6px; }
+.zone-detail__tag { display: inline-block; font-family: var(--sans); font-size: 12px; font-weight: 600;
+  letter-spacing: .1em; text-transform: uppercase; color: var(--rust); margin-bottom: 8px; }
+.zone-detail__body { color: var(--ink-soft); margin: 0 0 10px; }
+.zone-detail__items { font-size: 14px; color: var(--ink-soft); list-style: none; padding: 0; margin: 0; }
+.zone-detail__items li { padding: 4px 0 4px 18px; position: relative; }
+.zone-detail__items li::before {
+  content: ""; position: absolute; left: 0; top: 14px; width: 10px; height: 1.5px; background: var(--rust);
+}
+.zone-tabs { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 14px; }
+.zone-tab {
+  font-family: var(--sans); font-size: 13px; padding: 7px 12px; border-radius: 99px;
+  background: var(--paper); border: 1px solid var(--line); color: var(--ink-soft); cursor: pointer;
+}
+.zone-tab.is-active { background: var(--teal); color: var(--paper); border-color: var(--teal); }
+
+/* ============================================================
+   ANIMATED BACKGROUND TEXTURE on the final CTA — gentle grid sweep
+   ============================================================ */
+.cta-band.section--teal {
+  position: relative; overflow: hidden;
+}
+.cta-band.section--teal::before {
+  content: "";
+  position: absolute; inset: -2px;
+  background-image:
+    linear-gradient(90deg, rgba(197,128,89,0.07) 1px, transparent 1px),
+    linear-gradient(0deg,  rgba(197,128,89,0.07) 1px, transparent 1px);
+  background-size: 36px 36px;
+  animation: gridDrift 18s linear infinite;
+  pointer-events: none;
+}
+@keyframes gridDrift {
+  from { transform: translate(0, 0); }
+  to   { transform: translate(36px, 36px); }
+}
+.cta-band.section--teal .wrap { position: relative; z-index: 1; }
+
+/* Reduced motion — turn everything off. */
+@media (prefers-reduced-motion: reduce) {
+  .reveal, .reveal-stagger > * { opacity: 1 !important; transform: none !important; transition: none !important; }
+  .hero .badge { animation: none !important; }
+  .svc-card.is-popular .price { animation: none !important; }
+  .cta-band.section--teal::before { animation: none !important; }
+  .garage-intro { display: none !important; }
+}
 </style>
 </head>
 <body>
+
+<!-- ════════════════════════════════════════════════════════════
+     INLINE LOGO SVG SPRITE — referenced via <use href="#dd-logo">
+     so the site renders perfectly even if external assets are missing.
+     ════════════════════════════════════════════════════════════ -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <symbol id="dd-logo-mark" viewBox="0 0 130 130">
+      <g fill="none" stroke="#183B3F" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
+        <path d="M 6 56 L 65 10 L 124 56"/>
+        <path d="M 12 54 L 12 116 L 118 116 L 118 54"/>
+      </g>
+      <rect x="22" y="56" width="86" height="5" fill="#183B3F"/>
+      <rect x="22" y="64" width="86" height="3" fill="#183B3F" opacity=".85"/>
+      <line x1="22" y1="95" x2="108" y2="95" stroke="#183B3F" stroke-width="2"/>
+      <rect x="28" y="75" width="16" height="18" fill="#C58059" stroke="#682C10" stroke-width="1.3"/>
+      <rect x="46" y="78" width="13" height="15" fill="#682C10"/>
+      <rect x="28" y="98" width="16" height="14" fill="#682C10"/>
+      <rect x="46" y="98" width="16" height="14" fill="#C58059" stroke="#682C10" stroke-width="1.3"/>
+      <line x1="78" y1="70" x2="78" y2="113" stroke="#682C10" stroke-width="2.4"/>
+      <path d="M 73 100 L 83 100 L 85 113 L 71 113 Z" fill="#682C10"/>
+      <line x1="92" y1="72" x2="92" y2="113" stroke="#5A3A1C" stroke-width="2.4"/>
+      <path d="M 87 100 L 97 100 L 99 113 L 85 113 Z" fill="#C58059"/>
+      <path d="M 4 122 Q -6 80 14 50 Q 40 14 90 18 Q 128 26 130 60 Q 132 88 116 100"
+            fill="none" stroke="#8E3B13" stroke-width="6" stroke-linecap="round"/>
+      <path d="M 105 92 L 124 100 L 116 116 Z" fill="#8E3B13"/>
+      <g fill="#C58059">
+        <path d="M 8 100 L 10 105 L 15 107 L 10 109 L 8 114 L 6 109 L 1 107 L 6 105 Z"/>
+        <path d="M 122 28 L 124 32 L 128 34 L 124 36 L 122 40 L 120 36 L 116 34 L 120 32 Z"/>
+      </g>
+    </symbol>
+    <symbol id="dd-logo-full" viewBox="0 0 440 130">
+      <use href="#dd-logo-mark" width="130" height="130"/>
+      <text x="148" y="64" font-family="Fraunces, Georgia, serif" font-size="54" font-weight="600"
+            fill="#183B3F" letter-spacing="-0.02em">D&amp;D</text>
+      <text x="148" y="100" font-family="Inter, -apple-system, sans-serif" font-size="16" font-weight="600"
+            fill="#3A5761" letter-spacing="0.10em">GARAGE WORKS</text>
+    </symbol>
+  </defs>
+</svg>
+
+<!-- ════════════════════════════════════════════════════════════
+     GARAGE DOOR INTRO — full-screen overlay that opens on first visit.
+     ════════════════════════════════════════════════════════════ -->
+<div class="garage-intro" id="garageIntro" aria-hidden="true">
+  <div class="garage-intro__panel"></div>
+  <div class="garage-intro__panel"></div>
+  <div class="garage-intro__panel"></div>
+  <div class="garage-intro__panel"></div>
+  <div class="garage-intro__panel"></div>
+  <div class="garage-intro__panel"></div>
+  <svg class="garage-intro__mark" id="garageIntroMark" viewBox="0 0 130 130" aria-hidden="true">
+    <use href="#dd-logo-mark"/>
+  </svg>
+  <div class="garage-intro__caption" id="garageIntroCaption">Opening the garage…</div>
+  <button class="garage-intro__skip" id="garageIntroSkip" type="button">Skip</button>
+</div>
 
 <!-- ════════════════════════════════════════════════════════════
      HEADER
@@ -1422,7 +1713,7 @@ hr { border: 0; height: 1px; background: var(--line); margin: 0; }
 <header class="site-header" id="siteHeader">
   <div class="header-inner">
     <a class="brand" href="#home" data-route="home" aria-label="D&amp;D Garage Works — home">
-      <img src="assets/logo-transparent.png" alt="D&amp;D Garage Works" />
+      <svg class="logo-svg logo-svg--header" viewBox="0 0 440 130" role="img" aria-label="D&amp;D Garage Works"><use href="#dd-logo-full"/></svg>
     </a>
 
     <nav class="nav-primary" aria-label="Primary">
@@ -1447,7 +1738,7 @@ hr { border: 0; height: 1px; background: var(--line); margin: 0; }
 <div class="mobile-overlay" id="mobileNav" aria-hidden="true">
   <div class="mobile-overlay-top">
     <span class="brand">
-      <img src="assets/logo-transparent.png" alt="D&amp;D Garage Works" style="height:42px" />
+      <svg class="logo-svg" viewBox="0 0 440 130" role="img" aria-label="D&amp;D Garage Works" style="height:42px;width:auto"><use href="#dd-logo-full"/></svg>
     </span>
     <button class="icon-close" id="closeNav" aria-label="Close menu">
       <svg width="26" height="26" viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 5l16 16M21 5L5 21"/></svg>
@@ -1474,7 +1765,7 @@ hr { border: 0; height: 1px; background: var(--line); margin: 0; }
   <!-- HERO -->
   <div class="hero">
     <div class="wrap hero-grid">
-      <div>
+      <div class="reveal">
         <span class="eyebrow">Thornhill · Two-person team</span>
         <h1 id="home-h1">Your garage, <em>worked through</em> with you — not just emptied.</h1>
         <p class="hero-sub">We're two childhood friends who clean, declutter, and organize garages across Thornhill. We come by in person to walk through your space and hand you a real quote — free, no obligation, a day or two before the job.</p>
@@ -1482,12 +1773,17 @@ hr { border: 0; height: 1px; background: var(--line); margin: 0; }
           <a class="btn btn--lg" href="#quote" data-route="quote">Book a Free On-Site Quote</a>
           <a class="link-arrow" href="#how-it-works-teaser">See how it works <span class="arr">→</span></a>
         </div>
+        <div class="hero-stats">
+          <div class="hero-stat"><span class="num">2</span><span class="lbl">Friends. Same two.</span></div>
+          <div class="hero-stat"><span class="num">7</span><span class="lbl">Phases. Every job.</span></div>
+          <div class="hero-stat"><span class="num">1</span><span class="lbl">Written quote.</span></div>
+        </div>
         <div class="hero-trust">
           <span><strong>Locally owned · Thornhill.</strong> We're not a franchise. Two guys, one truck, one phone number.</span>
         </div>
       </div>
 
-      <div class="hero-stack">
+      <div class="hero-stack reveal reveal--right">
         <span class="badge">D &amp; D</span>
         <div class="photo photo--big">
           <span class="photo-label">HERO — A fully organized garage in golden afternoon light. Labeled bins on the shelves, swept floor, car parked inside.</span>
@@ -1623,24 +1919,28 @@ hr { border: 0; height: 1px; background: var(--line); margin: 0; }
     </div>
   </div>
 
-  <!-- FEATURED BEFORE/AFTER -->
+  <!-- FEATURED BEFORE/AFTER (interactive slider) -->
   <div class="section section--tight">
-    <div class="wrap">
-      <div class="ba">
-        <div>
-          <div class="photo photo--3-4">
-            <span class="photo-label">BEFORE — wide-shot of a packed 2-car garage. Boxes stacked to the ceiling, walking path only.</span>
+    <div class="wrap reveal">
+      <span class="eyebrow">A real Thornhill garage</span>
+      <h2 style="max-width: 22ch; margin-bottom: 22px;">Drag the slider — same garage, six hours apart.</h2>
+      <div class="ba-slider" id="baSlider" role="img" aria-label="Before-and-after comparison of a two-car Thornhill garage"
+           tabindex="0" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50">
+        <div class="ba-slider__layer ba-slider__before" id="baBefore">
+          <div class="ba-slider__label-text">
+            BEFORE — wide-shot of a packed two-car garage.<br>Boxes stacked to the ceiling, walking path only.
           </div>
-          <span class="ba-tag">Before</span>
         </div>
-        <div>
-          <div class="photo photo--3-4">
-            <span class="photo-label">AFTER — same garage, same camera position. Floor visible, zoned, labeled, car parked inside.</span>
+        <div class="ba-slider__layer ba-slider__after" id="baAfter">
+          <div class="ba-slider__label-text">
+            AFTER — same garage, same camera position.<br>Floor visible, zoned, labeled, car parked inside.
           </div>
-          <span class="ba-tag">After</span>
         </div>
+        <span class="ba-slider__tag ba-slider__tag--before">Before</span>
+        <span class="ba-slider__tag ba-slider__tag--after">After</span>
+        <div class="ba-slider__handle" id="baHandle"></div>
       </div>
-      <p style="margin-top: 22px; color: var(--ink-soft); font-size: 16px;">A two-car Thornhill garage. Six hours, two people, one truck. The owners kept the workbench and the boys' first hockey sticks — and got their car back inside.</p>
+      <p style="margin-top: 22px; color: var(--ink-soft); font-size: 16px;">Six hours, two people, one truck. The owners kept the workbench and the boys' first hockey sticks — and got their car back inside.</p>
     </div>
   </div>
 
@@ -1926,15 +2226,49 @@ hr { border: 0; height: 1px; background: var(--line); margin: 0; }
           <h2>Zone &amp; Organize</h2>
           <span class="time">1–2 hours</span>
           <p class="body">The keepers come back in — but not where they were. We build the four-zone strategy that turns a garage from a dumping ground into a working tool.</p>
-          <div class="callout">
-            <h4>The four-zone strategy</h4>
-            <ul>
-              <li><strong>Active.</strong> Daily and weekly: rakes, snow shovel, salt, recycling bins. Eye-level, near the door.</li>
-              <li><strong>Seasonal.</strong> Quarterly: patio cushions, holiday décor, summer tires. High shelves or far wall.</li>
-              <li><strong>Long-term.</strong> Yearly or less: paint, sentimental boxes, archives. Top shelf, labeled, easy to find.</li>
-              <li><strong>Workbench.</strong> Tools, fasteners, project supplies. One concentrated area, never a junk drawer.</li>
-            </ul>
+
+          <!-- Interactive garage zone diagram -->
+          <div class="zone-diagram" id="zoneDiagram">
+            <svg class="zone-svg" viewBox="0 0 400 280" role="img" aria-label="Garage floor plan with four zones">
+              <!-- Walls -->
+              <rect x="6" y="6" width="388" height="268" fill="none" stroke="#3A5761" stroke-width="3"/>
+              <!-- Garage door indicator at the bottom -->
+              <line x1="6" y1="274" x2="394" y2="274" stroke="#8E3B13" stroke-width="4"/>
+              <text x="200" y="290" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" fill="#76858B" letter-spacing="0.12em">↑  GARAGE DOOR  ↑</text>
+              <!-- Zone: Active (front-left, near door) -->
+              <rect class="zone" data-zone="active" x="14" y="180" width="180" height="88" rx="3"/>
+              <text class="zone-label" x="104" y="228">ACTIVE</text>
+              <!-- Zone: Workbench (front-right) -->
+              <rect class="zone" data-zone="workbench" x="206" y="180" width="180" height="88" rx="3"/>
+              <text class="zone-label" x="296" y="228">WORKBENCH</text>
+              <!-- Zone: Seasonal (back-left, far) -->
+              <rect class="zone" data-zone="seasonal" x="14" y="14" width="180" height="158" rx="3"/>
+              <text class="zone-label" x="104" y="96">SEASONAL</text>
+              <!-- Zone: Long-term (back-right, far) -->
+              <rect class="zone" data-zone="longterm" x="206" y="14" width="180" height="158" rx="3"/>
+              <text class="zone-label" x="296" y="96">LONG-TERM</text>
+            </svg>
+            <div class="zone-detail">
+              <div class="zone-tabs" role="tablist">
+                <button class="zone-tab is-active" data-zone="active" role="tab" aria-selected="true">Active</button>
+                <button class="zone-tab" data-zone="seasonal" role="tab" aria-selected="false">Seasonal</button>
+                <button class="zone-tab" data-zone="longterm" role="tab" aria-selected="false">Long-term</button>
+                <button class="zone-tab" data-zone="workbench" role="tab" aria-selected="false">Workbench</button>
+              </div>
+              <div id="zoneDetailContent">
+                <span class="zone-detail__tag" id="zoneTag">Front-left · near the door</span>
+                <h3 class="zone-detail__title" id="zoneTitle">Active</h3>
+                <p class="zone-detail__body" id="zoneBody">Daily and weekly items live here. Eye-level, closest to the garage door so you grab and go.</p>
+                <ul class="zone-detail__items" id="zoneItems">
+                  <li>Snow shovel &amp; salt</li>
+                  <li>Rakes, brooms, leaf bags</li>
+                  <li>Recycling &amp; green bins</li>
+                  <li>Bike helmets &amp; daily-use sports gear</li>
+                </ul>
+              </div>
+            </div>
           </div>
+
           <div class="photo photo--16-9"><span class="photo-label">PHASE 5 — labeled shelves being built, four zones marked on tape on the floor</span></div>
         </article>
 
@@ -2312,7 +2646,7 @@ hr { border: 0; height: 1px; background: var(--line); margin: 0; }
 <footer class="site-footer">
   <div class="footer-grid">
     <div class="col footer-brand">
-      <img src="assets/logo-transparent.png" alt="D&amp;D Garage Works" />
+      <svg class="logo-svg logo-svg--footer" viewBox="0 0 440 130" role="img" aria-label="D&amp;D Garage Works"><use href="#dd-logo-full"/></svg>
       <p style="margin: 0 0 6px;">Garage cleanouts, decluttering, and organization in Thornhill.</p>
       <p style="margin: 0; color: rgba(246, 242, 234, 0.6);">Locally owned. Two friends. One truck.</p>
     </div>
@@ -2652,6 +2986,173 @@ hr { border: 0; height: 1px; background: var(--line); margin: 0; }
       renderFiles();
     }
   });
+
+  // ════════════════════════════════════════════════════════════
+  // ANIMATION + INTERACTIVITY LAYER
+  // ════════════════════════════════════════════════════════════
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // ── Garage door intro overlay (first visit only) ──
+  const intro = document.getElementById('garageIntro');
+  function runIntro() {
+    if (!intro) return;
+    if (reduceMotion || sessionStorage.getItem('ddIntroSeen') === '1') {
+      intro.classList.add('is-done');
+      return;
+    }
+    document.body.classList.add('intro-locked');
+    const mark = document.getElementById('garageIntroMark');
+    const caption = document.getElementById('garageIntroCaption');
+    const skip = document.getElementById('garageIntroSkip');
+    requestAnimationFrame(() => {
+      mark.classList.add('is-visible');
+      caption.classList.add('is-visible');
+      skip.classList.add('is-visible');
+    });
+    function finish() {
+      intro.classList.add('is-opening');
+      setTimeout(() => {
+        intro.classList.add('is-done');
+        document.body.classList.remove('intro-locked');
+        sessionStorage.setItem('ddIntroSeen', '1');
+      }, 1300);
+    }
+    skip.addEventListener('click', finish);
+    document.addEventListener('keydown', function onEsc(e) {
+      if (e.key === 'Escape') { finish(); document.removeEventListener('keydown', onEsc); }
+    });
+    setTimeout(finish, 2200);
+  }
+  runIntro();
+
+  // ── Scroll reveal (IntersectionObserver) ──
+  if (!reduceMotion && 'IntersectionObserver' in window) {
+    // Auto-tag standard reveal candidates that aren't already marked.
+    const autoTag = [
+      '.svc-card', '.tier', '.testimonial', '.phase', '.faq-item',
+      '.value-card', '.reason-card', '.quote-callout',
+      '.section .lede', '.page-head', '.zone-diagram'
+    ];
+    document.querySelectorAll(autoTag.join(',')).forEach(el => {
+      if (!el.classList.contains('reveal') && !el.classList.contains('reveal-stagger')) {
+        el.classList.add('reveal');
+      }
+    });
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('is-revealed');
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+    document.querySelectorAll('.reveal, .reveal-stagger').forEach(el => io.observe(el));
+    // Reveal anything currently visible immediately (no flash on initial paint).
+    setTimeout(() => {
+      document.querySelectorAll('.reveal, .reveal-stagger').forEach(el => {
+        const r = el.getBoundingClientRect();
+        if (r.top < window.innerHeight && r.bottom > 0) el.classList.add('is-revealed');
+      });
+    }, 60);
+  } else {
+    document.querySelectorAll('.reveal, .reveal-stagger').forEach(el => el.classList.add('is-revealed'));
+  }
+
+  // ── Before / After slider ──
+  const ba = document.getElementById('baSlider');
+  if (ba) {
+    const after = document.getElementById('baAfter');
+    const handle = document.getElementById('baHandle');
+    let dragging = false;
+    function setPct(pct) {
+      pct = Math.max(0, Math.min(100, pct));
+      after.style.clipPath = `inset(0 0 0 ${pct}%)`;
+      handle.style.left = pct + '%';
+      ba.setAttribute('aria-valuenow', String(Math.round(pct)));
+    }
+    function fromEvent(e) {
+      const rect = ba.getBoundingClientRect();
+      const x = (e.touches ? e.touches[0].clientX : e.clientX) - rect.left;
+      setPct((x / rect.width) * 100);
+    }
+    ba.addEventListener('mousedown', (e) => { dragging = true; fromEvent(e); });
+    ba.addEventListener('touchstart', (e) => { dragging = true; fromEvent(e); }, { passive: true });
+    window.addEventListener('mousemove', (e) => { if (dragging) fromEvent(e); });
+    window.addEventListener('touchmove', (e) => { if (dragging) fromEvent(e); }, { passive: true });
+    window.addEventListener('mouseup',   () => dragging = false);
+    window.addEventListener('touchend',  () => dragging = false);
+    ba.addEventListener('keydown', (e) => {
+      const cur = parseFloat(ba.getAttribute('aria-valuenow')) || 50;
+      if (e.key === 'ArrowLeft')  { setPct(cur - 5); e.preventDefault(); }
+      if (e.key === 'ArrowRight') { setPct(cur + 5); e.preventDefault(); }
+    });
+    // Auto-nudge once on first visibility to hint interactivity.
+    if (!reduceMotion && 'IntersectionObserver' in window) {
+      const hint = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            let p = 50;
+            const start = performance.now();
+            function frame(t) {
+              const k = Math.min(1, (t - start) / 1500);
+              const ease = k < .5 ? 2*k*k : 1 - Math.pow(-2*k+2, 2)/2;
+              const target = 50 + Math.sin(ease * Math.PI) * 18;
+              setPct(target);
+              if (k < 1) requestAnimationFrame(frame);
+              else setPct(50);
+            }
+            requestAnimationFrame(frame);
+            hint.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.5 });
+      hint.observe(ba);
+    }
+  }
+
+  // ── Interactive garage zones ──
+  const zoneData = {
+    active:    { title: 'Active',     tag: 'Front-left · near the door',
+                 body: 'Daily and weekly items live here. Eye-level, closest to the garage door so you grab and go.',
+                 items: ['Snow shovel & salt', 'Rakes, brooms, leaf bags', 'Recycling & green bins', 'Bike helmets & daily-use sports gear'] },
+    seasonal:  { title: 'Seasonal',   tag: 'Back-left · mid-height shelves',
+                 body: "Quarterly stuff: out twice a year, away twice a year. Up where you can see it but don't bang into it.",
+                 items: ['Patio cushions & umbrellas', 'Holiday décor (in labeled bins)', 'Summer / winter tires', 'Camping & ski gear'] },
+    longterm:  { title: 'Long-term',  tag: 'Back-right · top shelf',
+                 body: 'Yearly or less. Labeled so you can find it without unloading the whole shelf — and you never have to.',
+                 items: ['Paint & touch-up supplies', 'Sentimental archive boxes', 'Old electronics for proper disposal', 'Records, taxes, warranties'] },
+    workbench: { title: 'Workbench',  tag: 'Front-right · designated wall',
+                 body: 'One concentrated work area, never a junk drawer. Tools have homes, screws are sorted, lighting is decent.',
+                 items: ['Hand tools on a pegboard', 'Power tools in labeled drawers', 'Fasteners in sorted bins', 'Project surface kept clear'] }
+  };
+  const zoneDiagram = document.getElementById('zoneDiagram');
+  if (zoneDiagram) {
+    const tabs   = zoneDiagram.querySelectorAll('.zone-tab');
+    const rects  = zoneDiagram.querySelectorAll('.zone-svg .zone');
+    const titleEl = document.getElementById('zoneTitle');
+    const tagEl   = document.getElementById('zoneTag');
+    const bodyEl  = document.getElementById('zoneBody');
+    const itemsEl = document.getElementById('zoneItems');
+    function setZone(key) {
+      const d = zoneData[key]; if (!d) return;
+      tabs.forEach(t => {
+        const on = t.dataset.zone === key;
+        t.classList.toggle('is-active', on);
+        t.setAttribute('aria-selected', String(on));
+      });
+      rects.forEach(r => r.classList.toggle('is-active', r.dataset.zone === key));
+      titleEl.textContent = d.title;
+      tagEl.textContent = d.tag;
+      bodyEl.textContent = d.body;
+      itemsEl.innerHTML = d.items.map(i => '<li>' + i + '</li>').join('');
+    }
+    tabs.forEach(t => t.addEventListener('click', () => setZone(t.dataset.zone)));
+    rects.forEach(r => {
+      r.addEventListener('click', () => setZone(r.dataset.zone));
+      r.addEventListener('mouseenter', () => setZone(r.dataset.zone));
+    });
+    setZone('active');
+  }
 
 })();
 </script>
