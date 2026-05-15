@@ -1,0 +1,2660 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>D&amp;D Garage Works — Garage Cleanouts in Thornhill</title>
+<meta name="description" content="Two childhood friends from Thornhill. We clean, declutter, and organize your garage with you — and we come quote it for free, in person, a couple of days before." />
+
+<!-- TODO: replace with your real domain once deployed -->
+<link rel="canonical" href="https://ddgarageworks.ca/" />
+<meta name="theme-color" content="#183B3F" />
+<meta name="robots" content="index,follow" />
+
+<!-- Open Graph / social previews -->
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="D&amp;D Garage Works" />
+<meta property="og:title" content="D&amp;D Garage Works — Garage Cleanouts in Thornhill" />
+<meta property="og:description" content="Two friends from Thornhill who clean, declutter, and organize garages with you. Free in-person quote, one honest number." />
+<meta property="og:image" content="assets/logo.png" />
+<meta property="og:locale" content="en_CA" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="D&amp;D Garage Works — Garage Cleanouts in Thornhill" />
+<meta name="twitter:description" content="Two friends from Thornhill. Free in-person quote, one honest number." />
+<meta name="twitter:image" content="assets/logo.png" />
+
+<!-- Icons -->
+<link rel="icon" type="image/png" sizes="any" href="assets/logo-mark.png" />
+<link rel="apple-touch-icon" href="assets/logo-mark.png" />
+<link rel="manifest" href="site.webmanifest" />
+
+<!--
+  ─── ROUTING NOTE ─────────────────────────────────────────────────
+  Six "pages" live in this single file as <section data-page="..."> blocks.
+  A small router shows one at a time based on URL hash (#home, #services, …).
+  Built this way so the prototype is one portable file; each section ports
+  cleanly to its own page when the site moves to a CMS later.
+  ──────────────────────────────────────────────────────────────────
+-->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=Caveat:wght@500;600;700&display=swap" rel="stylesheet">
+
+<style>
+/* ============================================================
+   TOKENS — palette derived from the supplied colour scheme
+   ============================================================ */
+:root {
+  /* primary teal scale (logo) */
+  --teal:        #183B3F;   /* deepest, primary brand */
+  --teal-2:      #3A5761;   /* secondary */
+  --teal-3:      #75868E;   /* muted / borders */
+  --teal-soft:   #DDE7E8;   /* logo background tint */
+
+  /* rust / terracotta accents (logo's arrow + bins) */
+  --rust-deep:   #682C10;
+  --rust:        #8E3B13;
+  --terracotta:  #C58059;
+  --terracotta-soft: #F3DECC;
+
+  /* surfaces */
+  --paper:       #F6F2EA;   /* warm cream */
+  --paper-2:     #ECE6D8;   /* slightly deeper for bands */
+  --paper-cool:  #EEF1F0;   /* cool tint that ties to logo bg */
+  --line:        #D8D0BC;
+  --line-cool:   #CFD7D6;
+
+  /* ink */
+  --ink:         #14282B;   /* darker variant of teal, body text */
+  --ink-soft:    #3A5761;
+  --ink-mute:    #76858B;
+
+  /* type */
+  --serif: "Fraunces", Georgia, "Times New Roman", serif;
+  --sans:  "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  --mark:  "Caveat", "Bradley Hand", cursive;
+
+  /* layout */
+  --maxw: 1200px;
+  --pad:  clamp(20px, 4vw, 56px);
+  --r:    6px;
+}
+
+/* ============================================================
+   RESET / BASE
+   ============================================================ */
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  font-family: var(--sans);
+  font-size: 17px;
+  line-height: 1.6;
+  color: var(--ink);
+  background: var(--paper);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+@media (min-width: 720px) { body { font-size: 18px; } }
+
+img { max-width: 100%; display: block; }
+a {
+  color: var(--rust);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+  transition: color .15s ease, text-decoration-thickness .15s ease;
+}
+a:hover { text-decoration-thickness: 2px; color: var(--rust-deep); }
+a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible, summary:focus-visible {
+  outline: 2px solid var(--rust);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+h1, h2, h3, h4 {
+  font-family: var(--serif);
+  font-weight: 500;
+  letter-spacing: -0.015em;
+  margin: 0 0 .5em;
+  color: var(--teal);
+  text-wrap: balance;
+  line-height: 1.1;
+}
+h1 { font-size: clamp(38px, 6vw, 70px); line-height: 1.02; letter-spacing: -0.025em; }
+h2 { font-size: clamp(28px, 3.8vw, 44px); letter-spacing: -0.02em; }
+h3 { font-size: clamp(20px, 2.2vw, 26px); }
+h4 { font-size: 17px; font-family: var(--sans); font-weight: 600; letter-spacing: 0; color: var(--ink); }
+p  { margin: 0 0 1em; max-width: 65ch; text-wrap: pretty; }
+hr { border: 0; height: 1px; background: var(--line); margin: 0; }
+
+.wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 var(--pad); }
+.eyebrow {
+  display: inline-block;
+  font-family: var(--sans);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--rust);
+  margin: 0 0 16px;
+}
+.mark {
+  font-family: var(--mark);
+  font-weight: 600;
+  color: var(--rust);
+  line-height: 1;
+}
+.section          { padding: clamp(64px, 9vw, 120px) 0; }
+.section--tight   { padding: clamp(40px, 6vw, 80px) 0; }
+.section--cream   { background: var(--paper-2); }
+.section--teal    { background: var(--teal); color: var(--paper); }
+.section--teal h1, .section--teal h2, .section--teal h3, .section--teal h4 { color: var(--paper); }
+.section--teal .eyebrow { color: var(--terracotta); }
+.section--teal a { color: var(--terracotta); }
+
+/* ============================================================
+   BUTTONS
+   ============================================================ */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: var(--rust);
+  color: #FFF8F1;
+  font-family: var(--sans);
+  font-weight: 600;
+  font-size: 15px;
+  letter-spacing: 0.005em;
+  padding: 14px 26px;
+  border: 1px solid var(--rust);
+  border-radius: var(--r);
+  text-decoration: none;
+  cursor: pointer;
+  transition: background .15s ease, border-color .15s ease, transform .05s ease;
+  white-space: nowrap;
+}
+.btn:hover { background: var(--rust-deep); border-color: var(--rust-deep); color: #FFF8F1; text-decoration: none; }
+.btn:active { transform: translateY(1px); }
+.btn--lg { padding: 18px 32px; font-size: 16px; }
+.btn--ghost {
+  background: transparent;
+  color: var(--teal);
+  border-color: var(--teal);
+}
+.btn--ghost:hover { background: var(--teal); color: var(--paper); }
+.btn--on-teal {
+  background: var(--terracotta);
+  border-color: var(--terracotta);
+  color: var(--teal);
+}
+.btn--on-teal:hover { background: #B66E48; border-color: #B66E48; color: var(--teal); }
+
+.link-arrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--teal);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 5px;
+  font-weight: 500;
+}
+.link-arrow:hover { color: var(--rust); }
+.link-arrow .arr { display: inline-block; transition: transform .2s ease; }
+.link-arrow:hover .arr { transform: translateX(4px); }
+
+/* ============================================================
+   HEADER
+   ============================================================ */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(246, 242, 234, 0.94);
+  backdrop-filter: saturate(140%) blur(8px);
+  -webkit-backdrop-filter: saturate(140%) blur(8px);
+  border-bottom: 1px solid transparent;
+  transition: padding .2s ease, border-color .2s ease, background .2s ease;
+}
+.site-header.is-scrolled { border-bottom-color: var(--line); }
+.header-inner {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 18px var(--pad);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  transition: padding .2s ease;
+}
+.site-header.is-scrolled .header-inner { padding-top: 12px; padding-bottom: 12px; }
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+}
+.brand:hover { text-decoration: none; }
+.brand img {
+  height: 52px;
+  width: auto;
+  transition: height .2s ease;
+}
+.site-header.is-scrolled .brand img { height: 42px; }
+
+.nav-primary {
+  display: flex;
+  align-items: center;
+  gap: 36px;
+}
+.nav-primary a {
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--teal-2);
+  position: relative;
+  padding: 4px 0;
+}
+.nav-primary a.is-active { color: var(--teal); }
+.nav-primary a.is-active::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: -6px;
+  height: 2px;
+  background: var(--rust);
+}
+.nav-primary a:hover { color: var(--rust); text-decoration: none; }
+
+.header-cta { display: inline-flex; align-items: center; gap: 14px; }
+.hamburger {
+  display: none;
+  background: transparent;
+  border: 0;
+  padding: 8px;
+  cursor: pointer;
+  color: var(--teal);
+}
+
+@media (max-width: 900px) {
+  .nav-primary { display: none; }
+  .header-cta .btn { display: none; }
+  .hamburger { display: inline-flex; }
+  .brand img { height: 44px; }
+}
+
+/* ============================================================
+   MOBILE OVERLAY
+   ============================================================ */
+.mobile-overlay {
+  position: fixed;
+  inset: 0;
+  background: var(--paper);
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  padding: 22px var(--pad) 32px;
+  transform: translateY(-100%);
+  transition: transform .28s cubic-bezier(.4, 0, .2, 1);
+}
+.mobile-overlay.is-open { transform: translateY(0); }
+.mobile-overlay-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.mobile-overlay nav {
+  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+}
+.mobile-overlay nav a {
+  font-family: var(--serif);
+  font-size: 32px;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  text-decoration: none;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--line);
+  color: var(--teal);
+}
+.mobile-overlay nav a:last-child { border-bottom: 0; }
+.mobile-overlay .btn { margin-top: 16px; align-self: stretch; padding: 18px; font-size: 17px; }
+.icon-close { background: transparent; border: 0; cursor: pointer; padding: 8px; color: var(--teal); }
+
+/* ============================================================
+   ROUTER — page swap
+   ============================================================ */
+[data-page] { display: none; }
+[data-page].is-active { display: block; animation: pageIn .22s ease; }
+@keyframes pageIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ============================================================
+   HERO
+   ============================================================ */
+.hero {
+  padding: clamp(48px, 7vw, 100px) 0 clamp(56px, 8vw, 110px);
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(80% 60% at 88% 14%, rgba(197,128,89,0.10), transparent 60%),
+    radial-gradient(60% 60% at 8% 100%, rgba(24,59,63,0.06), transparent 65%);
+  pointer-events: none;
+}
+.hero-grid {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: clamp(36px, 5vw, 80px);
+  align-items: center;
+}
+.hero h1 { margin-bottom: 20px; }
+.hero h1 em {
+  font-style: italic;
+  color: var(--rust);
+  font-weight: 500;
+}
+.hero-sub {
+  font-size: clamp(17px, 1.4vw, 20px);
+  color: var(--ink-soft);
+  max-width: 56ch;
+  margin-bottom: 32px;
+}
+.hero-ctas {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 18px 26px;
+}
+.hero-trust {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 28px;
+  padding: 12px 16px;
+  background: rgba(24,59,63,0.05);
+  border-left: 3px solid var(--terracotta);
+  color: var(--teal-2);
+  font-size: 14px;
+  max-width: max-content;
+}
+.hero-trust strong { color: var(--teal); font-weight: 600; }
+
+@media (max-width: 860px) {
+  .hero-grid { grid-template-columns: 1fr; }
+}
+
+/* ============================================================
+   PHOTO PLACEHOLDERS
+   ============================================================ */
+.photo {
+  background:
+    repeating-linear-gradient(135deg,
+      rgba(24,59,63,0.06) 0 12px,
+      rgba(197,128,89,0.08) 12px 24px);
+  border: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  color: var(--teal-2);
+  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  line-height: 1.5;
+  text-align: center;
+  padding: 16px;
+}
+.photo::before {
+  content: "";
+  position: absolute;
+  inset: 12px;
+  border: 1px dashed rgba(24,59,63,0.18);
+  pointer-events: none;
+}
+.photo-label {
+  position: relative;
+  z-index: 1;
+  max-width: 80%;
+  background: rgba(246, 242, 234, 0.92);
+  padding: 6px 12px;
+  border-radius: 2px;
+  color: var(--teal-2);
+}
+.photo--16-9 { aspect-ratio: 16 / 9; }
+.photo--4-3  { aspect-ratio: 4 / 3; }
+.photo--3-4  { aspect-ratio: 3 / 4; }
+.photo--1-1  { aspect-ratio: 1 / 1; }
+.photo--3-2  { aspect-ratio: 3 / 2; }
+.photo--wide { aspect-ratio: 21 / 9; }
+
+/* Hero stack — three stacked frames for visual interest */
+.hero-stack {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto;
+  gap: 12px;
+}
+.hero-stack .photo--big {
+  grid-column: 1 / -1;
+  aspect-ratio: 16 / 10;
+}
+.hero-stack .photo--small {
+  aspect-ratio: 4 / 5;
+}
+.hero-stack .badge {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  background: var(--teal);
+  color: var(--paper);
+  font-family: var(--mark);
+  font-weight: 600;
+  font-size: 22px;
+  padding: 8px 16px;
+  z-index: 5;
+  transform: rotate(-2deg);
+  box-shadow: 2px 2px 0 var(--terracotta);
+}
+
+/* Before / After pair */
+.ba {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+.ba > div { position: relative; }
+.ba .photo { aspect-ratio: 4 / 5; }
+.ba-tag {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  background: var(--teal);
+  color: var(--paper);
+  font-family: var(--sans);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  padding: 5px 10px;
+  border-radius: 2px;
+  z-index: 2;
+}
+.ba > div:nth-child(2) .ba-tag { background: var(--rust); }
+
+/* ============================================================
+   "HOW IT STARTS" — the on-site quote callout (home page)
+   ============================================================ */
+.quote-callout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(28px, 4vw, 64px);
+  align-items: center;
+  padding: clamp(40px, 5vw, 64px);
+  background: var(--paper-cool);
+  border: 1px solid var(--line-cool);
+  border-radius: var(--r);
+  position: relative;
+}
+.quote-callout::before {
+  content: "FREE";
+  position: absolute;
+  top: 20px;
+  right: 24px;
+  font-family: var(--mark);
+  font-size: 64px;
+  font-weight: 700;
+  color: var(--terracotta);
+  opacity: 0.4;
+  line-height: 1;
+}
+.quote-callout h2 { margin-bottom: 18px; }
+.quote-callout .steps {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  margin: 0; padding: 0;
+  list-style: none;
+}
+.quote-callout .steps li {
+  display: grid;
+  grid-template-columns: 36px 1fr;
+  gap: 14px;
+  align-items: start;
+}
+.quote-callout .steps .n {
+  font-family: var(--mark);
+  font-size: 34px;
+  font-weight: 700;
+  color: var(--rust);
+  line-height: 1;
+}
+.quote-callout .steps strong {
+  display: block;
+  color: var(--teal);
+  font-family: var(--serif);
+  font-size: 20px;
+  font-weight: 500;
+  margin-bottom: 2px;
+}
+.quote-callout .steps span { color: var(--ink-soft); font-size: 15px; }
+@media (max-width: 820px) { .quote-callout { grid-template-columns: 1fr; padding: 28px; } }
+
+/* ============================================================
+   SERVICE PREVIEW CARDS
+   ============================================================ */
+.services-preview {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  margin-top: 44px;
+}
+.svc-card {
+  border: 1px solid var(--line);
+  background: var(--paper);
+  padding: 30px 26px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-height: 260px;
+  transition: border-color .15s ease, transform .15s ease;
+}
+.svc-card:hover { border-color: var(--teal-3); }
+.svc-card h3 { margin: 0; color: var(--teal); }
+.svc-card .price {
+  font-family: var(--serif);
+  font-size: 22px;
+  color: var(--rust);
+  margin-top: auto;
+  font-weight: 500;
+}
+.svc-card p { color: var(--ink-soft); margin-bottom: 0; }
+@media (max-width: 820px) { .services-preview { grid-template-columns: 1fr; } }
+
+/* ============================================================
+   REASONS GRID
+   ============================================================ */
+.reasons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 44px 72px;
+  margin-top: 48px;
+}
+.reason h3 {
+  margin-bottom: 12px;
+  position: relative;
+  padding-left: 0;
+}
+.reason h3::before {
+  content: "";
+  display: block;
+  width: 36px;
+  height: 2px;
+  background: var(--rust);
+  margin-bottom: 14px;
+}
+.reason p { color: var(--ink-soft); margin: 0; }
+@media (max-width: 820px) { .reasons { grid-template-columns: 1fr; gap: 36px; } }
+
+/* ============================================================
+   HOW-IT-WORKS TEASER
+   ============================================================ */
+.how-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+  margin-top: 44px;
+  align-items: start;
+}
+.how-step .num {
+  font-family: var(--mark);
+  font-size: 64px;
+  font-weight: 700;
+  color: var(--rust);
+  line-height: 0.9;
+  display: block;
+  margin-bottom: 8px;
+}
+.how-step h4 {
+  font-family: var(--serif);
+  font-size: 22px;
+  font-weight: 500;
+  color: var(--teal);
+  margin-bottom: 6px;
+}
+.how-step p { color: var(--ink-soft); font-size: 16px; margin: 0; }
+@media (max-width: 820px) { .how-row { grid-template-columns: 1fr; gap: 28px; } }
+
+/* ============================================================
+   REVIEWS
+   ============================================================ */
+.reviews-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+  margin: 44px 0 28px;
+}
+.review {
+  border-top: 2px solid var(--terracotta);
+  padding-top: 24px;
+}
+.review p {
+  font-family: var(--serif);
+  font-size: 19px;
+  line-height: 1.5;
+  color: var(--teal);
+}
+.review .stars { color: var(--rust); letter-spacing: 2px; margin-bottom: 10px; font-size: 14px; }
+.review .who { font-size: 14px; color: var(--ink-mute); margin: 14px 0 0; }
+.review-footer {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  padding-top: 22px;
+  border-top: 1px solid var(--line);
+  color: var(--ink-soft);
+  font-size: 14px;
+}
+@media (max-width: 820px) { .reviews-row { grid-template-columns: 1fr; } }
+
+/* ============================================================
+   FINAL CTA BAND
+   ============================================================ */
+.cta-band { text-align: center; padding: clamp(72px, 9vw, 120px) 0; }
+.cta-band h2 { max-width: 18ch; margin: 0 auto 14px; }
+.cta-band p  { max-width: 50ch; margin: 0 auto 30px; color: var(--ink-soft); }
+.section--teal.cta-band p { color: rgba(246, 242, 234, 0.85); }
+
+/* ============================================================
+   PAGE HEADERS
+   ============================================================ */
+.page-head {
+  padding: clamp(56px, 8vw, 110px) 0 clamp(28px, 4vw, 52px);
+  border-bottom: 1px solid var(--line);
+}
+.page-head h1 { max-width: 18ch; margin-bottom: 18px; }
+.page-head .lede {
+  font-size: clamp(18px, 1.6vw, 21px);
+  color: var(--ink-soft);
+  max-width: 60ch;
+  margin: 0;
+}
+
+/* ============================================================
+   SERVICES PAGE — pricing tiers
+   ============================================================ */
+.tier {
+  display: grid;
+  grid-template-columns: 5fr 7fr;
+  gap: clamp(32px, 5vw, 80px);
+  padding: clamp(48px, 6vw, 80px) 0;
+  border-top: 1px solid var(--line);
+  align-items: start;
+}
+.tier:first-of-type { border-top: 0; padding-top: clamp(32px, 4vw, 56px); }
+.tier-meta .tag {
+  display: inline-block;
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+.tier-meta .tag.popular {
+  color: var(--rust);
+}
+.tier-meta h2 { margin-bottom: 4px; }
+.tier-meta .price {
+  font-family: var(--serif);
+  font-size: 34px;
+  color: var(--rust);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  margin-top: 12px;
+}
+.tier-meta .meta-line {
+  font-size: 14px;
+  color: var(--ink-mute);
+  margin-top: 4px;
+}
+.tier-meta .fit {
+  margin-top: 22px;
+  padding: 16px 18px;
+  background: var(--terracotta-soft);
+  border-left: 3px solid var(--rust);
+  font-size: 15px;
+  color: var(--ink);
+  border-radius: 0 var(--r) var(--r) 0;
+}
+.tier-meta .fit strong {
+  display: block;
+  color: var(--rust);
+  font-family: var(--sans);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.tier-body h3 { font-family: var(--serif); font-size: 28px; margin-bottom: 12px; }
+.tier-body p  { color: var(--ink-soft); }
+.tier-body h4 {
+  margin: 26px 0 12px;
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  font-weight: 600;
+}
+.tier-body ul {
+  margin: 0 0 24px;
+  padding: 0;
+  list-style: none;
+}
+.tier-body ul li {
+  padding: 10px 0 10px 28px;
+  border-bottom: 1px solid var(--line);
+  position: relative;
+  color: var(--ink-soft);
+}
+.tier-body ul li::before {
+  content: "";
+  position: absolute;
+  left: 4px; top: 18px;
+  width: 12px; height: 1px;
+  background: var(--rust);
+}
+.tier-body ul li:last-child { border-bottom: 0; }
+@media (max-width: 860px) { .tier { grid-template-columns: 1fr; gap: 28px; } }
+
+/* extras / materials note */
+.extras-note {
+  margin-top: 24px;
+  padding: 28px;
+  border: 1px solid var(--line);
+  background: var(--paper);
+}
+.extras-note h3 { font-family: var(--serif); font-size: 24px; margin-bottom: 12px; }
+.extras-note p { color: var(--ink-soft); margin-bottom: 14px; }
+.extras-note .items {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px 24px;
+  font-size: 15px;
+  color: var(--ink);
+}
+.extras-note .items div {
+  padding: 8px 0;
+  border-top: 1px dashed var(--line);
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+.extras-note .items strong { font-family: var(--serif); color: var(--teal); font-weight: 500; }
+@media (max-width: 600px) { .extras-note .items { grid-template-columns: 1fr; } }
+
+/* limits list */
+.limits {
+  list-style: none;
+  padding: 0;
+  margin-top: 24px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px 48px;
+}
+.limits li {
+  padding: 18px 0;
+  border-top: 1px solid var(--line);
+}
+.limits li strong {
+  display: block;
+  font-family: var(--serif);
+  font-size: 19px;
+  font-weight: 500;
+  color: var(--teal);
+  margin-bottom: 4px;
+}
+.limits li span { color: var(--ink-soft); font-size: 15px; }
+@media (max-width: 700px) { .limits { grid-template-columns: 1fr; } }
+
+/* ============================================================
+   PROCESS PAGE
+   ============================================================ */
+.process-grid {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  gap: clamp(40px, 6vw, 96px);
+  margin-top: 32px;
+  align-items: start;
+}
+.phase-nav {
+  position: sticky;
+  top: 110px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  border-left: 1px solid var(--line);
+  padding-left: 20px;
+}
+.phase-nav a {
+  text-decoration: none;
+  color: var(--ink-mute);
+  font-size: 14px;
+  padding: 8px 0;
+  display: flex;
+  gap: 12px;
+  align-items: baseline;
+  transition: color .15s ease;
+  font-weight: 500;
+}
+.phase-nav a .n {
+  font-family: var(--mark);
+  font-size: 22px;
+  color: var(--teal-3);
+  width: 22px;
+  font-weight: 700;
+}
+.phase-nav a.is-active { color: var(--teal); }
+.phase-nav a.is-active .n { color: var(--rust); }
+.phase-nav a:hover { color: var(--teal); }
+
+.phase {
+  padding: clamp(32px, 4vw, 56px) 0;
+  border-top: 1px solid var(--line);
+  scroll-margin-top: 90px;
+}
+.phase:first-child { border-top: 0; padding-top: 0; }
+.phase .numeral {
+  font-family: var(--mark);
+  font-size: clamp(72px, 9vw, 120px);
+  color: var(--rust);
+  line-height: 0.85;
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 700;
+}
+.phase h2 { font-size: clamp(28px, 3.4vw, 40px); margin-bottom: 6px; }
+.phase .time {
+  font-family: var(--sans);
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  margin-bottom: 18px;
+  display: inline-block;
+  font-weight: 600;
+}
+.phase .body {
+  color: var(--ink-soft);
+  font-size: 18px;
+  max-width: 64ch;
+}
+.callout {
+  margin: 24px 0;
+  padding: 24px 28px;
+  background: var(--paper-cool);
+  border-left: 3px solid var(--rust);
+  border-radius: 0 var(--r) var(--r) 0;
+}
+.callout h4 {
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--rust);
+  font-family: var(--sans);
+  font-weight: 700;
+  margin-bottom: 14px;
+}
+.callout ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.callout ul li {
+  padding: 8px 0;
+  font-size: 16px;
+  color: var(--teal);
+  font-family: var(--serif);
+}
+.callout ul li::before {
+  content: "—";
+  color: var(--rust);
+  margin-right: 12px;
+  font-family: var(--sans);
+}
+.callout.rules .rule { padding: 14px 0; border-bottom: 1px solid var(--line-cool); }
+.callout.rules .rule:last-child { border-bottom: 0; padding-bottom: 0; }
+.callout.rules .rule strong {
+  display: block;
+  font-family: var(--serif);
+  font-size: 19px;
+  font-weight: 500;
+  color: var(--teal);
+  margin-bottom: 2px;
+}
+.callout.rules .rule span { color: var(--ink-soft); font-size: 15px; }
+@media (max-width: 900px) {
+  .process-grid { grid-template-columns: 1fr; }
+  .phase-nav { display: none; }
+}
+
+/* ============================================================
+   ABOUT PAGE
+   ============================================================ */
+.about-hero {
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: clamp(36px, 5vw, 80px);
+  align-items: end;
+}
+.about-hero h1 { max-width: 14ch; }
+.about-hero .lede { font-size: clamp(18px, 1.5vw, 21px); color: var(--ink-soft); max-width: 50ch; }
+@media (max-width: 820px) { .about-hero { grid-template-columns: 1fr; } }
+
+.story-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(40px, 6vw, 96px);
+  align-items: start;
+}
+.story-grid .photo { aspect-ratio: 4 / 5; }
+.story-grid p {
+  font-size: 18px;
+  color: var(--ink-soft);
+}
+.story-grid h2 { margin-bottom: 18px; }
+.story-grid .pull {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: clamp(24px, 2.5vw, 30px);
+  line-height: 1.3;
+  color: var(--teal);
+  padding: 24px 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  margin: 28px 0;
+}
+@media (max-width: 820px) { .story-grid { grid-template-columns: 1fr; } }
+
+.values {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+  margin-top: 40px;
+}
+.value {
+  padding: 28px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(246, 242, 234, 0.18);
+}
+.value h3 {
+  color: var(--terracotta);
+  font-family: var(--serif);
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+.value p { color: rgba(246, 242, 234, 0.85); margin: 0; }
+.value .icon-num {
+  font-family: var(--mark);
+  font-size: 38px;
+  font-weight: 700;
+  color: var(--terracotta);
+  line-height: 1;
+  margin-bottom: 16px;
+  display: block;
+}
+@media (max-width: 820px) { .values { grid-template-columns: 1fr; } }
+
+.duo-portrait {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+.duo-portrait .photo { aspect-ratio: 3 / 4; }
+.duo-portrait .name {
+  font-family: var(--serif);
+  font-size: 22px;
+  color: var(--teal);
+  margin-top: 10px;
+  font-weight: 500;
+}
+.duo-portrait .name span {
+  display: block;
+  font-size: 14px;
+  color: var(--ink-mute);
+  font-family: var(--sans);
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  margin-top: 2px;
+}
+
+.trust-strip {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px 32px;
+  padding: 24px var(--pad);
+  background: var(--paper-2);
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  font-size: 13px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--teal-2);
+  font-weight: 600;
+}
+.trust-strip span { white-space: nowrap; }
+.trust-strip span + span::before {
+  content: "·";
+  color: var(--rust);
+  margin-right: 32px;
+  margin-left: -16px;
+}
+@media (max-width: 600px) {
+  .trust-strip span + span::before { display: none; margin: 0; }
+}
+
+/* ============================================================
+   FAQ
+   ============================================================ */
+.faq-wrap { max-width: 760px; margin: 36px auto 0; }
+.faq-item { border-bottom: 1px solid var(--line); }
+.faq-item:first-child { border-top: 1px solid var(--line); }
+.faq-q {
+  width: 100%;
+  background: none;
+  border: 0;
+  padding: 24px 0;
+  text-align: left;
+  font-family: var(--serif);
+  font-size: 21px;
+  font-weight: 500;
+  color: var(--teal);
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  line-height: 1.3;
+}
+.faq-q:hover { color: var(--rust); }
+.faq-toggle {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  position: relative;
+  border: 1px solid var(--teal);
+  border-radius: 50%;
+}
+.faq-toggle::before, .faq-toggle::after {
+  content: "";
+  position: absolute;
+  background: var(--teal);
+  left: 50%; top: 50%;
+  transform: translate(-50%, -50%);
+}
+.faq-toggle::before { width: 12px; height: 1px; }
+.faq-toggle::after  { width: 1px; height: 12px; transition: transform .2s ease; }
+.faq-item.is-open .faq-toggle { border-color: var(--rust); }
+.faq-item.is-open .faq-toggle::before,
+.faq-item.is-open .faq-toggle::after { background: var(--rust); }
+.faq-item.is-open .faq-toggle::after { transform: translate(-50%, -50%) scaleY(0); }
+.faq-a {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height .3s ease;
+}
+.faq-a-inner {
+  padding: 0 0 24px;
+  color: var(--ink-soft);
+  font-size: 17px;
+  max-width: 64ch;
+}
+.faq-a-inner p { margin: 0 0 .8em; }
+.faq-a-inner p:last-child { margin-bottom: 0; }
+
+/* ============================================================
+   CONTACT / QUOTE FORM
+   ============================================================ */
+.quote-intro {
+  max-width: 640px;
+  margin: 0 auto 12px;
+  text-align: center;
+}
+.quote-steps-mini {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  max-width: 760px;
+  margin: 32px auto 56px;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  padding: 28px 0;
+}
+.quote-steps-mini .step {
+  text-align: center;
+  padding: 0 8px;
+}
+.quote-steps-mini .step .n {
+  font-family: var(--mark);
+  font-size: 36px;
+  font-weight: 700;
+  color: var(--rust);
+  line-height: 1;
+  display: block;
+  margin-bottom: 8px;
+}
+.quote-steps-mini .step strong {
+  display: block;
+  font-family: var(--serif);
+  font-size: 18px;
+  color: var(--teal);
+  margin-bottom: 4px;
+  font-weight: 500;
+}
+.quote-steps-mini .step span { font-size: 14px; color: var(--ink-soft); }
+@media (max-width: 700px) {
+  .quote-steps-mini { grid-template-columns: 1fr; gap: 24px; }
+  .quote-steps-mini .step { text-align: left; padding-left: 0; }
+}
+
+.quote-form-wrap { max-width: 640px; margin: 0 auto; }
+.field { margin-bottom: 22px; }
+.field label {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: var(--teal);
+}
+.field label .req { color: var(--rust); }
+.field .sub {
+  display: block;
+  font-size: 13px;
+  color: var(--ink-mute);
+  margin-bottom: 8px;
+  font-weight: 400;
+  margin-top: -4px;
+}
+.input, .textarea {
+  width: 100%;
+  font-family: inherit;
+  font-size: 17px;
+  color: var(--ink);
+  padding: 14px 16px;
+  background: #FFFCF6;
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  transition: border-color .15s ease, box-shadow .15s ease;
+}
+.input:focus, .textarea:focus {
+  outline: 0;
+  border-color: var(--rust);
+  box-shadow: 0 0 0 3px rgba(142, 59, 19, 0.14);
+}
+.textarea { resize: vertical; min-height: 130px; line-height: 1.5; }
+.field.has-error .input,
+.field.has-error .textarea { border-color: var(--rust); background: #FCF4ED; }
+.field-error {
+  display: none;
+  margin-top: 6px;
+  font-size: 13px;
+  color: var(--rust-deep);
+}
+.field.has-error .field-error { display: block; }
+
+.radio-group {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+.radio-group label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 13px 14px;
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  cursor: pointer;
+  font-weight: 400;
+  font-size: 16px;
+  margin-bottom: 0;
+  background: #FFFCF6;
+  color: var(--ink);
+  transition: border-color .15s ease, background .15s ease;
+}
+.radio-group label:hover { border-color: var(--rust); }
+.radio-group input { accent-color: var(--rust); }
+.radio-group label:has(input:checked) {
+  border-color: var(--rust);
+  background: var(--terracotta-soft);
+  color: var(--rust-deep);
+  font-weight: 500;
+}
+@media (max-width: 600px) { .radio-group { grid-template-columns: 1fr; } }
+
+.preferred-times {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+.preferred-times label {
+  text-align: center;
+  padding: 12px 10px;
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  cursor: pointer;
+  background: #FFFCF6;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--ink-soft);
+  transition: border-color .15s ease, background .15s ease;
+}
+.preferred-times label:hover { border-color: var(--rust); }
+.preferred-times input { display: none; }
+.preferred-times label:has(input:checked) {
+  border-color: var(--rust);
+  background: var(--terracotta-soft);
+  color: var(--rust-deep);
+}
+@media (max-width: 480px) { .preferred-times { grid-template-columns: 1fr 1fr; } }
+
+.file-drop {
+  border: 1px dashed var(--terracotta);
+  border-radius: var(--r);
+  background: #FFFCF6;
+  padding: 28px 20px;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color .15s ease, background .15s ease;
+  display: block;
+}
+.file-drop:hover, .file-drop.is-drag {
+  border-color: var(--rust);
+  background: var(--terracotta-soft);
+}
+.file-drop input { display: none; }
+.file-drop strong {
+  font-family: var(--serif);
+  font-size: 18px;
+  font-weight: 500;
+  display: block;
+  margin-bottom: 4px;
+  color: var(--teal);
+}
+.file-drop em { font-style: normal; color: var(--ink-mute); font-size: 14px; }
+.file-list {
+  margin: 12px 0 0;
+  padding: 0;
+  font-size: 14px;
+  color: var(--ink-soft);
+  text-align: left;
+}
+.file-list li { padding: 4px 0; list-style: none; }
+
+.submit-row {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+.alt-contact {
+  margin-top: 56px;
+  padding-top: 32px;
+  border-top: 1px solid var(--line);
+  color: var(--ink-soft);
+  font-size: 16px;
+  text-align: center;
+}
+.alt-contact .resp { font-size: 13px; color: var(--ink-mute); margin-top: 8px; }
+
+.success {
+  text-align: center;
+  padding: 60px 24px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+.success .check {
+  width: 60px; height: 60px;
+  border-radius: 50%;
+  background: var(--terracotta-soft);
+  border: 1px solid var(--rust);
+  margin: 0 auto 24px;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--rust);
+  font-size: 30px;
+  font-weight: 600;
+}
+.success h2 { margin-bottom: 16px; }
+.success p { color: var(--ink-soft); margin-left: auto; margin-right: auto; }
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+.site-footer {
+  background: var(--teal);
+  color: rgba(246, 242, 234, 0.85);
+  padding: 64px 0 32px;
+  margin-top: 60px;
+  font-size: 14px;
+}
+.footer-grid {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 0 var(--pad);
+  display: grid;
+  grid-template-columns: 1.6fr 1fr 1fr;
+  gap: 56px;
+}
+.footer-grid h5 {
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--terracotta);
+  margin: 0 0 14px;
+}
+.footer-grid p,
+.footer-grid a {
+  color: rgba(246, 242, 234, 0.85);
+  margin: 0 0 6px;
+  text-decoration: none;
+  display: block;
+  font-size: 15px;
+}
+.footer-grid a:hover { color: var(--terracotta); text-decoration: underline; }
+.footer-grid .footer-brand img {
+  height: 48px;
+  width: auto;
+  margin-bottom: 18px;
+  filter: brightness(0) invert(1);
+  opacity: 0.92;
+}
+.footer-bottom {
+  max-width: var(--maxw);
+  margin: 44px auto 0;
+  padding: 22px var(--pad) 0;
+  border-top: 1px solid rgba(246, 242, 234, 0.15);
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+  flex-wrap: wrap;
+  font-size: 12px;
+  color: rgba(246, 242, 234, 0.55);
+}
+@media (max-width: 760px) {
+  .footer-grid { grid-template-columns: 1fr; gap: 36px; }
+  .footer-bottom { flex-direction: column; }
+}
+
+/* ============================================================
+   MISC
+   ============================================================ */
+.sr-only {
+  position: absolute; width: 1px; height: 1px;
+  padding: 0; margin: -1px; overflow: hidden;
+  clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+}
+.center { text-align: center; }
+</style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════════════════════════
+     HEADER
+     ════════════════════════════════════════════════════════════ -->
+<header class="site-header" id="siteHeader">
+  <div class="header-inner">
+    <a class="brand" href="#home" data-route="home" aria-label="D&amp;D Garage Works — home">
+      <img src="assets/logo-transparent.png" alt="D&amp;D Garage Works" />
+    </a>
+
+    <nav class="nav-primary" aria-label="Primary">
+      <a href="#services" data-route="services">Services</a>
+      <a href="#process"  data-route="process">Process</a>
+      <a href="#about"    data-route="about">About</a>
+      <a href="#faq"      data-route="faq">FAQ</a>
+    </nav>
+
+    <div class="header-cta">
+      <a class="btn" href="#quote" data-route="quote">Book a Free Quote</a>
+      <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
+        <svg width="26" height="26" viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 7h20M3 13h20M3 19h20"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- ════════════════════════════════════════════════════════════
+     MOBILE OVERLAY
+     ════════════════════════════════════════════════════════════ -->
+<div class="mobile-overlay" id="mobileNav" aria-hidden="true">
+  <div class="mobile-overlay-top">
+    <span class="brand">
+      <img src="assets/logo-transparent.png" alt="D&amp;D Garage Works" style="height:42px" />
+    </span>
+    <button class="icon-close" id="closeNav" aria-label="Close menu">
+      <svg width="26" height="26" viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 5l16 16M21 5L5 21"/></svg>
+    </button>
+  </div>
+  <nav aria-label="Mobile">
+    <a href="#home"     data-route="home">Home</a>
+    <a href="#services" data-route="services">Services</a>
+    <a href="#process"  data-route="process">Process</a>
+    <a href="#about"    data-route="about">About</a>
+    <a href="#faq"      data-route="faq">FAQ</a>
+    <a href="#quote"    data-route="quote">Book a Quote</a>
+  </nav>
+  <a class="btn btn--lg" href="#quote" data-route="quote">Book a Free Quote</a>
+</div>
+
+<main id="main">
+
+<!-- ════════════════════════════════════════════════════════════
+     PAGE: HOME
+     ════════════════════════════════════════════════════════════ -->
+<section data-page="home" class="is-active" aria-labelledby="home-h1">
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <span class="eyebrow">Thornhill · Two-person team</span>
+        <h1 id="home-h1">Your garage, <em>worked through</em> with you — not just emptied.</h1>
+        <p class="hero-sub">We're two childhood friends who clean, declutter, and organize garages across Thornhill. We come by in person to walk through your space and hand you a real quote — free, no obligation, a day or two before the job.</p>
+        <div class="hero-ctas">
+          <a class="btn btn--lg" href="#quote" data-route="quote">Book a Free On-Site Quote</a>
+          <a class="link-arrow" href="#how-it-works-teaser">See how it works <span class="arr">→</span></a>
+        </div>
+        <div class="hero-trust">
+          <span><strong>Locally owned · Thornhill.</strong> We're not a franchise. Two guys, one truck, one phone number.</span>
+        </div>
+      </div>
+
+      <div class="hero-stack">
+        <span class="badge">D &amp; D</span>
+        <div class="photo photo--big">
+          <span class="photo-label">HERO — A fully organized garage in golden afternoon light. Labeled bins on the shelves, swept floor, car parked inside.</span>
+        </div>
+        <div class="photo photo--small">
+          <span class="photo-label">CANDID — David K &amp; David R working a sort, mid-job. Backs to camera, items being staged on a tarp.</span>
+        </div>
+        <div class="photo photo--small">
+          <span class="photo-label">DETAIL — Close-up of a bin labeled "SEASONAL · holiday décor" with a hand placing it on a shelf.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr />
+
+  <!-- HOW IT STARTS: the on-site quote -->
+  <div class="section section--tight">
+    <div class="wrap">
+      <div class="quote-callout">
+        <div>
+          <span class="eyebrow">How it starts</span>
+          <h2>A free, in-person quote — a day or two before the job.</h2>
+          <p style="color: var(--ink-soft);">No virtual estimates from a photo. We come to your house, walk the garage with you for fifteen minutes, and write you one honest number on the spot.</p>
+          <a class="btn" href="#quote" data-route="quote">Book My Free Quote</a>
+        </div>
+        <ol class="steps">
+          <li>
+            <span class="n">1</span>
+            <div>
+              <strong>You reach out.</strong>
+              <span>Fill out the short form, or text us. We reply within a few hours.</span>
+            </div>
+          </li>
+          <li>
+            <span class="n">2</span>
+            <div>
+              <strong>We visit, free.</strong>
+              <span>We swing by your driveway a day or two before the job to look at the space together.</span>
+            </div>
+          </li>
+          <li>
+            <span class="n">3</span>
+            <div>
+              <strong>One number, no surprises.</strong>
+              <span>You get a written quote at the visit. If you say yes, we book the day. If not, no hard feelings.</span>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </div>
+  </div>
+
+  <!-- SERVICES PREVIEW -->
+  <div class="section">
+    <div class="wrap">
+      <span class="eyebrow">What we do</span>
+      <h2>Three ways we work — priced for the job in front of us.</h2>
+      <div class="services-preview">
+        <div class="svc-card">
+          <h3>Declutter &amp; Organize</h3>
+          <p>You keep most of it. We sort with you, build the zones, label what stays. No truck needed.</p>
+          <div class="price">$325</div>
+          <a class="link-arrow" href="#services" data-route="services">Learn more <span class="arr">→</span></a>
+        </div>
+        <div class="svc-card">
+          <h3>Garage Cleanout</h3>
+          <p>The full reset. We sort with you, remove what's going, and organize what stays.</p>
+          <div class="price">$400 – $575</div>
+          <a class="link-arrow" href="#services" data-route="services">Learn more <span class="arr">→</span></a>
+        </div>
+        <div class="svc-card">
+          <h3>Estate &amp; Full-Day Cleanout</h3>
+          <p>Whole-garage jobs, downsizing, or inherited spaces. A careful, full day at a respectful pace.</p>
+          <div class="price">$900 – $1,500+</div>
+          <a class="link-arrow" href="#services" data-route="services">Learn more <span class="arr">→</span></a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- REASONS -->
+  <div class="section section--cream">
+    <div class="wrap">
+      <span class="eyebrow">Why people hire us</span>
+      <h2>Four small differences that change the whole experience.</h2>
+      <div class="reasons">
+        <div class="reason">
+          <h3>The same two people, every job.</h3>
+          <p>No rotating crews and no subcontractors. The two friends who quote your garage are the two friends who do the work.</p>
+        </div>
+        <div class="reason">
+          <h3>We organize. We don't just empty.</h3>
+          <p>You get clear zones and labels. We leave the space actually functional — not just a swept-out concrete box.</p>
+        </div>
+        <div class="reason">
+          <h3>You're in the room.</h3>
+          <p>The keep-or-go calls are yours. We hold the rhythm and the rules so the day moves forward without ever feeling rushed.</p>
+        </div>
+        <div class="reason">
+          <h3>One honest number, in person.</h3>
+          <p>We come to your driveway before the job to look at the space and quote it. No surprise fees, no upcharge at the curb.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HOW IT WORKS TEASER -->
+  <div class="section" id="how-it-works-teaser">
+    <div class="wrap">
+      <span class="eyebrow">The 7-phase method</span>
+      <h2>How a day with us actually goes.</h2>
+      <div class="how-row">
+        <div class="how-step">
+          <span class="num">01</span>
+          <h4>Walkthrough</h4>
+          <p>We meet you in the driveway, tour the space together, and agree on the plan before we lift a thing.</p>
+        </div>
+        <div class="how-step">
+          <span class="num">03</span>
+          <h4>The Sort</h4>
+          <p>Two piles, side-by-side with you: <em>Keep</em> and <em>Dispose</em>. We handle everything in the dispose pile from there.</p>
+        </div>
+        <div class="how-step">
+          <span class="num">05</span>
+          <h4>Organize</h4>
+          <p>Four zones — Active, Seasonal, Long-term, Workbench — labeled so the system holds long after we leave.</p>
+        </div>
+      </div>
+      <div style="margin-top: 44px;">
+        <a class="link-arrow" href="#process" data-route="process">See the full 7-phase process <span class="arr">→</span></a>
+      </div>
+    </div>
+  </div>
+
+  <!-- FEATURED BEFORE/AFTER -->
+  <div class="section section--tight">
+    <div class="wrap">
+      <div class="ba">
+        <div>
+          <div class="photo photo--3-4">
+            <span class="photo-label">BEFORE — wide-shot of a packed 2-car garage. Boxes stacked to the ceiling, walking path only.</span>
+          </div>
+          <span class="ba-tag">Before</span>
+        </div>
+        <div>
+          <div class="photo photo--3-4">
+            <span class="photo-label">AFTER — same garage, same camera position. Floor visible, zoned, labeled, car parked inside.</span>
+          </div>
+          <span class="ba-tag">After</span>
+        </div>
+      </div>
+      <p style="margin-top: 22px; color: var(--ink-soft); font-size: 16px;">A two-car Thornhill garage. Six hours, two people, one truck. The owners kept the workbench and the boys' first hockey sticks — and got their car back inside.</p>
+    </div>
+  </div>
+
+  <!-- REVIEWS -->
+  <div class="section section--tight section--cream">
+    <div class="wrap">
+      <span class="eyebrow">What neighbours say</span>
+      <h2>Three of the kindest.</h2>
+      <div class="reviews-row">
+        <div class="review">
+          <div class="stars">★★★★★</div>
+          <p>"They didn't make me feel bad about anything in there. Two of them, the whole day, and at the end I could actually park inside again."</p>
+          <p class="who">— Marlene K., Bayview Glen</p>
+        </div>
+        <div class="review">
+          <div class="stars">★★★★★</div>
+          <p>"They showed up to quote it in person, gave me one number, and that's exactly what I paid. Two polite kids who work harder than I did at their age."</p>
+          <p class="who">— Anand P., Thornhill Woods</p>
+        </div>
+        <div class="review">
+          <div class="stars">★★★★★</div>
+          <p>"We were emptying my dad's place. They were patient with me, gentle with everything, and helped me figure out what to keep. Worth every cent."</p>
+          <p class="who">— Janine R., Richmond Hill</p>
+        </div>
+      </div>
+      <div class="review-footer">
+        <span style="font-family: var(--serif); font-size: 18px; color: var(--teal);">★ 4.9 · word-of-mouth, mostly</span>
+        <a class="link-arrow" href="#" onclick="event.preventDefault()">Read more on Google <span class="arr">→</span></a>
+      </div>
+    </div>
+  </div>
+
+  <!-- FINAL CTA -->
+  <div class="cta-band section--teal">
+    <div class="wrap">
+      <h2>Ready to see your garage floor again?</h2>
+      <p>Book a free on-site quote. We'll come by, take a look, and give you one number.</p>
+      <a class="btn btn--on-teal btn--lg" href="#quote" data-route="quote">Book My Free Quote</a>
+    </div>
+  </div>
+
+</section>
+
+<!-- ════════════════════════════════════════════════════════════
+     PAGE: SERVICES
+     ════════════════════════════════════════════════════════════ -->
+<section data-page="services" aria-labelledby="svc-h1">
+
+  <div class="page-head">
+    <div class="wrap">
+      <span class="eyebrow">Services &amp; pricing</span>
+      <h1 id="svc-h1">Three tiers. Real prices.</h1>
+      <p class="lede">Every garage is different, so the quote is always specific to the job in front of us. We confirm everything in person, free, before any work begins.</p>
+    </div>
+  </div>
+
+  <div class="wrap">
+
+    <!-- TIER 1 -->
+    <div class="tier">
+      <div class="tier-meta">
+        <span class="tag">Tier 1</span>
+        <h2>Declutter &amp; Organize</h2>
+        <div class="price">$325</div>
+        <div class="meta-line">~4–5 hours · No truck</div>
+        <div class="fit">
+          <strong>Right for you if</strong>
+          You like most of what's in your garage and don't need anything hauled away. You need a system, labels, and a couple of friendly hands working the corners with you.
+        </div>
+      </div>
+      <div class="tier-body">
+        <p>You keep most of what's in there. We bring the structure: a four-zone layout, labeled shelves and bins, and a sort done side-by-side with you, one corner at a time.</p>
+
+        <h4>What's included</h4>
+        <ul>
+          <li>On-site walkthrough and zone plan before we touch anything</li>
+          <li>Side-by-side sort with you using simple rules to keep the day moving</li>
+          <li>Active / Seasonal / Long-term / Workbench zoning across the space</li>
+          <li>Shelves and bins labeled where it helps</li>
+          <li>Final walkthrough — we guide you through where everything lives now</li>
+        </ul>
+
+        <a class="btn" href="#quote" data-route="quote">Book My Free Quote</a>
+      </div>
+    </div>
+
+    <!-- TIER 2 -->
+    <div class="tier">
+      <div class="tier-meta">
+        <span class="tag popular">Tier 2 · Most popular</span>
+        <h2>Garage Cleanout</h2>
+        <div class="price">$400 – $575</div>
+        <div class="meta-line">~5–8 hours · Truck included</div>
+        <div class="fit">
+          <strong>Right for you if</strong>
+          You haven't seen the back wall in a couple of years. You want most of it gone, what's left organized, and one team handling all of it.
+        </div>
+      </div>
+      <div class="tier-body">
+        <p>The full reset. We sort the entire space with you, take care of everything in the dispose pile, and organize what stays. Pricing scales with how much volume comes out:</p>
+
+        <h4>How the range works</h4>
+        <ul>
+          <li><strong>$400</strong> — Cluttered space, roughly a quarter-truckload coming out</li>
+          <li><strong>$500</strong> — Heavy clutter, roughly a half-truckload</li>
+          <li><strong>$575</strong> — Packed wall-to-wall, full truckload</li>
+        </ul>
+
+        <h4>What's included</h4>
+        <ul>
+          <li>Everything in Tier 1, plus:</li>
+          <li>Removal of everything you decide doesn't stay</li>
+          <li>We sort, transport, and handle disposition of the dispose pile — that's on us</li>
+          <li>Sweep-out and a photo set of the finished garage for your records</li>
+        </ul>
+
+        <a class="btn" href="#quote" data-route="quote">Book My Free Quote</a>
+      </div>
+    </div>
+
+    <!-- TIER 3 -->
+    <div class="tier">
+      <div class="tier-meta">
+        <span class="tag">Tier 3</span>
+        <h2>Estate &amp; Full-Day Cleanout</h2>
+        <div class="price">$900 – $1,500+</div>
+        <div class="meta-line">Full day · Truck included · Multi-load</div>
+        <div class="fit">
+          <strong>Right for you if</strong>
+          You're emptying an inherited garage, prepping for a listing, or you've put it off long enough that "a full day" is the honest answer. We slow down where it matters.
+        </div>
+      </div>
+      <div class="tier-body">
+        <p>Larger or sensitive jobs. We work at a respectful pace — particularly with inherited spaces, where decisions feel heavier. We document anything that looks meaningful before it leaves, in case you want a second look.</p>
+
+        <h4>What's included</h4>
+        <ul>
+          <li>Everything in Tier 2, scaled to a full day (or two)</li>
+          <li>Multi-trip removal of everything coming out of the space</li>
+          <li>Photo log of any item that looks personal or potentially meaningful</li>
+          <li>Coordination with your Realtor on listing-prep timing if needed</li>
+        </ul>
+
+        <a class="btn" href="#quote" data-route="quote">Book My Free Quote</a>
+      </div>
+    </div>
+
+    <!-- EXTRAS / MATERIALS -->
+    <div class="extras-note">
+      <span class="eyebrow">A note on materials</span>
+      <h3>Most of what we use is included.</h3>
+      <p>Bins and labels for the keep pile are built into your quote. A few items, when we provide them, are priced separately because we'd rather not pad your number with stuff you didn't ask for:</p>
+      <div class="items">
+        <div><strong>Wall hooks</strong> <span>billed at a small per-hook rate</span></div>
+        <div><strong>Bike ceiling pulleys</strong> <span>priced separately when you want them</span></div>
+        <div><strong>Kayak / ski wall racks</strong> <span>priced separately when you want them</span></div>
+        <div><strong>Storage bins (extras)</strong> <span>at our cost, no markup</span></div>
+      </div>
+      <p style="margin-top: 18px; margin-bottom: 0; font-size: 14px; color: var(--ink-mute);">Every quote is built around your specific garage, so we walk you through exactly what's included and what isn't before we book the day.</p>
+    </div>
+
+    <!-- LIMITS -->
+    <div class="section section--tight" style="padding-bottom: 24px;">
+      <span class="eyebrow">Limits, said out loud</span>
+      <h2>What we don't take on.</h2>
+      <p style="color: var(--ink-soft); max-width: 60ch;">We'd rather point you to the right person than fake our way through a job that needs different hands.</p>
+      <ul class="limits">
+        <li><strong>Industrial chemicals or unknown drums</strong><span>Regulated work that needs licensed crews.</span></li>
+        <li><strong>Asbestos, mold, biohazard</strong><span>Same — call a remediation specialist.</span></li>
+        <li><strong>Whole-house cleanouts</strong><span>We're a garage-specialist team. Different operation entirely.</span></li>
+        <li><strong>Storage unit cleanouts</strong><span>Different access, different tools, different logic.</span></li>
+        <li><strong>Demolition debris</strong><span>Drywall, framing, post-reno waste — call a bin company.</span></li>
+        <li><strong>Hoarder-condition spaces</strong><span>We're not the right team for these yet.</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="cta-band section--cream">
+    <div class="wrap">
+      <h2>Not sure which tier fits?</h2>
+      <p>That's exactly what the free on-site quote is for. We come look at it together.</p>
+      <a class="btn btn--lg" href="#quote" data-route="quote">Book My Free Quote</a>
+      <p style="margin-top: 18px; font-size: 15px;">
+        Or grab our <a href="assets/garage-quote-checklist.pdf" download>free Garage Quote Checklist (PDF)</a> —
+        five minutes of prep before we arrive saves you money on the day.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════
+     PAGE: PROCESS
+     ════════════════════════════════════════════════════════════ -->
+<section data-page="process" aria-labelledby="process-h1">
+
+  <div class="page-head">
+    <div class="wrap">
+      <span class="eyebrow">The 7-phase method</span>
+      <h1 id="process-h1">Every job runs through the same seven phases.</h1>
+      <p class="lede">Built so nothing gets missed, and so you always know what's happening, hour by hour.</p>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <div class="process-grid">
+
+      <aside class="phase-nav" id="phaseNav" aria-label="Process phases">
+        <a href="#p1"><span class="n">1</span> Arrival &amp; Walkthrough</a>
+        <a href="#p2"><span class="n">2</span> Setup &amp; Staging</a>
+        <a href="#p3"><span class="n">3</span> The Sort</a>
+        <a href="#p4"><span class="n">4</span> Removal</a>
+        <a href="#p5"><span class="n">5</span> Zone &amp; Organize</a>
+        <a href="#p6"><span class="n">6</span> Label &amp; Document</a>
+        <a href="#p7"><span class="n">7</span> Final Walkthrough</a>
+      </aside>
+
+      <div>
+        <!-- PHASE 1 -->
+        <article class="phase" id="p1">
+          <span class="numeral">1</span>
+          <h2>Arrival &amp; Walkthrough</h2>
+          <span class="time">15–30 minutes</span>
+          <p class="body">We show up on time, in the same truck you saw at the quote visit. Before we move anything, we tour the space with you and write the plan down. Most surprises in a cleanout happen in the first twenty minutes — we'd rather find them now than at hour four.</p>
+          <div class="callout">
+            <h4>What we ask you</h4>
+            <ul>
+              <li>What absolutely stays, no matter what?</li>
+              <li>Anything with sentimental weight we should slow down for?</li>
+              <li>Anything fragile we should know about?</li>
+              <li>Where does the dust and noise bother you least?</li>
+              <li>How do you want to be involved — every decision, or just the hard ones?</li>
+            </ul>
+          </div>
+          <div class="photo photo--16-9"><span class="photo-label">PHASE 1 — handshake at the driveway, clipboard visible, garage door open</span></div>
+        </article>
+
+        <!-- PHASE 2 -->
+        <article class="phase" id="p2">
+          <span class="numeral">2</span>
+          <h2>Setup &amp; Staging</h2>
+          <span class="time">20–40 minutes</span>
+          <p class="body">We lay down floor protection, set up staging areas in the driveway (or on a tarp inside, if the weather's bad), and pull anything blocking access. The garage gets worse before it gets better — but only for the next couple of hours.</p>
+          <div class="photo photo--16-9"><span class="photo-label">PHASE 2 — driveway laid out with tarps, items being staged in piles</span></div>
+        </article>
+
+        <!-- PHASE 3 -->
+        <article class="phase" id="p3">
+          <span class="numeral">3</span>
+          <h2>The Sort</h2>
+          <span class="time">2–3 hours · the main event</span>
+          <p class="body">We work corner by corner, item by item. You make the calls; we hold the rules and the rhythm. Decision fatigue is the enemy of a good cleanout — our job is to keep you moving without ever making you feel rushed.</p>
+
+          <div class="callout">
+            <h4>Two piles, that's it</h4>
+            <ul>
+              <li><strong>Keep</strong> — goes back into the garage, zoned and labeled.</li>
+              <li><strong>Dispose</strong> — everything you decide doesn't stay. We take it from there; you don't have to think about it.</li>
+            </ul>
+          </div>
+
+          <div class="callout rules">
+            <h4>Three rules we lean on</h4>
+            <div class="rule"><strong>The 5-Year Rule</strong><span>If you haven't touched it in five years, you don't own it — it owns you. Doesn't mean it goes, but it changes the default answer.</span></div>
+            <div class="rule"><strong>The Replacement Rule</strong><span>If it broke tomorrow, would you spend money to replace it? If not, it's quietly already gone.</span></div>
+            <div class="rule"><strong>The Sentimentality Filter</strong><span>Sentimental items deserve real consideration — not a yes-or-no question at hour three. We pull them aside and revisit them at the end, when you're calmer.</span></div>
+          </div>
+
+          <div class="photo photo--16-9"><span class="photo-label">PHASE 3 — homeowner and one of us, hands on an item, two piles visible behind</span></div>
+        </article>
+
+        <!-- PHASE 4 -->
+        <article class="phase" id="p4">
+          <span class="numeral">4</span>
+          <h2>Removal</h2>
+          <span class="time">1–2 hours · we step away, you breathe</span>
+          <p class="body">Once the sort is done, the dispose pile becomes our problem. One of us takes the truck and handles everything in that pile from start to finish — you don't have to think about where it goes or what happens to it. The other one of us stays at the house, getting Phase 5 ready.</p>
+          <div class="photo photo--16-9"><span class="photo-label">PHASE 4 — pickup truck loaded, tarp tied down, pulling out of the driveway</span></div>
+        </article>
+
+        <!-- PHASE 5 -->
+        <article class="phase" id="p5">
+          <span class="numeral">5</span>
+          <h2>Zone &amp; Organize</h2>
+          <span class="time">1–2 hours</span>
+          <p class="body">The keepers come back in — but not where they were. We build the four-zone strategy that turns a garage from a dumping ground into a working tool.</p>
+          <div class="callout">
+            <h4>The four-zone strategy</h4>
+            <ul>
+              <li><strong>Active.</strong> Daily and weekly: rakes, snow shovel, salt, recycling bins. Eye-level, near the door.</li>
+              <li><strong>Seasonal.</strong> Quarterly: patio cushions, holiday décor, summer tires. High shelves or far wall.</li>
+              <li><strong>Long-term.</strong> Yearly or less: paint, sentimental boxes, archives. Top shelf, labeled, easy to find.</li>
+              <li><strong>Workbench.</strong> Tools, fasteners, project supplies. One concentrated area, never a junk drawer.</li>
+            </ul>
+          </div>
+          <div class="photo photo--16-9"><span class="photo-label">PHASE 5 — labeled shelves being built, four zones marked on tape on the floor</span></div>
+        </article>
+
+        <!-- PHASE 6 -->
+        <article class="phase" id="p6">
+          <span class="numeral">6</span>
+          <h2>Label &amp; Document</h2>
+          <span class="time">30–45 minutes</span>
+          <p class="body">Every shelf, every bin, every zone gets a label that's readable from a step back. We photograph the finished garage in a four-corner grid so you have a record of how it looked the day we left.</p>
+          <div class="photo photo--16-9"><span class="photo-label">PHASE 6 — close-up of a labeled bin: "SEASONAL · holiday décor"</span></div>
+        </article>
+
+        <!-- PHASE 7 -->
+        <article class="phase" id="p7">
+          <span class="numeral">7</span>
+          <h2>Final Walkthrough</h2>
+          <span class="time">15–20 minutes</span>
+          <p class="body">We do the walkthrough together. We show you each zone, where things ended up, and why — so you can find anything you need on day one without guessing. You point at anything that's not where you want it, and we fix it on the spot. Then we settle up the agreed quote, and that's the day.</p>
+          <div class="photo photo--16-9"><span class="photo-label">PHASE 7 — homeowner standing inside the finished garage, hands on hips, tired smile</span></div>
+        </article>
+
+        <div style="padding: 64px 0 16px;">
+          <h2>That's the whole method. No shortcuts.</h2>
+          <p style="color: var(--ink-soft); max-width: 55ch; margin-bottom: 28px;">If that's the kind of care you want in your garage, the next step is the free on-site quote. We come look at it together.</p>
+          <a class="btn btn--lg" href="#quote" data-route="quote">Book My Free Quote</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════
+     PAGE: ABOUT
+     ════════════════════════════════════════════════════════════ -->
+<section data-page="about" aria-labelledby="about-h1">
+
+  <div class="page-head">
+    <div class="wrap">
+      <div class="about-hero">
+        <div>
+          <span class="eyebrow">The two of us</span>
+          <h1 id="about-h1">We're <span style="color: var(--rust);">David K</span> and <span style="color: var(--rust);">David R</span>.</h1>
+          <p class="lede">Two twenty-year-olds, childhood friends, building something one Thornhill garage at a time.</p>
+        </div>
+        <div class="duo-portrait">
+          <div>
+            <div class="photo photo--3-4"><span class="photo-label">DAVID K — candid, natural light, in front of the garage door</span></div>
+            <div class="name">David K. <span>Co-founder</span></div>
+          </div>
+          <div>
+            <div class="photo photo--3-4"><span class="photo-label">DAVID R — candid, leaning on the truck, same lighting</span></div>
+            <div class="name">David R. <span>Co-founder</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="trust-strip">
+    <span>Locally owned</span>
+    <span>Thornhill-based</span>
+    <span>Two-person team</span>
+    <span>Honest pricing</span>
+  </div>
+
+  <div class="section">
+    <div class="wrap">
+      <div class="story-grid">
+        <div class="photo photo--3-4"><span class="photo-label">THE GARAGE THAT STARTED IT — David R's garage, mid-cleanout, the day the idea hit. Candid, slightly imperfect framing.</span></div>
+        <div>
+          <span class="eyebrow">How this started</span>
+          <h2>One garage. One Saturday. One idea.</h2>
+          <p>We've been friends since we were kids. The kind of friendship where you know each other's parents' phone numbers, and you've spent more summers in each other's basements than your own.</p>
+          <p>One weekend, David R's family decided his garage had to go. Years of stuff, no plan, a couple of dollar-store bins, and a lot of "we'll figure it out." We figured it out together — eight hours, two coffees, and a garage that suddenly made sense.</p>
+
+          <div class="pull">"Halfway through, we looked at each other and said: people would pay for this. And we could do it for them."</div>
+
+          <p>That's where this started. Not a business plan in a Word doc — a Saturday we couldn't stop talking about for a month.</p>
+          <p>We're not trying to build a chain. We're trying to build a name in our neighbourhood. A few hundred Thornhill garages over the next few years, done one at a time by the same two people, with our handshake and our reputation on every one of them.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section section--teal">
+    <div class="wrap">
+      <span class="eyebrow">What we're building</span>
+      <h2>Three things that mean more than money.</h2>
+      <div class="values">
+        <div class="value">
+          <span class="icon-num">1</span>
+          <h3>Community</h3>
+          <p>Most of our jobs come from someone whose garage we did. We earn the next one by treating this one like our own.</p>
+        </div>
+        <div class="value">
+          <span class="icon-num">2</span>
+          <h3>Legacy</h3>
+          <p>We want our name on a hundred Thornhill garages by the time we're thirty. Small business, long road, no shortcuts.</p>
+        </div>
+        <div class="value">
+          <span class="icon-num">3</span>
+          <h3>Companionship</h3>
+          <p>We started this because we wanted to work with our best friend. That energy shows up on every job — and homeowners feel it.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="wrap">
+      <span class="eyebrow">How we work</span>
+      <h2>Clean, declutter, organize — with you in the room.</h2>
+      <p style="color: var(--ink-soft); max-width: 60ch; font-size: 18px;">Our job is to clean, declutter, and organize your garage — with your help on the keep-or-go calls. We also remove everything you decide doesn't stay; from there, D&amp;D Garage Works handles where each item goes. You don't have to think about it again.</p>
+      <p style="color: var(--ink-soft); max-width: 60ch; font-size: 18px;">Everything we charge is on one page — and we walk through it with you in person, the free quote visit, a day or two before the job. No phone-call estimates, no surprise fees, no upsells at the curb.</p>
+      <a class="btn btn--lg" href="#quote" data-route="quote" style="margin-top: 8px;">Book a Free Quote</a>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════
+     PAGE: FAQ
+     ════════════════════════════════════════════════════════════ -->
+<section data-page="faq" aria-labelledby="faq-h1">
+
+  <div class="page-head">
+    <div class="wrap" style="text-align: center;">
+      <span class="eyebrow">Honest answers</span>
+      <h1 id="faq-h1" style="margin-left: auto; margin-right: auto;">Things people ask us first.</h1>
+      <p class="lede" style="margin-left: auto; margin-right: auto;">We've done enough of these to know what comes up. Here are the ones we hear most.</p>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <div class="faq-wrap" id="faqWrap">
+
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false"><span>How does the free quote actually work?</span><span class="faq-toggle" aria-hidden="true"></span></button>
+        <div class="faq-a"><div class="faq-a-inner">
+          <p>You send us a quick form or a text. We reply with a time to come by — usually a day or two before you'd want the job done. We pull up to your driveway, walk the garage with you for about fifteen minutes, and hand you one written number on the spot. If you want to book the day, we shake on it. If not, no hard feelings, no charge for the visit.</p>
+        </div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false"><span>How much does a typical garage cleanout cost?</span><span class="faq-toggle" aria-hidden="true"></span></button>
+        <div class="faq-a"><div class="faq-a-inner">
+          <p>Most of our Thornhill cleanouts land between $400 and $575, depending on how much volume is coming out. The Services page has the three tiers with real prices. The number we quote you in person is the number you pay — pricing is specific to each garage, and we go through it with you at the on-site visit.</p>
+        </div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false"><span>What happens to the stuff that leaves the garage?</span><span class="faq-toggle" aria-hidden="true"></span></button>
+        <div class="faq-a"><div class="faq-a-inner">
+          <p>Once you've put something in the dispose pile, it's our problem from there. We take everything away, and D&amp;D Garage Works handles where it goes. Items in usable shape get dropped at our local Goodwill — we don't believe in landfilling things people would use. You don't have to think about it after that.</p>
+        </div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false"><span>Do I need to be home the whole time?</span><span class="faq-toggle" aria-hidden="true"></span></button>
+        <div class="faq-a"><div class="faq-a-inner">
+          <p>You need to be there for Phase 1 (walkthrough) and Phase 3 (sort). That's the part where you make the keep-or-go calls. After that you're free — grab a coffee, run errands, whatever. We'll text you if anything makes us pause.</p>
+        </div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false"><span>What if I change my mind about something after the sort?</span><span class="faq-toggle" aria-hidden="true"></span></button>
+        <div class="faq-a"><div class="faq-a-inner">
+          <p>Once the truck pulls out of the driveway, the dispose pile is no longer something we can pull back from. That's why the sort is unhurried — we'd rather take an extra ten minutes on one box than have you regret a call later.</p>
+        </div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false"><span>What about paint, batteries, and old chemicals?</span><span class="faq-toggle" aria-hidden="true"></span></button>
+        <div class="faq-a"><div class="faq-a-inner">
+          <p>A typical garage's worth — old paint cans, household batteries, motor oil, propane tanks — yes. We take them to the appropriate municipal drop. What we don't take is industrial volumes (multiple unknown drums, asbestos, mold, biohazard). That's regulated work, and you want a licensed crew for it, not us.</p>
+        </div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false"><span>Do you do basements, sheds, or storage units?</span><span class="faq-toggle" aria-hidden="true"></span></button>
+        <div class="faq-a"><div class="faq-a-inner">
+          <p>Not yet. Garages are what we're good at, so garages are what we do. If you ask about a shed that's connected to a garage cleanout, sometimes yes. Standalone basements and storage units — there are operators in the GTA built for that, and we'll happily point you to them.</p>
+        </div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false"><span>How far in advance should I book?</span><span class="faq-toggle" aria-hidden="true"></span></button>
+        <div class="faq-a"><div class="faq-a-inner">
+          <p>Two weeks is comfortable. One week is doable. Same-day or next-day is sometimes possible — text us, don't email, if it's urgent.</p>
+        </div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false"><span>What if it rains on the booking day?</span><span class="faq-toggle" aria-hidden="true"></span></button>
+        <div class="faq-a"><div class="faq-a-inner">
+          <p>Light rain, we work — most of the sorting happens inside the garage anyway. Heavy rain or a thunderstorm, we'll reach out the night before and reschedule for the next open day, no fee.</p>
+        </div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false"><span>Cash, e-transfer, or card?</span><span class="faq-toggle" aria-hidden="true"></span></button>
+        <div class="faq-a"><div class="faq-a-inner">
+          <p>E-transfer is easiest. Cash works too. We're two twenty-year-olds, not a Square terminal — but if card is your only option, tell us at the quote visit and we'll figure it out together.</p>
+        </div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false"><span>Will I need to buy bins, hooks, or shelving?</span><span class="faq-toggle" aria-hidden="true"></span></button>
+        <div class="faq-a"><div class="faq-a-inner">
+          <p>Sometimes. If you already have bins and shelves we can work with, great — we'll use them. If you want us to install wall hooks, bike ceiling pulleys, or extra bins, those carry a small additional cost we walk through with you at the free quote visit. Nothing surprises you on the invoice.</p>
+        </div></div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false"><span>What if my garage is worse than your photos make it look?</span><span class="faq-toggle" aria-hidden="true"></span></button>
+        <div class="faq-a"><div class="faq-a-inner">
+          <p>It's probably not. We've seen garages where the door wouldn't close, garages with thirty years of paperwork stacked to the ceiling, garages with raccoons in residency. We won't make you feel weird about yours — and we'll quote it honestly when we come look at it.</p>
+        </div></div>
+      </div>
+
+    </div>
+
+    <div class="cta-band" style="padding-top: 96px;">
+      <h2>Still got a question?</h2>
+      <p>Ask it in the form. We answer every inquiry, usually within a few hours.</p>
+      <a class="btn btn--lg" href="#quote" data-route="quote">Book a Free Quote</a>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════════════════════════════════
+     PAGE: QUOTE / CONTACT
+     ════════════════════════════════════════════════════════════ -->
+<section data-page="quote" aria-labelledby="quote-h1">
+
+  <div class="page-head">
+    <div class="wrap quote-intro">
+      <span class="eyebrow">Free on-site quote</span>
+      <h1 id="quote-h1" style="margin-left: auto; margin-right: auto;">Let's come look at your garage.</h1>
+      <p class="lede" style="margin: 0 auto;">Fill in the form. We'll text you back with a time to swing by and quote it in person — usually within a few hours.</p>
+    </div>
+  </div>
+
+  <div class="wrap">
+
+    <div class="quote-steps-mini">
+      <div class="step">
+        <span class="n">1</span>
+        <strong>You send the form</strong>
+        <span>Takes about 90 seconds</span>
+      </div>
+      <div class="step">
+        <span class="n">2</span>
+        <strong>We come quote it, free</strong>
+        <span>15 minutes in your driveway</span>
+      </div>
+      <div class="step">
+        <span class="n">3</span>
+        <strong>You decide</strong>
+        <span>One number on the spot</span>
+      </div>
+    </div>
+
+    <div class="quote-form-wrap">
+      <!--
+        FORM SUBMISSION
+        Set up a free Formspree form at https://formspree.io/ and paste your form ID
+        into the action below (replace YOUR_FORMSPREE_ID). The form already works
+        with no JS as a fallback (regular POST), and with JS we intercept and show
+        an in-page success state.
+      -->
+      <form class="quote-form"
+            id="quoteForm"
+            action="https://formspree.io/f/YOUR_FORMSPREE_ID"
+            method="POST"
+            enctype="multipart/form-data"
+            novalidate>
+
+        <!-- Honeypot — bots fill it, humans don't see it. -->
+        <input type="text" name="_gotcha" tabindex="-1" autocomplete="off"
+               style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0;" aria-hidden="true" />
+        <input type="hidden" name="_subject" value="New garage quote request — D&amp;D Garage Works" />
+
+        <div class="field">
+          <label for="f-name">Name <span class="req">*</span></label>
+          <input class="input" id="f-name" name="name" type="text" autocomplete="name" required />
+          <div class="field-error">Please tell us what to call you.</div>
+        </div>
+
+        <div class="field">
+          <label for="f-email">Email <span class="req">*</span></label>
+          <input class="input" id="f-email" name="email" type="email" autocomplete="email" required />
+          <div class="field-error">A valid email so we can write you back.</div>
+        </div>
+
+        <div class="field">
+          <label for="f-phone">Phone <span class="req">*</span></label>
+          <span class="sub">A number we can text — it's faster than email for quotes.</span>
+          <input class="input" id="f-phone" name="phone" type="tel" autocomplete="tel" required />
+          <div class="field-error">A reachable phone number, please.</div>
+        </div>
+
+        <div class="field">
+          <label for="f-address">Address or nearest intersection <span class="req">*</span></label>
+          <span class="sub">So we know where we're driving to for the on-site visit.</span>
+          <input class="input" id="f-address" name="address" type="text" autocomplete="street-address" required />
+          <div class="field-error">A cross-street is fine — we just need to know where.</div>
+        </div>
+
+        <div class="field">
+          <label>Which service are you interested in?</label>
+          <div class="radio-group" role="radiogroup">
+            <label><input type="radio" name="service" value="declutter"><span>Declutter &amp; Organize</span></label>
+            <label><input type="radio" name="service" value="cleanout" checked><span>Garage Cleanout</span></label>
+            <label><input type="radio" name="service" value="estate"><span>Estate / Full-Day</span></label>
+            <label><input type="radio" name="service" value="unsure"><span>Not sure yet</span></label>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Best time for us to swing by for the free quote?</label>
+          <span class="sub">Pick anything that works — we'll confirm by text.</span>
+          <div class="preferred-times">
+            <label><input type="checkbox" name="time" value="weekday-morning"><span>Weekday morning</span></label>
+            <label><input type="checkbox" name="time" value="weekday-afternoon"><span>Weekday afternoon</span></label>
+            <label><input type="checkbox" name="time" value="weekday-evening"><span>Weekday evening</span></label>
+            <label><input type="checkbox" name="time" value="weekend-morning"><span>Weekend morning</span></label>
+            <label><input type="checkbox" name="time" value="weekend-afternoon"><span>Weekend afternoon</span></label>
+            <label><input type="checkbox" name="time" value="anytime"><span>Anytime</span></label>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="f-notes">Tell us about your garage</label>
+          <span class="sub">Anything you want to keep, anything you definitely want gone, any timing constraints — whatever you'd want us to know before we drop by.</span>
+          <textarea class="textarea" id="f-notes" name="notes" placeholder="My garage hasn't seen the inside of a car since 2019…"></textarea>
+        </div>
+
+        <div class="field">
+          <label for="f-photos">Photos (optional)</label>
+          <span class="sub">A photo or two helps us prepare, but we'll see it all in person at the quote visit anyway.</span>
+          <label class="file-drop" id="fileDrop" for="f-photos">
+            <input type="file" id="f-photos" name="photos" accept="image/*" multiple />
+            <strong>Drop photos here, or tap to choose</strong>
+            <em>JPG, PNG, HEIC · up to 8 files</em>
+            <ul class="file-list" id="fileList"></ul>
+          </label>
+        </div>
+
+        <div class="submit-row">
+          <button class="btn btn--lg" type="submit">Request my free on-site quote</button>
+          <span style="color: var(--ink-mute); font-size: 14px;">We never share your info. Ever.</span>
+        </div>
+      </form>
+
+      <div class="alt-contact" id="altContact">
+        <p>Prefer to talk? <a href="tel:+19055550100">Text or call (905) 555-0100</a>. Or DM us on <a href="#" onclick="event.preventDefault()">Instagram</a>.</p>
+        <p class="resp">We answer every message — usually within a few hours.</p>
+      </div>
+
+      <div class="success" id="quoteSuccess" hidden>
+        <div class="check">✓</div>
+        <h2>Thanks. We'll text you within a few hours.</h2>
+        <p>You'll get a message from a Thornhill number — that's us. We'll suggest a couple of times to come by for the free on-site quote. In the meantime, your garage doesn't get any worse just sitting there.</p>
+        <p style="margin-top: 24px; font-family: var(--mark); font-size: 30px; color: var(--rust);">— David &amp; David</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ════════════════════════════════════════════════════════════
+     FOOTER
+     ════════════════════════════════════════════════════════════ -->
+<footer class="site-footer">
+  <div class="footer-grid">
+    <div class="col footer-brand">
+      <img src="assets/logo-transparent.png" alt="D&amp;D Garage Works" />
+      <p style="margin: 0 0 6px;">Garage cleanouts, decluttering, and organization in Thornhill.</p>
+      <p style="margin: 0; color: rgba(246, 242, 234, 0.6);">Locally owned. Two friends. One truck.</p>
+    </div>
+    <div class="col">
+      <h5>Get in touch</h5>
+      <a href="mailto:hi@ddgarageworks.ca">hi@ddgarageworks.ca</a>
+      <a href="tel:+19055550100">(905) 555-0100</a>
+      <a href="#" onclick="event.preventDefault()">Instagram</a>
+      <a href="#" onclick="event.preventDefault()">Google Business</a>
+    </div>
+    <div class="col">
+      <h5>Site</h5>
+      <a href="#services" data-route="services">Services &amp; pricing</a>
+      <a href="#process"  data-route="process">Our process</a>
+      <a href="#about"    data-route="about">About David &amp; David</a>
+      <a href="#faq"      data-route="faq">FAQ</a>
+      <a href="#quote"    data-route="quote">Book a quote</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© <span id="copyYear">2026</span> D&amp;D Garage Works · Thornhill, ON</span>
+    <span>Photos used with homeowner permission.</span>
+  </div>
+</footer>
+
+<!-- ════════════════════════════════════════════════════════════
+     JSON-LD
+     ════════════════════════════════════════════════════════════ -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "@id": "https://ddgarageworks.ca/#business",
+  "name": "D&D Garage Works",
+  "image": "https://ddgarageworks.ca/assets/logo.png",
+  "logo": "https://ddgarageworks.ca/assets/logo-transparent.png",
+  "url": "https://ddgarageworks.ca/",
+  "description": "Garage cleanouts, decluttering, and organization in Thornhill. Two-person team. Free on-site quotes.",
+  "telephone": "+1-905-555-0100",
+  "email": "hi@ddgarageworks.ca",
+  "priceRange": "$$",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Thornhill",
+    "addressRegion": "ON",
+    "addressCountry": "CA"
+  },
+  "areaServed": [
+    { "@type": "City", "name": "Thornhill" },
+    { "@type": "City", "name": "Vaughan" },
+    { "@type": "City", "name": "Markham" },
+    { "@type": "City", "name": "Richmond Hill" }
+  ],
+  "founder": [
+    { "@type": "Person", "name": "David K." },
+    { "@type": "Person", "name": "David R." }
+  ],
+  "makesOffer": [
+    {
+      "@type": "Offer",
+      "name": "Declutter & Organize",
+      "price": "325",
+      "priceCurrency": "CAD",
+      "description": "Half-day declutter and organize, no truck. About 4–5 hours."
+    },
+    {
+      "@type": "Offer",
+      "name": "Garage Cleanout",
+      "priceSpecification": {
+        "@type": "PriceSpecification",
+        "minPrice": "400",
+        "maxPrice": "575",
+        "priceCurrency": "CAD"
+      },
+      "description": "Full reset with haul-away. Most common booking."
+    },
+    {
+      "@type": "Offer",
+      "name": "Estate & Full-Day Cleanout",
+      "priceSpecification": {
+        "@type": "PriceSpecification",
+        "minPrice": "900",
+        "maxPrice": "1500",
+        "priceCurrency": "CAD"
+      },
+      "description": "Downsizing, estates, inherited garages. Full day or more."
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "serviceType": "Garage cleanout, decluttering, and organizing",
+  "provider": { "@id": "https://ddgarageworks.ca/#business" },
+  "areaServed": ["Thornhill", "Vaughan", "Markham", "Richmond Hill"],
+  "audience": { "@type": "Audience", "audienceType": "Homeowners" },
+  "termsOfService": "Free in-person on-site quote. One written number. No curb upcharges."
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    { "@type": "Question", "name": "How does the free quote actually work?", "acceptedAnswer": { "@type": "Answer", "text": "You send us a quick form or a text. We reply with a time to come by — usually a day or two before you'd want the job done. We pull up to your driveway, walk the garage with you for about fifteen minutes, and hand you one written number on the spot. If you want to book the day, we shake on it. If not, no hard feelings, no charge for the visit." } },
+    { "@type": "Question", "name": "How much does a typical garage cleanout cost?", "acceptedAnswer": { "@type": "Answer", "text": "Most of our Thornhill cleanouts land between $400 and $575, depending on how much volume is coming out. The Services page has the three tiers with real prices. The number we quote you in person is the number you pay — pricing is specific to each garage, and we go through it with you at the on-site visit." } },
+    { "@type": "Question", "name": "What happens to the stuff that leaves the garage?", "acceptedAnswer": { "@type": "Answer", "text": "Once you've put something in the dispose pile, it's our problem from there. We take everything away, and D&D Garage Works handles where it goes. Items in usable shape get dropped at our local Goodwill — we don't believe in landfilling things people would use. You don't have to think about it after that." } },
+    { "@type": "Question", "name": "Do I need to be home the whole time?", "acceptedAnswer": { "@type": "Answer", "text": "You need to be there for Phase 1 (walkthrough) and Phase 3 (sort). That's the part where you make the keep-or-go calls. After that you're free — grab a coffee, run errands, whatever. We'll text you if anything makes us pause." } },
+    { "@type": "Question", "name": "What if I change my mind about something after the sort?", "acceptedAnswer": { "@type": "Answer", "text": "Once the truck pulls out of the driveway, the dispose pile is no longer something we can pull back from. That's why the sort is unhurried — we'd rather take an extra ten minutes on one box than have you regret a call later." } },
+    { "@type": "Question", "name": "What about paint, batteries, and old chemicals?", "acceptedAnswer": { "@type": "Answer", "text": "A typical garage's worth — old paint cans, household batteries, motor oil, propane tanks — yes. We take them to the appropriate municipal drop. What we don't take is industrial volumes (multiple unknown drums, asbestos, mold, biohazard). That's regulated work, and you want a licensed crew for it, not us." } },
+    { "@type": "Question", "name": "Do you do basements, sheds, or storage units?", "acceptedAnswer": { "@type": "Answer", "text": "Not yet. Garages are what we're good at, so garages are what we do. If you ask about a shed that's connected to a garage cleanout, sometimes yes. Standalone basements and storage units — there are operators in the GTA built for that, and we'll happily point you to them." } },
+    { "@type": "Question", "name": "How far in advance should I book?", "acceptedAnswer": { "@type": "Answer", "text": "Two weeks is comfortable. One week is doable. Same-day or next-day is sometimes possible — text us, don't email, if it's urgent." } },
+    { "@type": "Question", "name": "What if it rains on the booking day?", "acceptedAnswer": { "@type": "Answer", "text": "Light rain, we work — most of the sorting happens inside the garage anyway. Heavy rain or a thunderstorm, we'll reach out the night before and reschedule for the next open day, no fee." } },
+    { "@type": "Question", "name": "Cash, e-transfer, or card?", "acceptedAnswer": { "@type": "Answer", "text": "E-transfer is easiest. Cash works too. We're two twenty-year-olds, not a Square terminal — but if card is your only option, tell us at the quote visit and we'll figure it out together." } },
+    { "@type": "Question", "name": "Will I need to buy bins, hooks, or shelving?", "acceptedAnswer": { "@type": "Answer", "text": "Sometimes. If you already have bins and shelves we can work with, great — we'll use them. If you want us to install wall hooks, bike ceiling pulleys, or extra bins, those carry a small additional cost we walk through with you at the free quote visit. Nothing surprises you on the invoice." } },
+    { "@type": "Question", "name": "What if my garage is worse than your photos make it look?", "acceptedAnswer": { "@type": "Answer", "text": "It's probably not. We've seen garages where the door wouldn't close, garages with thirty years of paperwork stacked to the ceiling, garages with raccoons in residency. We won't make you feel weird about yours — and we'll quote it honestly when we come look at it." } }
+  ]
+}
+</script>
+
+<!-- ════════════════════════════════════════════════════════════
+     JS
+     ════════════════════════════════════════════════════════════ -->
+<script>
+(function () {
+  'use strict';
+
+  // ── Copyright year ──
+  const yr = document.getElementById('copyYear');
+  if (yr) yr.textContent = String(new Date().getFullYear());
+
+  // ── Mobile nav refs (declared early — showRoute calls closeMobileNav) ──
+  const hamburger = document.getElementById('hamburger');
+  const mobileNav = document.getElementById('mobileNav');
+  const closeNav  = document.getElementById('closeNav');
+
+  function openMobileNav() {
+    mobileNav.classList.add('is-open');
+    mobileNav.setAttribute('aria-hidden', 'false');
+    hamburger.setAttribute('aria-expanded', 'true');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeMobileNav() {
+    if (!mobileNav) return;
+    mobileNav.classList.remove('is-open');
+    mobileNav.setAttribute('aria-hidden', 'true');
+    hamburger.setAttribute('aria-expanded', 'false');
+    document.body.style.overflow = '';
+  }
+
+  // ── Router ──
+  const pages = document.querySelectorAll('[data-page]');
+  const validRoutes = new Set(Array.from(pages).map(p => p.dataset.page));
+
+  function routeFromHash() {
+    const h = (location.hash || '#home').replace('#', '').toLowerCase();
+    return validRoutes.has(h) ? h : 'home';
+  }
+
+  function showRoute(route, opts) {
+    opts = opts || {};
+    pages.forEach(p => p.classList.toggle('is-active', p.dataset.page === route));
+    document.querySelectorAll('[data-route]').forEach(a => {
+      const on = a.dataset.route === route;
+      a.classList.toggle('is-active', on);
+      if (on) a.setAttribute('aria-current', 'page');
+      else a.removeAttribute('aria-current');
+    });
+    // Update document title per route so browser tabs/back history make sense.
+    const titles = {
+      home:     'D&D Garage Works — Garage Cleanouts in Thornhill',
+      services: 'Services & Pricing — D&D Garage Works',
+      process:  'Our 7-Phase Process — D&D Garage Works',
+      about:    'About David & David — D&D Garage Works',
+      faq:      'FAQ — D&D Garage Works',
+      quote:    'Book a Free On-Site Quote — D&D Garage Works'
+    };
+    if (titles[route]) document.title = titles[route];
+    if (!opts.skipScroll) window.scrollTo({ top: 0, behavior: 'auto' });
+    closeMobileNav();
+    if (route === 'process') setTimeout(updatePhaseNav, 50);
+  }
+
+  document.querySelectorAll('[data-route]').forEach(a => {
+    a.addEventListener('click', (e) => {
+      const route = a.dataset.route;
+      if (!validRoutes.has(route)) return;
+      e.preventDefault();
+      if (location.hash !== '#' + route) history.pushState({}, '', '#' + route);
+      showRoute(route);
+    });
+  });
+
+  window.addEventListener('hashchange', () => showRoute(routeFromHash()));
+  showRoute(routeFromHash(), { skipScroll: true });
+
+  // ── Sticky header ──
+  const header = document.getElementById('siteHeader');
+  function onScroll() {
+    header.classList.toggle('is-scrolled', window.scrollY > 80);
+    updatePhaseNav();
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  // ── Mobile nav wire-up ──
+  hamburger.addEventListener('click', openMobileNav);
+  closeNav.addEventListener('click', closeMobileNav);
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeMobileNav(); });
+
+  // ── FAQ accordion ──
+  document.querySelectorAll('.faq-item').forEach(item => {
+    const btn = item.querySelector('.faq-q');
+    const ans = item.querySelector('.faq-a');
+    btn.addEventListener('click', () => {
+      const open = item.classList.toggle('is-open');
+      btn.setAttribute('aria-expanded', String(open));
+      ans.style.maxHeight = open ? (ans.scrollHeight + 'px') : '0px';
+    });
+  });
+
+  // ── Process phase nav ──
+  const phaseLinks = document.querySelectorAll('#phaseNav a');
+  const phaseSections = Array.from(document.querySelectorAll('.phase'));
+  function updatePhaseNav() {
+    const proc = document.querySelector('[data-page="process"]');
+    if (!proc || !proc.classList.contains('is-active') || phaseSections.length === 0) return;
+    const y = window.scrollY + 180;
+    let active = phaseSections[0].id;
+    for (const s of phaseSections) {
+      if (s.offsetTop <= y) active = s.id;
+    }
+    phaseLinks.forEach(a => a.classList.toggle('is-active', a.getAttribute('href') === '#' + active));
+  }
+  phaseLinks.forEach(a => {
+    a.addEventListener('click', (e) => {
+      e.preventDefault();
+      const target = document.getElementById(a.getAttribute('href').slice(1));
+      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+
+  // ── Quote form ──
+  const form = document.getElementById('quoteForm');
+  const success = document.getElementById('quoteSuccess');
+  const altContact = document.getElementById('altContact');
+  const fileInput = document.getElementById('f-photos');
+  const fileDrop  = document.getElementById('fileDrop');
+  const fileList  = document.getElementById('fileList');
+
+  function clear(f) { f.classList.remove('has-error'); }
+  function mark(f)  { f.classList.add('has-error'); }
+
+  ['f-name','f-email','f-phone','f-address'].forEach(id => {
+    const el = document.getElementById(id);
+    el.addEventListener('input', () => clear(el.closest('.field')));
+  });
+
+  form.addEventListener('submit', (e) => {
+    const checks = [
+      { id: 'f-name',    test: v => v.trim().length > 0 },
+      { id: 'f-email',   test: v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim()) },
+      { id: 'f-phone',   test: v => v.replace(/\D/g, '').length >= 7 },
+      { id: 'f-address', test: v => v.trim().length > 1 },
+    ];
+    let firstError = null;
+    checks.forEach(c => {
+      const el = document.getElementById(c.id);
+      const field = el.closest('.field');
+      if (!c.test(el.value)) { mark(field); if (!firstError) firstError = field; }
+      else clear(field);
+    });
+    if (firstError) {
+      e.preventDefault();
+      firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      firstError.querySelector('.input, .textarea').focus({ preventScroll: true });
+      return;
+    }
+
+    // If the form hasn't been wired to a real endpoint yet, fall back to
+    // showing the success state locally so the prototype demo still works.
+    const action = form.getAttribute('action') || '';
+    if (action.indexOf('YOUR_FORMSPREE_ID') !== -1 || action === '') {
+      e.preventDefault();
+      form.hidden = true;
+      altContact.hidden = true;
+      success.hidden = false;
+      success.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return;
+    }
+
+    // Real endpoint: intercept, POST as fetch with JSON accept so the page
+    // doesn't navigate away.
+    e.preventDefault();
+    const submitBtn = form.querySelector('button[type="submit"]');
+    if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Sending…'; }
+    fetch(action, {
+      method: 'POST',
+      body: new FormData(form),
+      headers: { 'Accept': 'application/json' }
+    })
+      .then(r => {
+        if (!r.ok) throw new Error('Submission failed');
+        form.hidden = true;
+        altContact.hidden = true;
+        success.hidden = false;
+        success.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      })
+      .catch(() => {
+        if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = 'Request my free on-site quote'; }
+        alert("Something went wrong sending the form. Please text us at (905) 555-0100 — we'll take care of it.");
+      });
+  });
+
+  // File chooser display
+  function renderFiles() {
+    fileList.innerHTML = '';
+    Array.from(fileInput.files).slice(0, 8).forEach(f => {
+      const li = document.createElement('li');
+      li.textContent = '✓  ' + f.name + (f.size > 0 ? '  (' + Math.round(f.size/1024) + ' KB)' : '');
+      fileList.appendChild(li);
+    });
+  }
+  fileInput.addEventListener('change', renderFiles);
+
+  ['dragenter','dragover'].forEach(evt => {
+    fileDrop.addEventListener(evt, (e) => { e.preventDefault(); e.stopPropagation(); fileDrop.classList.add('is-drag'); });
+  });
+  ['dragleave','drop'].forEach(evt => {
+    fileDrop.addEventListener(evt, (e) => { e.preventDefault(); e.stopPropagation(); fileDrop.classList.remove('is-drag'); });
+  });
+  fileDrop.addEventListener('drop', (e) => {
+    if (e.dataTransfer && e.dataTransfer.files) {
+      fileInput.files = e.dataTransfer.files;
+      renderFiles();
+    }
+  });
+
+})();
+</script>
+
+</body>
+</html>

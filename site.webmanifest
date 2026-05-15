@@ -1,0 +1,12 @@
+{
+  "name": "D&D Garage Works",
+  "short_name": "D&D Garage",
+  "description": "Garage cleanouts, decluttering, and organization in Thornhill.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#F6F2EA",
+  "theme_color": "#183B3F",
+  "icons": [
+    { "src": "assets/logo-mark.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}
