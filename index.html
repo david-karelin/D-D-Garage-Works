@@ -1633,6 +1633,284 @@ body.intro-locked { overflow: hidden; }
 }
 .cta-band.section--teal .wrap { position: relative; z-index: 1; }
 
+/* ============================================================
+   GARAGE-DOOR PANEL SEAM DIVIDERS (replaces plain <hr>)
+   Thin segmented bars that look like the gaps between door panels.
+   ============================================================ */
+.seam {
+  display: flex; gap: 8px; align-items: center; justify-content: center;
+  padding: 0 var(--pad); margin: clamp(40px, 6vw, 72px) auto;
+  max-width: var(--maxw);
+}
+.seam > span {
+  flex: 1; height: 2px; background: var(--teal-3); opacity: .4;
+  border-radius: 1px;
+  transform: scaleX(0); transform-origin: left center;
+  transition: transform .7s cubic-bezier(.2,.7,.2,1);
+}
+.seam.is-revealed > span:nth-child(1) { transition-delay: .00s; transform: scaleX(1); }
+.seam.is-revealed > span:nth-child(2) { transition-delay: .08s; transform: scaleX(1); }
+.seam.is-revealed > span:nth-child(3) { transition-delay: .16s; transform: scaleX(1); }
+.seam.is-revealed > span:nth-child(4) { transition-delay: .24s; transform: scaleX(1); }
+.seam.is-revealed > span:nth-child(5) { transition-delay: .32s; transform: scaleX(1); }
+.seam--rust > span { background: var(--terracotta); opacity: .55; }
+
+/* ============================================================
+   HERO "CHAOS TO ORDER" — placeholders start scrambled, settle into place.
+   ============================================================ */
+.hero-stack.chaos .photo { animation: heroSettle .9s cubic-bezier(.2,.7,.2,1) both; }
+.hero-stack.chaos .photo:nth-child(2) { animation-delay: .05s; }
+.hero-stack.chaos .photo:nth-child(3) { animation-delay: .15s; }
+.hero-stack.chaos .photo:nth-child(4) { animation-delay: .25s; }
+@keyframes heroSettle {
+  0%   { transform: translate(-18px, 22px) rotate(-9deg) scale(.92); opacity: 0; }
+  60%  { opacity: 1; }
+  100% { transform: none; opacity: 1; }
+}
+
+/* ============================================================
+   TIER CARD AS GARAGE BAY
+   The Services page renders each tier as a closed garage bay.
+   The "door" sits over the body and rolls up on click/hover.
+   ============================================================ */
+.tier { position: relative; }
+.tier.is-bay {
+  display: block;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--paper);
+  padding: 0;
+  margin-bottom: 26px;
+  overflow: hidden;
+}
+.tier.is-bay .tier-meta { padding: 28px clamp(20px, 3vw, 36px) 18px; position: relative; z-index: 2; background: var(--paper); }
+.tier.is-bay .tier-meta::after {
+  content: ""; position: absolute; left: clamp(20px, 3vw, 36px); right: clamp(20px, 3vw, 36px); bottom: 0;
+  height: 2px; background: var(--terracotta); opacity: .6;
+}
+.bay-frame {
+  position: relative;
+  background: var(--teal);
+  /* Subtle floor + ceiling shading inside the bay */
+  background-image:
+    linear-gradient(180deg, rgba(0,0,0,0.25) 0%, transparent 12%, transparent 88%, rgba(0,0,0,0.35) 100%);
+}
+.bay-interior {
+  padding: clamp(24px, 3vw, 40px) clamp(20px, 3vw, 36px);
+  color: var(--paper);
+}
+.bay-interior h4 { color: var(--paper); margin-top: 8px; }
+.bay-interior p,
+.bay-interior li { color: rgba(246, 242, 234, 0.88); }
+.bay-interior ul li { border-color: rgba(246, 242, 234, 0.15); }
+.bay-interior ul li::before { background: var(--terracotta); }
+.bay-interior .btn { background: var(--terracotta); border-color: var(--terracotta); color: #14282B; }
+.bay-interior .btn:hover { background: var(--paper); border-color: var(--paper); color: var(--teal); }
+
+/* The door itself: 5 horizontal panels covering the interior */
+.bay-door {
+  position: absolute; inset: 0; z-index: 3;
+  display: grid; grid-template-rows: repeat(5, 1fr);
+  cursor: pointer;
+  transition: opacity .25s ease;
+}
+.bay-door::after {
+  /* Door handle in the center */
+  content: ""; position: absolute; left: 50%; bottom: 14px; transform: translateX(-50%);
+  width: 64px; height: 6px; background: var(--terracotta); border-radius: 99px;
+  box-shadow: 0 2px 0 rgba(0,0,0,0.2);
+}
+.bay-door__panel {
+  background: linear-gradient(180deg, #1F4549 0%, var(--teal) 50%, #14282B 100%);
+  border-bottom: 2px solid rgba(0,0,0,0.18);
+  display: grid; place-items: center;
+  position: relative;
+  transition: transform .55s cubic-bezier(.6,.04,.2,1);
+  will-change: transform;
+}
+.bay-door__panel:last-child { border-bottom: 0; }
+.bay-door__panel::after {
+  /* Subtle horizontal seam highlight */
+  content: ""; position: absolute; left: 8%; right: 8%; top: 50%;
+  height: 1px; background: rgba(246,242,234,0.06);
+}
+.bay-door__label {
+  font-family: var(--mark); color: var(--terracotta-soft); font-size: clamp(20px, 3vw, 32px);
+  letter-spacing: .04em; transform: translateY(2px);
+}
+.bay-door__hint {
+  position: absolute; left: 50%; bottom: 24px; transform: translateX(-50%);
+  font-family: var(--sans); color: rgba(246,242,234,0.6); font-size: 11px;
+  letter-spacing: .14em; text-transform: uppercase; pointer-events: none;
+}
+/* Open state: panels lift up sequentially */
+.tier.is-open .bay-door__panel:nth-child(5) { transform: translateY(-100%); transition-delay: .00s; }
+.tier.is-open .bay-door__panel:nth-child(4) { transform: translateY(-200%); transition-delay: .06s; }
+.tier.is-open .bay-door__panel:nth-child(3) { transform: translateY(-300%); transition-delay: .12s; }
+.tier.is-open .bay-door__panel:nth-child(2) { transform: translateY(-400%); transition-delay: .18s; }
+.tier.is-open .bay-door__panel:nth-child(1) { transform: translateY(-500%); transition-delay: .24s; }
+.tier.is-open .bay-door { pointer-events: none; opacity: 0; transition-delay: .5s; }
+.tier.is-open .bay-door::after { display: none; }
+
+/* On the Home page preview, keep the simpler card look (no bay treatment) */
+.home-services .svc-card { /* untouched */ }
+
+/* ============================================================
+   PROCESS PAGE — phase nav reskinned as a garage door track.
+   ============================================================ */
+.phase-nav.is-track {
+  border-left: 0; padding-left: 0;
+  background: linear-gradient(90deg, transparent, var(--teal-soft) 8%, var(--teal-soft) 92%, transparent);
+  padding: 14px 12px;
+  border-radius: 6px;
+  gap: 6px;
+}
+.phase-nav.is-track a {
+  position: relative;
+  background: linear-gradient(180deg, #1F4549 0%, var(--teal) 50%, #14282B 100%);
+  color: var(--paper);
+  padding: 11px 12px;
+  border-radius: 3px;
+  border-bottom: 1px solid rgba(0,0,0,0.2);
+  font-weight: 600;
+  letter-spacing: .01em;
+  transform-origin: top center;
+  transition: transform .35s cubic-bezier(.4,.04,.2,1), opacity .25s ease, background .2s ease;
+}
+.phase-nav.is-track a::before {
+  /* faux panel seam line */
+  content: ""; position: absolute; left: 8%; right: 8%; top: 50%;
+  height: 1px; background: rgba(246,242,234,0.07);
+}
+.phase-nav.is-track a .n {
+  color: var(--terracotta-soft);
+  width: 24px;
+}
+/* Slats above the active one — "rolled up" (compressed, lifted) */
+.phase-nav.is-track a.is-passed {
+  transform: scaleY(.4) translateY(-4px);
+  opacity: .55;
+  background: linear-gradient(180deg, #0F2326 0%, #163438 100%);
+}
+.phase-nav.is-track a.is-passed .n,
+.phase-nav.is-track a.is-passed { font-size: 12px; }
+/* Active slat — highlighted */
+.phase-nav.is-track a.is-active {
+  background: linear-gradient(180deg, var(--rust) 0%, var(--rust-deep) 100%);
+  color: var(--paper);
+  transform: scale(1.02);
+  box-shadow: 0 6px 18px -8px rgba(142, 59, 19, 0.5);
+}
+.phase-nav.is-track a.is-active .n { color: var(--paper); }
+.phase-nav.is-track a:hover:not(.is-active) {
+  background: linear-gradient(180deg, #2A5358 0%, #1F4549 100%);
+}
+
+/* ============================================================
+   LIGHT PULL-CHAIN (dark / light mode toggle)
+   ============================================================ */
+.light-pull {
+  position: fixed; top: 0; right: clamp(16px, 4vw, 56px);
+  z-index: 120;
+  width: 56px; height: 130px;
+  display: flex; flex-direction: column; align-items: center;
+  pointer-events: none;
+}
+.light-pull__wire {
+  width: 2px; flex: 0 0 60px;
+  background: linear-gradient(180deg, transparent 0, #6B5F40 18%, #6B5F40 100%);
+  transform-origin: top center;
+  animation: chainIdle 5s ease-in-out infinite;
+}
+.light-pull__bulb {
+  width: 38px; height: 50px; position: relative; pointer-events: auto; cursor: pointer;
+  background: transparent; border: 0; padding: 0;
+  transform-origin: top center;
+  animation: chainIdle 5s ease-in-out infinite;
+}
+.light-pull__bulb svg { width: 100%; height: 100%; display: block; }
+.light-pull__chain {
+  position: absolute; left: 50%; top: 46px; transform: translateX(-50%);
+  width: 1px; height: 24px; background: #6B5F40; pointer-events: auto;
+}
+.light-pull__chain::after {
+  content: ""; position: absolute; left: 50%; bottom: 0; transform: translateX(-50%);
+  width: 7px; height: 7px; border-radius: 50%; background: #C58059;
+  box-shadow: 0 1px 0 rgba(0,0,0,0.2);
+  cursor: pointer; pointer-events: auto;
+}
+.light-pull__bulb.is-swinging,
+.light-pull__bulb.is-swinging + .light-pull__chain { animation: chainSwing .8s ease-out 1; }
+@keyframes chainIdle {
+  0%,100% { transform: rotate(-1deg); }
+  50%     { transform: rotate(1deg); }
+}
+@keyframes chainSwing {
+  0%   { transform: rotate(-14deg); }
+  30%  { transform: rotate(10deg); }
+  60%  { transform: rotate(-6deg); }
+  85%  { transform: rotate(3deg); }
+  100% { transform: rotate(0); }
+}
+.light-pull__bulb .glow { transition: opacity .4s ease, fill .4s ease; }
+@media (max-width: 600px) {
+  .light-pull { transform: scale(.8); transform-origin: top right; right: 4px; }
+}
+
+/* ── Dark mode (garage at night with the bulb on) ── */
+body.dark { background: #0E2326; color: #E8E2D1; }
+body.dark .site-header { background: rgba(14, 35, 38, 0.92); border-bottom: 1px solid rgba(232, 226, 209, 0.08); }
+body.dark .nav-primary a,
+body.dark .hamburger { color: #E8E2D1; }
+body.dark .nav-primary a.is-active { color: #F2C188; }
+body.dark .nav-primary a.is-active::after { background: #F2C188; }
+body.dark h1, body.dark h2, body.dark h3, body.dark h4 { color: #F6F2EA; }
+body.dark .eyebrow { color: #F2C188; }
+body.dark .eyebrow + h1::before, body.dark .eyebrow + h2::before { background: #F2C188; }
+body.dark .hero { background: linear-gradient(180deg, #0E2326 0%, #14282B 100%); }
+body.dark .hero-sub, body.dark .lede { color: #C2BFB1; }
+body.dark .hero-trust { background: rgba(232, 226, 209, 0.05); border-left-color: var(--terracotta); color: #D9D6C8; }
+body.dark .section--cream,
+body.dark .quote-callout,
+body.dark .callout,
+body.dark .tier.is-bay { background: #14282B; border-color: #2A4146; color: #D9D6C8; }
+body.dark .testimonial { background: #14282B; border-color: #2A4146; }
+body.dark .testimonial p { color: #D9D6C8; }
+body.dark .faq-q { color: #F6F2EA; }
+body.dark .faq-a-inner p { color: #C2BFB1; }
+body.dark .faq-item { border-color: #2A4146; }
+body.dark .photo { background-image: repeating-linear-gradient(135deg, #1A3236 0 14px, #0F2326 14px 28px); border-color: #2A4146; }
+body.dark .photo-label { color: #C2BFB1; }
+body.dark .ba-slider__before { background: repeating-linear-gradient(135deg, #1A3236 0 14px, #233F44 14px 28px); color: #C2BFB1; }
+body.dark .ba-slider__after  { background: repeating-linear-gradient(135deg, #4A2614 0 14px, #5C2F18 14px 28px); color: var(--terracotta-soft); }
+body.dark .zone-diagram { background: #14282B; border-color: #2A4146; }
+body.dark .zone-svg .zone { fill: #182F33; stroke: #4A6168; }
+body.dark .zone-svg .zone-label { fill: #C2BFB1; }
+body.dark .zone-svg .zone:hover, body.dark .zone-svg .zone.is-active { fill: var(--rust-deep); stroke: var(--terracotta); }
+body.dark .zone-tab { background: #182F33; border-color: #2A4146; color: #D9D6C8; }
+body.dark .zone-tab.is-active { background: var(--rust); border-color: var(--rust); color: #F6F2EA; }
+body.dark .zone-detail__title { color: #F6F2EA; }
+body.dark .zone-detail__body, body.dark .zone-detail__items { color: #C2BFB1; }
+body.dark .quote-form .input, body.dark .quote-form .textarea {
+  background: #182F33; border-color: #2A4146; color: #E8E2D1;
+}
+body.dark .quote-form label { color: #E8E2D1; }
+body.dark .quote-form .sub { color: #B6BDB3; }
+body.dark .radio-group label, body.dark .preferred-times label { background: #182F33; border-color: #2A4146; color: #D9D6C8; }
+body.dark .file-drop { background: #182F33; border-color: #2A4146; color: #D9D6C8; }
+body.dark .site-footer { background: #0A1A1C; border-top-color: #2A4146; }
+body.dark .seam > span { background: #4A6168; opacity: .5; }
+body.dark .cta-band.section--cream { background: #14282B; }
+body.dark .alt-contact { color: #C2BFB1; }
+body.dark .alt-contact a { color: var(--terracotta); }
+body.dark .light-pull__bulb .glow { fill: #FFD58A; opacity: 1; }
+body.dark .light-pull__wire,
+body.dark .light-pull__chain { background: #8A7A55; }
+body.dark .quote-steps-mini { background: #14282B; border-color: #2A4146; }
+body.dark .quote-steps-mini .step { color: #D9D6C8; }
+body.dark .quote-steps-mini .step strong { color: #F6F2EA; }
+body.dark .seam--rust > span { background: var(--terracotta); }
+
 /* Reduced motion — turn everything off. */
 @media (prefers-reduced-motion: reduce) {
   .reveal, .reveal-stagger > * { opacity: 1 !important; transform: none !important; transition: none !important; }
@@ -1640,6 +1918,10 @@ body.intro-locked { overflow: hidden; }
   .svc-card.is-popular .price { animation: none !important; }
   .cta-band.section--teal::before { animation: none !important; }
   .garage-intro { display: none !important; }
+  .hero-stack.chaos .photo { animation: none !important; }
+  .bay-door__panel { transition: none !important; }
+  .light-pull__bulb, .light-pull__wire { animation: none !important; }
+  .seam > span { transform: scaleX(1) !important; transition: none !important; }
 }
 </style>
 </head>
@@ -1661,6 +1943,29 @@ body.intro-locked { overflow: hidden; }
 .dd-logo-full { background-image: var(--logo-full); aspect-ratio: 600 / 260; }
 .dd-logo-mark { background-image: var(--logo-mark); aspect-ratio: 360 / 354; }
 </style>
+
+<!-- ════════════════════════════════════════════════════════════
+     LIGHT PULL-CHAIN — dark / light mode toggle (top-right corner).
+     ════════════════════════════════════════════════════════════ -->
+<div class="light-pull" aria-hidden="false">
+  <div class="light-pull__wire"></div>
+  <button class="light-pull__bulb" id="lightPull" type="button"
+          aria-label="Toggle dark mode" aria-pressed="false" title="Pull to toggle the garage light">
+    <svg viewBox="0 0 40 52" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <!-- Bulb base / socket -->
+      <rect x="14" y="0" width="12" height="6" fill="#3A2A18"/>
+      <rect x="12" y="6" width="16" height="4" rx="1" fill="#5A4326"/>
+      <rect x="13" y="10" width="14" height="2" fill="#3A2A18"/>
+      <!-- Bulb glass -->
+      <path d="M 11 14 Q 11 36 20 44 Q 29 36 29 14 Z" fill="#1F3438" stroke="#3A5761" stroke-width="1.2"/>
+      <!-- Glow (turned on in dark mode) -->
+      <ellipse class="glow" cx="20" cy="26" rx="9" ry="14" fill="#F2C188" opacity="0"/>
+      <!-- Filament hint -->
+      <path d="M 16 22 Q 20 30 24 22" fill="none" stroke="#8E6A2E" stroke-width="1" opacity=".6"/>
+    </svg>
+  </button>
+  <div class="light-pull__chain"></div>
+</div>
 
 <!-- ════════════════════════════════════════════════════════════
      GARAGE DOOR INTRO — full-screen overlay that opens on first visit.
@@ -1753,7 +2058,7 @@ body.intro-locked { overflow: hidden; }
         </div>
       </div>
 
-      <div class="hero-stack reveal reveal--right">
+      <div class="hero-stack chaos reveal reveal--right">
         <span class="badge">D &amp; D</span>
         <div class="photo photo--big">
           <span class="photo-label">HERO — A fully organized garage in golden afternoon light. Labeled bins on the shelves, swept floor, car parked inside.</span>
@@ -1768,7 +2073,7 @@ body.intro-locked { overflow: hidden; }
     </div>
   </div>
 
-  <hr />
+  <div class="seam" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>
 
   <!-- HOW IT STARTS: the on-site quote -->
   <div class="section section--tight">
@@ -1970,7 +2275,7 @@ body.intro-locked { overflow: hidden; }
   <div class="wrap">
 
     <!-- TIER 1 -->
-    <div class="tier">
+    <div class="tier is-bay" data-tier="1">
       <div class="tier-meta">
         <span class="tag">Tier 1</span>
         <h2>Declutter &amp; Organize</h2>
@@ -1981,24 +2286,36 @@ body.intro-locked { overflow: hidden; }
           You like most of what's in your garage and don't need anything hauled away. You need a system, labels, and a couple of friendly hands working the corners with you.
         </div>
       </div>
-      <div class="tier-body">
-        <p>You keep most of what's in there. We bring the structure: a four-zone layout, labeled shelves and bins, and a sort done side-by-side with you, one corner at a time.</p>
-
-        <h4>What's included</h4>
-        <ul>
-          <li>On-site walkthrough and zone plan before we touch anything</li>
-          <li>Side-by-side sort with you using simple rules to keep the day moving</li>
-          <li>Active / Seasonal / Long-term / Workbench zoning across the space</li>
-          <li>Shelves and bins labeled where it helps</li>
-          <li>Final walkthrough — we guide you through where everything lives now</li>
-        </ul>
-
-        <a class="btn" href="#quote" data-route="quote">Book My Free Quote</a>
+      <div class="bay-frame">
+        <div class="bay-interior">
+          <div class="tier-body">
+                  <p>You keep most of what's in there. We bring the structure: a four-zone layout, labeled shelves and bins, and a sort done side-by-side with you, one corner at a time.</p>
+          
+                  <h4>What's included</h4>
+                  <ul>
+                    <li>On-site walkthrough and zone plan before we touch anything</li>
+                    <li>Side-by-side sort with you using simple rules to keep the day moving</li>
+                    <li>Active / Seasonal / Long-term / Workbench zoning across the space</li>
+                    <li>Shelves and bins labeled where it helps</li>
+                    <li>Final walkthrough — we guide you through where everything lives now</li>
+                  </ul>
+          
+                  <a class="btn" href="#quote" data-route="quote">Book My Free Quote</a>
+                </div>
+        </div>
+        <div class="bay-door" role="button" tabindex="0" aria-label="Open this bay" aria-expanded="false">
+          <div class="bay-door__panel"><span class="bay-door__label">Bay 1</span></div>
+          <div class="bay-door__panel"></div>
+          <div class="bay-door__panel"></div>
+          <div class="bay-door__panel"></div>
+          <div class="bay-door__panel"></div>
+          <div class="bay-door__hint">Tap to open the bay ↑</div>
+        </div>
       </div>
     </div>
 
     <!-- TIER 2 -->
-    <div class="tier">
+    <div class="tier is-bay" data-tier="2">
       <div class="tier-meta">
         <span class="tag popular">Tier 2 · Most popular</span>
         <h2>Garage Cleanout</h2>
@@ -2009,30 +2326,42 @@ body.intro-locked { overflow: hidden; }
           You haven't seen the back wall in a couple of years. You want most of it gone, what's left organized, and one team handling all of it.
         </div>
       </div>
-      <div class="tier-body">
-        <p>The full reset. We sort the entire space with you, take care of everything in the dispose pile, and organize what stays. Pricing scales with how much volume comes out:</p>
-
-        <h4>How the range works</h4>
-        <ul>
-          <li><strong>$400</strong> — Cluttered space, roughly a quarter-truckload coming out</li>
-          <li><strong>$500</strong> — Heavy clutter, roughly a half-truckload</li>
-          <li><strong>$575</strong> — Packed wall-to-wall, full truckload</li>
-        </ul>
-
-        <h4>What's included</h4>
-        <ul>
-          <li>Everything in Tier 1, plus:</li>
-          <li>Removal of everything you decide doesn't stay</li>
-          <li>We sort, transport, and handle disposition of the dispose pile — that's on us</li>
-          <li>Sweep-out and a photo set of the finished garage for your records</li>
-        </ul>
-
-        <a class="btn" href="#quote" data-route="quote">Book My Free Quote</a>
+      <div class="bay-frame">
+        <div class="bay-interior">
+          <div class="tier-body">
+                  <p>The full reset. We sort the entire space with you, take care of everything in the dispose pile, and organize what stays. Pricing scales with how much volume comes out:</p>
+          
+                  <h4>How the range works</h4>
+                  <ul>
+                    <li><strong>$400</strong> — Cluttered space, roughly a quarter-truckload coming out</li>
+                    <li><strong>$500</strong> — Heavy clutter, roughly a half-truckload</li>
+                    <li><strong>$575</strong> — Packed wall-to-wall, full truckload</li>
+                  </ul>
+          
+                  <h4>What's included</h4>
+                  <ul>
+                    <li>Everything in Tier 1, plus:</li>
+                    <li>Removal of everything you decide doesn't stay</li>
+                    <li>We sort, transport, and handle disposition of the dispose pile — that's on us</li>
+                    <li>Sweep-out and a photo set of the finished garage for your records</li>
+                  </ul>
+          
+                  <a class="btn" href="#quote" data-route="quote">Book My Free Quote</a>
+                </div>
+        </div>
+        <div class="bay-door" role="button" tabindex="0" aria-label="Open this bay" aria-expanded="false">
+          <div class="bay-door__panel"><span class="bay-door__label">Bay 2</span></div>
+          <div class="bay-door__panel"></div>
+          <div class="bay-door__panel"></div>
+          <div class="bay-door__panel"></div>
+          <div class="bay-door__panel"></div>
+          <div class="bay-door__hint">Tap to open the bay ↑</div>
+        </div>
       </div>
     </div>
 
     <!-- TIER 3 -->
-    <div class="tier">
+    <div class="tier is-bay" data-tier="3">
       <div class="tier-meta">
         <span class="tag">Tier 3</span>
         <h2>Estate &amp; Full-Day Cleanout</h2>
@@ -2043,18 +2372,30 @@ body.intro-locked { overflow: hidden; }
           You're emptying an inherited garage, prepping for a listing, or you've put it off long enough that "a full day" is the honest answer. We slow down where it matters.
         </div>
       </div>
-      <div class="tier-body">
-        <p>Larger or sensitive jobs. We work at a respectful pace — particularly with inherited spaces, where decisions feel heavier. We document anything that looks meaningful before it leaves, in case you want a second look.</p>
-
-        <h4>What's included</h4>
-        <ul>
-          <li>Everything in Tier 2, scaled to a full day (or two)</li>
-          <li>Multi-trip removal of everything coming out of the space</li>
-          <li>Photo log of any item that looks personal or potentially meaningful</li>
-          <li>Coordination with your Realtor on listing-prep timing if needed</li>
-        </ul>
-
-        <a class="btn" href="#quote" data-route="quote">Book My Free Quote</a>
+      <div class="bay-frame">
+        <div class="bay-interior">
+          <div class="tier-body">
+                  <p>Larger or sensitive jobs. We work at a respectful pace — particularly with inherited spaces, where decisions feel heavier. We document anything that looks meaningful before it leaves, in case you want a second look.</p>
+          
+                  <h4>What's included</h4>
+                  <ul>
+                    <li>Everything in Tier 2, scaled to a full day (or two)</li>
+                    <li>Multi-trip removal of everything coming out of the space</li>
+                    <li>Photo log of any item that looks personal or potentially meaningful</li>
+                    <li>Coordination with your Realtor on listing-prep timing if needed</li>
+                  </ul>
+          
+                  <a class="btn" href="#quote" data-route="quote">Book My Free Quote</a>
+                </div>
+        </div>
+        <div class="bay-door" role="button" tabindex="0" aria-label="Open this bay" aria-expanded="false">
+          <div class="bay-door__panel"><span class="bay-door__label">Bay 3</span></div>
+          <div class="bay-door__panel"></div>
+          <div class="bay-door__panel"></div>
+          <div class="bay-door__panel"></div>
+          <div class="bay-door__panel"></div>
+          <div class="bay-door__hint">Tap to open the bay ↑</div>
+        </div>
       </div>
     </div>
 
@@ -2117,7 +2458,7 @@ body.intro-locked { overflow: hidden; }
   <div class="wrap">
     <div class="process-grid">
 
-      <aside class="phase-nav" id="phaseNav" aria-label="Process phases">
+      <aside class="phase-nav is-track" id="phaseNav" aria-label="Process phases">
         <a href="#p1"><span class="n">1</span> Arrival &amp; Walkthrough</a>
         <a href="#p2"><span class="n">2</span> Setup &amp; Staging</a>
         <a href="#p3"><span class="n">3</span> The Sort</a>
@@ -2500,6 +2841,22 @@ body.intro-locked { overflow: hidden; }
         <span>One number on the spot</span>
       </div>
     </div>
+
+    <!--
+      CAL.COM EMBED GOES HERE — when you're ready, sign up at cal.com (free
+      Personal plan: unlimited bookings, unlimited event types, Google/Outlook
+      calendar sync), create an event type called "Free On-Site Quote" (15 min),
+      then paste the embed snippet below this comment. Cal.com gives you both
+      an iframe snippet and a script-tag embed; either works. Example:
+
+        <div id="cal-inline" style="min-height:600px;width:100%;"></div>
+        <script type="text/javascript">
+          (function (C, A, L) { ... Cal.com loader ... })(window, "https://app.cal.com/embed/embed.js", "init");
+          Cal("inline", { elementOrSelector: "#cal-inline", calLink: "your-handle/on-site-quote" });
+        </script>
+
+      Leave the form below as a fallback for people who'd rather type it out.
+    -->
 
     <div class="quote-form-wrap">
       <!--
@@ -3123,6 +3480,81 @@ body.intro-locked { overflow: hidden; }
     });
     setZone('active');
   }
+
+  // ════════════════════════════════════════════════════════════
+  // 1. SERVICE TIER CARDS AS GARAGE BAYS (open / close on click)
+  // ════════════════════════════════════════════════════════════
+  document.querySelectorAll('.tier.is-bay').forEach(tier => {
+    const door = tier.querySelector('.bay-door');
+    if (!door) return;
+    function toggle() {
+      const open = tier.classList.toggle('is-open');
+      door.setAttribute('aria-expanded', String(open));
+    }
+    door.addEventListener('click', toggle);
+    door.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); }
+    });
+    // Open Tier 2 (the popular one) by default
+    if (tier.dataset.tier === '2') {
+      requestAnimationFrame(() => tier.classList.add('is-open'));
+      door.setAttribute('aria-expanded', 'true');
+    }
+  });
+
+  // ════════════════════════════════════════════════════════════
+  // 2. PROCESS PAGE — phase nav as garage-door track.
+  // Extends the existing updatePhaseNav by also tagging .is-passed.
+  // ════════════════════════════════════════════════════════════
+  function paintPhaseTrack() {
+    const proc = document.querySelector('[data-page="process"]');
+    if (!proc || !proc.classList.contains('is-active')) return;
+    const links = document.querySelectorAll('#phaseNav a');
+    const phases = Array.from(document.querySelectorAll('.phase'));
+    if (!phases.length) return;
+    const y = window.scrollY + 220;
+    let activeIdx = 0;
+    phases.forEach((s, i) => { if (s.offsetTop <= y) activeIdx = i; });
+    links.forEach((a, i) => {
+      a.classList.toggle('is-active', i === activeIdx);
+      a.classList.toggle('is-passed', i < activeIdx);
+    });
+  }
+  window.addEventListener('scroll', paintPhaseTrack, { passive: true });
+  paintPhaseTrack();
+  // Re-paint when routing into process
+  const _origShow = window.showRoute;
+  // Also hook into hashchange just in case:
+  window.addEventListener('hashchange', () => setTimeout(paintPhaseTrack, 100));
+
+  // ════════════════════════════════════════════════════════════
+  // 3. LIGHT PULL-CHAIN — dark/light mode toggle with persistence.
+  // ════════════════════════════════════════════════════════════
+  const pull  = document.getElementById('lightPull');
+  const chain = document.querySelector('.light-pull__chain');
+  function setMode(dark, persist) {
+    document.body.classList.toggle('dark', !!dark);
+    if (pull) pull.setAttribute('aria-pressed', String(!!dark));
+    if (persist) {
+      try { localStorage.setItem('ddTheme', dark ? 'dark' : 'light'); } catch (_) {}
+    }
+  }
+  // Restore preference (default = light)
+  try {
+    const saved = localStorage.getItem('ddTheme');
+    if (saved === 'dark') setMode(true, false);
+    else if (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches) setMode(true, false);
+  } catch (_) {}
+  function pullChain() {
+    if (!pull) return;
+    pull.classList.remove('is-swinging');
+    void pull.offsetWidth;          // restart animation
+    pull.classList.add('is-swinging');
+    setTimeout(() => pull.classList.remove('is-swinging'), 850);
+    setMode(!document.body.classList.contains('dark'), true);
+  }
+  if (pull)  pull.addEventListener('click', pullChain);
+  if (chain) chain.addEventListener('click', pullChain);
 
 })();
 </script>
