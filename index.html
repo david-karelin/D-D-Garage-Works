@@ -1691,20 +1691,46 @@ body.intro-locked { overflow: hidden; }
 .bay-frame {
   position: relative;
   background: var(--teal);
-  /* Subtle floor + ceiling shading inside the bay */
+  /* Closed-door size — stays compact even when content is long. */
+  min-height: 320px;
+  overflow: hidden;
   background-image:
     linear-gradient(180deg, rgba(0,0,0,0.25) 0%, transparent 12%, transparent 88%, rgba(0,0,0,0.35) 100%);
+  transition: min-height .55s cubic-bezier(.2,.7,.2,1);
 }
+.tier.is-open .bay-frame { min-height: 0; }
+
 .bay-interior {
-  padding: clamp(24px, 3vw, 40px) clamp(20px, 3vw, 36px);
+  max-height: 0;
+  overflow: hidden;
+  padding: 0 clamp(20px, 3vw, 36px);
   color: var(--paper);
+  transition: max-height .85s cubic-bezier(.2,.7,.2,1), padding .35s ease;
 }
-.bay-interior h4 { color: var(--paper); margin-top: 8px; }
-.bay-interior p,
-.bay-interior li { color: rgba(246, 242, 234, 0.88); }
-.bay-interior ul li { border-color: rgba(246, 242, 234, 0.15); }
-.bay-interior ul li::before { background: var(--terracotta); }
-.bay-interior .btn { background: var(--terracotta); border-color: var(--terracotta); color: #14282B; }
+.tier.is-open .bay-interior {
+  max-height: 1400px;
+  padding: clamp(28px, 3vw, 44px) clamp(20px, 3vw, 36px);
+}
+.bay-interior h4 {
+  color: var(--terracotta-soft); margin-top: 14px;
+  font-size: 13px; letter-spacing: .14em; text-transform: uppercase; font-family: var(--sans); font-weight: 600;
+}
+.bay-interior p { color: rgba(246, 242, 234, 0.92); font-size: 16px; line-height: 1.65; }
+.bay-interior ul { padding-left: 0; }
+.bay-interior ul li {
+  color: rgba(246, 242, 234, 0.92);
+  border-color: rgba(246, 242, 234, 0.18);
+  padding: 11px 0 11px 30px;
+}
+.bay-interior ul li::before {
+  background: var(--terracotta);
+  width: 14px; height: 2px; top: 22px; left: 4px;
+  border-radius: 1px;
+}
+.bay-interior .btn {
+  background: var(--terracotta); border-color: var(--terracotta); color: #14282B;
+  margin-top: 14px; font-weight: 700;
+}
 .bay-interior .btn:hover { background: var(--paper); border-color: var(--paper); color: var(--teal); }
 
 /* The door itself: 5 horizontal panels covering the interior */
@@ -1712,44 +1738,63 @@ body.intro-locked { overflow: hidden; }
   position: absolute; inset: 0; z-index: 3;
   display: grid; grid-template-rows: repeat(5, 1fr);
   cursor: pointer;
-  transition: opacity .25s ease;
+  transition: opacity .35s ease;
 }
 .bay-door::after {
-  /* Door handle in the center */
-  content: ""; position: absolute; left: 50%; bottom: 14px; transform: translateX(-50%);
+  /* Door handle in the center-bottom */
+  content: ""; position: absolute; left: 50%; bottom: 18px; transform: translateX(-50%);
   width: 64px; height: 6px; background: var(--terracotta); border-radius: 99px;
-  box-shadow: 0 2px 0 rgba(0,0,0,0.2);
+  box-shadow: 0 2px 0 rgba(0,0,0,0.3), inset 0 -1px 0 rgba(0,0,0,0.2);
+  z-index: 2;
 }
 .bay-door__panel {
-  background: linear-gradient(180deg, #1F4549 0%, var(--teal) 50%, #14282B 100%);
-  border-bottom: 2px solid rgba(0,0,0,0.18);
-  display: grid; place-items: center;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.06) 0%, rgba(0,0,0,0) 12%, rgba(0,0,0,0) 88%, rgba(0,0,0,0.35) 100%),
+    linear-gradient(180deg, #1F4549 0%, var(--teal) 50%, #122529 100%);
+  border-bottom: 1px solid rgba(0,0,0,0.45);
+  box-shadow: inset 0 1px 0 rgba(246,242,234,0.06);
   position: relative;
   transition: transform .55s cubic-bezier(.6,.04,.2,1);
   will-change: transform;
 }
 .bay-door__panel:last-child { border-bottom: 0; }
+.bay-door__panel::before {
+  /* Two recessed lines per panel (like real garage door panel detailing) */
+  content: ""; position: absolute; left: 12%; right: 12%; top: 32%;
+  height: 1px; background: rgba(0,0,0,0.18); box-shadow: 0 1px 0 rgba(246,242,234,0.04);
+}
 .bay-door__panel::after {
-  /* Subtle horizontal seam highlight */
-  content: ""; position: absolute; left: 8%; right: 8%; top: 50%;
-  height: 1px; background: rgba(246,242,234,0.06);
+  content: ""; position: absolute; left: 12%; right: 12%; top: 68%;
+  height: 1px; background: rgba(0,0,0,0.18); box-shadow: 0 1px 0 rgba(246,242,234,0.04);
 }
-.bay-door__label {
-  font-family: var(--mark); color: var(--terracotta-soft); font-size: clamp(20px, 3vw, 32px);
-  letter-spacing: .04em; transform: translateY(2px);
+/* Centered "Bay N" badge — sits across the whole door, not in one panel */
+.bay-door__label-center {
+  position: absolute; left: 50%; top: 50%;
+  transform: translate(-50%, -58%);
+  font-family: var(--mark);
+  color: var(--terracotta);
+  font-size: clamp(40px, 6vw, 72px);
+  letter-spacing: .02em;
+  line-height: 1;
+  text-shadow: 0 3px 0 rgba(0,0,0,0.3), 0 0 24px rgba(197,128,89,0.3);
+  pointer-events: none;
+  z-index: 2;
+  transition: opacity .3s ease;
 }
+.tier.is-open .bay-door__label-center { opacity: 0; transition-duration: .15s; }
 .bay-door__hint {
-  position: absolute; left: 50%; bottom: 24px; transform: translateX(-50%);
-  font-family: var(--sans); color: rgba(246,242,234,0.6); font-size: 11px;
-  letter-spacing: .14em; text-transform: uppercase; pointer-events: none;
+  position: absolute; left: 50%; bottom: 36px; transform: translateX(-50%);
+  font-family: var(--sans); color: rgba(246,242,234,0.78); font-size: 11px;
+  letter-spacing: .2em; text-transform: uppercase; pointer-events: none;
+  z-index: 2;
 }
 /* Open state: panels lift up sequentially */
 .tier.is-open .bay-door__panel:nth-child(5) { transform: translateY(-100%); transition-delay: .00s; }
-.tier.is-open .bay-door__panel:nth-child(4) { transform: translateY(-200%); transition-delay: .06s; }
-.tier.is-open .bay-door__panel:nth-child(3) { transform: translateY(-300%); transition-delay: .12s; }
-.tier.is-open .bay-door__panel:nth-child(2) { transform: translateY(-400%); transition-delay: .18s; }
-.tier.is-open .bay-door__panel:nth-child(1) { transform: translateY(-500%); transition-delay: .24s; }
-.tier.is-open .bay-door { pointer-events: none; opacity: 0; transition-delay: .5s; }
+.tier.is-open .bay-door__panel:nth-child(4) { transform: translateY(-200%); transition-delay: .07s; }
+.tier.is-open .bay-door__panel:nth-child(3) { transform: translateY(-300%); transition-delay: .14s; }
+.tier.is-open .bay-door__panel:nth-child(2) { transform: translateY(-400%); transition-delay: .21s; }
+.tier.is-open .bay-door__panel:nth-child(1) { transform: translateY(-500%); transition-delay: .28s; }
+.tier.is-open .bay-door { pointer-events: none; opacity: 0; transition-delay: .55s; }
 .tier.is-open .bay-door::after { display: none; }
 
 /* On the Home page preview, keep the simpler card look (no bay treatment) */
@@ -1910,6 +1955,28 @@ body.dark .quote-steps-mini { background: #14282B; border-color: #2A4146; }
 body.dark .quote-steps-mini .step { color: #D9D6C8; }
 body.dark .quote-steps-mini .step strong { color: #F6F2EA; }
 body.dark .seam--rust > span { background: var(--terracotta); }
+
+/* Cal.com embed wrapper */
+.cal-embed-wrap {
+  background: var(--paper-cool);
+  border: 1px solid var(--line-cool);
+  border-radius: 8px;
+  padding: clamp(22px, 3vw, 32px);
+  margin: 28px 0 14px;
+}
+.cal-embed-head { margin-bottom: 10px; }
+.cal-embed-head h2 { margin: 8px 0 4px; font-size: clamp(24px, 3vw, 32px); }
+.cal-divider {
+  display: flex; align-items: center; gap: 14px;
+  margin: 26px 0 18px;
+  color: var(--ink-mute); font-size: 13px; letter-spacing: .08em; text-transform: uppercase;
+}
+.cal-divider::before, .cal-divider::after {
+  content: ""; flex: 1; height: 1px; background: var(--line);
+}
+body.dark .cal-embed-wrap { background: #14282B; border-color: #2A4146; }
+body.dark .cal-divider { color: #B6BDB3; }
+body.dark .cal-divider::before, body.dark .cal-divider::after { background: #2A4146; }
 
 /* Reduced motion — turn everything off. */
 @media (prefers-reduced-motion: reduce) {
@@ -2304,7 +2371,8 @@ body.dark .seam--rust > span { background: var(--terracotta); }
                 </div>
         </div>
         <div class="bay-door" role="button" tabindex="0" aria-label="Open this bay" aria-expanded="false">
-          <div class="bay-door__panel"><span class="bay-door__label">Bay 1</span></div>
+          <span class="bay-door__label-center">Bay 1</span>
+          <div class="bay-door__panel"></div>
           <div class="bay-door__panel"></div>
           <div class="bay-door__panel"></div>
           <div class="bay-door__panel"></div>
@@ -2350,7 +2418,8 @@ body.dark .seam--rust > span { background: var(--terracotta); }
                 </div>
         </div>
         <div class="bay-door" role="button" tabindex="0" aria-label="Open this bay" aria-expanded="false">
-          <div class="bay-door__panel"><span class="bay-door__label">Bay 2</span></div>
+          <span class="bay-door__label-center">Bay 2</span>
+          <div class="bay-door__panel"></div>
           <div class="bay-door__panel"></div>
           <div class="bay-door__panel"></div>
           <div class="bay-door__panel"></div>
@@ -2389,7 +2458,8 @@ body.dark .seam--rust > span { background: var(--terracotta); }
                 </div>
         </div>
         <div class="bay-door" role="button" tabindex="0" aria-label="Open this bay" aria-expanded="false">
-          <div class="bay-door__panel"><span class="bay-door__label">Bay 3</span></div>
+          <span class="bay-door__label-center">Bay 3</span>
+          <div class="bay-door__panel"></div>
           <div class="bay-door__panel"></div>
           <div class="bay-door__panel"></div>
           <div class="bay-door__panel"></div>
@@ -2842,20 +2912,41 @@ body.dark .seam--rust > span { background: var(--terracotta); }
       </div>
     </div>
 
+    <!-- Cal.com booking — Free On-Site Quote (15 min) -->
+    <div class="cal-embed-wrap">
+      <div class="cal-embed-head">
+        <span class="eyebrow">Pick a time directly</span>
+        <h2>Book your free on-site quote in seconds.</h2>
+        <p class="lede" style="margin: 0 0 18px;">This shows our real availability. Pick a 15-minute window — we'll confirm by text.</p>
+      </div>
+      <!-- Cal inline embed code begins -->
+      <div style="width:100%;min-height:640px;overflow:hidden" id="my-cal-inline-free-on-site-quote"></div>
+      <script type="text/javascript">
+      (function (C, A, L) { let p = function (a, ar) { a.q.push(ar); }; let d = C.document; C.Cal = C.Cal || function () { let cal = C.Cal; let ar = arguments; if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement("script")).src = A; cal.loaded = true; } if (ar[0] === L) { const api = function () { p(api, arguments); }; const namespace = ar[1]; api.q = api.q || []; if(typeof namespace === "string"){cal.ns[namespace] = cal.ns[namespace] || api;p(cal.ns[namespace], ar);p(cal, ["initNamespace", namespace]);} else p(cal, ar); return;} p(cal, ar); }; })(window, "https://app.cal.com/embed/embed.js", "init");
+      Cal("init", "free-on-site-quote", {origin:"https://app.cal.com"});
+      Cal.ns["free-on-site-quote"]("inline", {
+        elementOrSelector:"#my-cal-inline-free-on-site-quote",
+        config: {"layout":"month_view","useSlotsViewOnSmallScreen":"true"},
+        calLink: "d-d-garage-works/free-on-site-quote",
+      });
+      Cal.ns["free-on-site-quote"]("ui", {
+        "hideEventTypeDetails": false,
+        "layout": "month_view",
+        "theme": "auto",
+        "styles": { "branding": { "brandColor": "#8E3B13" } }
+      });
+      </script>
+      <!-- Cal inline embed code ends -->
+    </div>
+
+    <div class="cal-divider"><span>or send a quick note instead</span></div>
+
     <!--
-      CAL.COM EMBED GOES HERE — when you're ready, sign up at cal.com (free
-      Personal plan: unlimited bookings, unlimited event types, Google/Outlook
-      calendar sync), create an event type called "Free On-Site Quote" (15 min),
-      then paste the embed snippet below this comment. Cal.com gives you both
-      an iframe snippet and a script-tag embed; either works. Example:
-
-        <div id="cal-inline" style="min-height:600px;width:100%;"></div>
-        <script type="text/javascript">
-          (function (C, A, L) { ... Cal.com loader ... })(window, "https://app.cal.com/embed/embed.js", "init");
-          Cal("inline", { elementOrSelector: "#cal-inline", calLink: "your-handle/on-site-quote" });
-        </script>
-
-      Leave the form below as a fallback for people who'd rather type it out.
+      SECOND CAL.COM EMBED (Decluttering & Hauling, 6 hr) is intentionally NOT
+      placed publicly here. The free on-site quote happens first; the Davids
+      share cal.com/d-d-garage-works/decluttering-and-hauling manually with
+      quoted customers to book the actual workday. If you want it public,
+      paste the snippet in this comment block.
     -->
 
     <div class="quote-form-wrap">
