@@ -415,6 +415,226 @@ body.dark .header-phone svg { color: var(--terracotta); }
 }
 
 /* ============================================================
+   "GARAGE RESET" HERO — four-stage animated slider (Home only).
+   No CSS keyframes: motion is driven by class swaps on .slide,
+   CSS transitions interpolate between states. See HERO-ANIMATION.md.
+   ============================================================ */
+.hero-reset {
+  position: relative;
+  height: min(92vh, 820px);
+  min-height: 560px;
+  overflow: hidden;
+  isolation: isolate;
+  color: var(--paper);
+  /* Base wash so cream text is legible even before JS primes the gradient
+     divs, and as a graceful fallback if JS never runs. */
+  background: radial-gradient(ellipse at 50% 45%, #3A5761 0%, #14282B 100%);
+}
+.hero-reset__bg {
+  position: absolute; inset: 0;
+  opacity: 0;
+  transition: opacity 0.85s ease;
+  z-index: 0;
+}
+.hero-reset__stage { position: absolute; inset: 0; z-index: 1; }
+
+.slide {
+  position: absolute; inset: 0;
+  pointer-events: none;
+}
+.slide.active { pointer-events: auto; }
+.slide__col {
+  position: absolute;
+  left: 50%; top: clamp(84px, 13vh, 150px);
+  transform: translateX(-50%);
+  width: min(92vw, 1100px);
+  display: flex; flex-direction: column; align-items: center; gap: clamp(18px, 3vw, 34px);
+  text-align: center;
+}
+.slide .headline {
+  font-family: var(--serif);
+  font-weight: 600;
+  font-size: clamp(34px, 6.4vw, 92px);
+  line-height: 1.02;
+  letter-spacing: -0.02em;
+  color: var(--paper);
+  margin: 0;
+  max-width: 16ch;
+  text-wrap: balance;
+  text-shadow: 0 2px 18px rgba(0,0,0,0.28);
+}
+.slide .scene {
+  width: clamp(280px, 42vw, 600px);
+  max-width: 86vw;
+  aspect-ratio: 16 / 11;
+  border-radius: 22px;
+  overflow: hidden;
+  box-shadow: 0 30px 70px -28px rgba(0,0,0,0.65), 0 0 0 1px rgba(246,242,234,0.10);
+}
+.slide .scene .photo { width: 100%; height: 100%; border-radius: 22px; border: 0; }
+.slide .scene .photo.has-img { background: #14282B; }
+.slide .scene .photo.has-img img { border-radius: 22px; }
+.slide .promise {
+  position: absolute;
+  left: clamp(20px, 4vw, 64px);
+  bottom: clamp(150px, 22vh, 220px);
+  margin: 0;
+  max-width: 460px;
+  text-align: left;
+  font-size: clamp(15px, 1.5vw, 19px);
+  line-height: 1.5;
+  color: rgba(246,242,234,0.92);
+  text-shadow: 0 1px 12px rgba(0,0,0,0.4);
+}
+.slide .tool {
+  position: absolute;
+  color: rgba(246,242,234,0.82);
+  filter: drop-shadow(0 6px 14px rgba(0,0,0,0.35));
+}
+.slide .tool--rust { color: var(--terracotta); }
+.slide .tool-1 { top: 14%; left: 9%;  width: clamp(48px, 6vw, 88px); }
+.slide .tool-2 { top: 10%; right: 10%; width: clamp(40px, 5vw, 76px); }
+.slide .tool-3 { bottom: 30%; right: 18%; width: clamp(36px, 4.5vw, 64px); }
+.slide .tool svg { width: 100%; height: 100%; display: block; }
+
+/* ── Persistent chrome (does NOT animate) ── */
+.hero-reset__chrome { position: absolute; inset: 0; z-index: 3; pointer-events: none; }
+.hero-reset__chrome > * { pointer-events: auto; }
+.hero-cta-cluster {
+  position: absolute; left: clamp(20px, 4vw, 64px); bottom: clamp(28px, 5vh, 56px);
+  display: flex; flex-direction: column; align-items: flex-start; gap: 14px;
+}
+.hero-badge {
+  font-family: var(--mark);
+  font-size: clamp(22px, 2.4vw, 30px);
+  color: var(--terracotta-soft);
+  transform: rotate(-3deg);
+  line-height: 1;
+}
+.hero-badge::before { content: "★ "; color: var(--terracotta); font-size: 0.7em; }
+.hero-reset .btn--hero {
+  background: var(--rust); border-color: var(--rust); color: #FFF8F1;
+  box-shadow: 0 8px 24px -8px rgba(0,0,0,0.5);
+}
+.hero-reset .btn--hero:hover { background: var(--rust-deep); border-color: var(--rust-deep); }
+.hero-controls {
+  position: absolute; right: clamp(20px, 4vw, 64px); bottom: clamp(28px, 5vh, 56px);
+  display: flex; align-items: center; gap: 16px;
+}
+.hero-counter {
+  font-family: var(--mark);
+  font-size: clamp(26px, 3vw, 40px);
+  color: rgba(246,242,234,0.92);
+  letter-spacing: 0.02em;
+  min-width: 4.5ch; text-align: right;
+}
+.hero-arrow {
+  width: 46px; height: 46px; border-radius: 50%;
+  background: rgba(246,242,234,0.12);
+  border: 1px solid rgba(246,242,234,0.4);
+  color: var(--paper);
+  display: grid; place-items: center; cursor: pointer;
+  transition: background .15s ease, border-color .15s ease, transform .1s ease;
+}
+.hero-arrow:hover { background: rgba(246,242,234,0.22); border-color: var(--paper); }
+.hero-arrow:active { transform: scale(0.94); }
+.hero-arrow svg { width: 20px; height: 20px; }
+.hero-scrollhint {
+  position: absolute; left: 50%; bottom: clamp(24px, 4vh, 40px); transform: translateX(-50%);
+  display: inline-flex; flex-direction: column; align-items: center; gap: 4px;
+  color: rgba(246,242,234,0.85); text-decoration: none;
+  font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 600;
+}
+.hero-scrollhint:hover { color: var(--paper); text-decoration: none; }
+.hero-scrollhint .chev { animation: heroChev 1.8s ease-in-out infinite; font-size: 16px; }
+@keyframes heroChev { 0%,100% { transform: translateY(0); opacity: .7; } 50% { transform: translateY(5px); opacity: 1; } }
+
+/* ── Animation state machine ── */
+.anim {
+  opacity: 0;
+  transition: transform 0.85s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.55s ease;
+}
+.tool.anim {
+  transition: transform 0.9s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.55s ease;
+}
+.tool-1 { transform: rotate(-16deg); }
+.tool-2 { transform: rotate(12deg); }
+.tool-3 { transform: rotate(-9deg); }
+/* ACTIVE */
+.slide.active .headline-anim { opacity: 1; transform: translateX(0); }
+.slide.active .scene-anim    { opacity: 1; transform: translateX(0) rotate(0deg); }
+.slide.active .promise-anim  { opacity: 1; transform: translateX(0); }
+.slide.active .tool-1 { opacity: 1; transform: rotate(-16deg) translateY(0); }
+.slide.active .tool-2 { opacity: 1; transform: rotate(12deg)  translateY(0); }
+.slide.active .tool-3 { opacity: 1; transform: rotate(-9deg)  translateY(0); }
+.slide.active .headline-anim { transition-delay: 0s; }
+.slide.active .promise-anim  { transition-delay: 0.04s; }
+.slide.active .scene-anim    { transition-delay: 0.07s; }
+.slide.active .tool-1        { transition-delay: 0.30s; }
+.slide.active .tool-2        { transition-delay: 0.38s; }
+.slide.active .tool-3        { transition-delay: 0.46s; }
+/* ENTER RIGHT */
+.slide.enter-right .headline-anim { opacity: 0; transform: translateX(65vw); }
+.slide.enter-right .scene-anim    { opacity: 0; transform: translateX(72vw) rotate(30deg); }
+.slide.enter-right .promise-anim  { opacity: 0; transform: translateX(55vw); }
+.slide.enter-right .tool-1 { opacity: 0; transform: rotate(-16deg) translateY(-90vh); }
+.slide.enter-right .tool-2 { opacity: 0; transform: rotate(12deg)  translateY(-90vh); }
+.slide.enter-right .tool-3 { opacity: 0; transform: rotate(-9deg)  translateY(-90vh); }
+/* ENTER LEFT */
+.slide.enter-left .headline-anim { opacity: 0; transform: translateX(-65vw); }
+.slide.enter-left .scene-anim    { opacity: 0; transform: translateX(-72vw) rotate(-30deg); }
+.slide.enter-left .promise-anim  { opacity: 0; transform: translateX(-55vw); }
+.slide.enter-left .tool-1 { opacity: 0; transform: rotate(-16deg) translateY(-90vh); }
+.slide.enter-left .tool-2 { opacity: 0; transform: rotate(12deg)  translateY(-90vh); }
+.slide.enter-left .tool-3 { opacity: 0; transform: rotate(-9deg)  translateY(-90vh); }
+/* EXIT LEFT */
+.slide.exit-left .headline-anim,
+.slide.exit-left .scene-anim,
+.slide.exit-left .promise-anim {
+  transition: transform 0.5s cubic-bezier(0.4, 0, 1, 1), opacity 0.4s ease-in;
+}
+.slide.exit-left .tool.anim {
+  transition: transform 0.42s cubic-bezier(0.4, 0, 1, 1), opacity 0.32s ease-in;
+}
+.slide.exit-left .headline-anim { opacity: 0; transform: translateX(-55vw); }
+.slide.exit-left .scene-anim    { opacity: 0; transform: translateX(-60vw) rotate(-26deg); }
+.slide.exit-left .promise-anim  { opacity: 0; transform: translateX(-45vw); }
+.slide.exit-left .tool-1 { opacity: 0; transform: rotate(-16deg) translateY(-110vh); }
+.slide.exit-left .tool-2 { opacity: 0; transform: rotate(12deg)  translateY(-110vh); }
+.slide.exit-left .tool-3 { opacity: 0; transform: rotate(-9deg)  translateY(-110vh); }
+/* EXIT RIGHT */
+.slide.exit-right .headline-anim,
+.slide.exit-right .scene-anim,
+.slide.exit-right .promise-anim {
+  transition: transform 0.5s cubic-bezier(0.4, 0, 1, 1), opacity 0.4s ease-in;
+}
+.slide.exit-right .tool.anim {
+  transition: transform 0.42s cubic-bezier(0.4, 0, 1, 1), opacity 0.32s ease-in;
+}
+.slide.exit-right .headline-anim { opacity: 0; transform: translateX(55vw); }
+.slide.exit-right .scene-anim    { opacity: 0; transform: translateX(60vw) rotate(26deg); }
+.slide.exit-right .promise-anim  { opacity: 0; transform: translateX(45vw); }
+.slide.exit-right .tool-1 { opacity: 0; transform: rotate(-16deg) translateY(-110vh); }
+.slide.exit-right .tool-2 { opacity: 0; transform: rotate(12deg)  translateY(-110vh); }
+.slide.exit-right .tool-3 { opacity: 0; transform: rotate(-9deg)  translateY(-110vh); }
+
+@media (max-width: 720px) {
+  .slide .tool { display: none; }
+  .slide .promise { bottom: clamp(160px, 28vh, 240px); right: clamp(20px, 4vw, 64px); }
+  .hero-badge { font-size: 22px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .anim, .tool.anim,
+  .slide.exit-left .headline-anim, .slide.exit-left .scene-anim, .slide.exit-left .promise-anim,
+  .slide.exit-right .headline-anim, .slide.exit-right .scene-anim, .slide.exit-right .promise-anim,
+  .slide.exit-left .tool.anim, .slide.exit-right .tool.anim {
+    transition-duration: 0s !important;
+    transition-delay: 0s !important;
+  }
+  .hero-scrollhint .chev { animation: none !important; }
+}
+
+/* ============================================================
    PHOTO PLACEHOLDERS
    ============================================================ */
 .photo {
@@ -2363,46 +2583,95 @@ body.dark .scatter-icon--terra { color: var(--terracotta); opacity: .22; }
      ════════════════════════════════════════════════════════════ -->
 <section data-page="home" class="is-active" aria-labelledby="home-h1">
 
-  <!-- HERO -->
-  <div class="hero">
-    <div class="scatter" aria-hidden="true">
-      <svg class="scatter-icon scatter-icon--lg"  style="top: 12%;  left: 2%;   --r: -8deg;"><use href="#ic-wrench"/></svg>
-      <svg class="scatter-icon scatter-icon--sm scatter-icon--rust" style="top: 6%; left: 38%; --r: 14deg;"><use href="#ic-sparkle"/></svg>
-      <svg class="scatter-icon"                   style="bottom: 14%; left: 4%; --r: 12deg;"><use href="#ic-bolt"/></svg>
-      <svg class="scatter-icon scatter-icon--sm scatter-icon--rust" style="bottom: 6%; left: 32%; --r: -18deg;"><use href="#ic-sparkle"/></svg>
-      <svg class="scatter-icon scatter-icon--lg scatter-icon--fade" style="top: 38%; left: -1.5%; --r: 22deg;"><use href="#ic-tape"/></svg>
-    </div>
-    <div class="wrap hero-grid">
-      <div class="reveal">
-        <span class="eyebrow">Thornhill · Two-person team</span>
-        <h1 id="home-h1">Your garage, <em>worked through</em> with you — not just emptied.</h1>
-        <p class="hero-sub">We're two childhood friends who clean, declutter, and organize garages across Thornhill. We come by in person to walk through your space and hand you a real quote — free, no obligation, a day or two before the job.</p>
-        <div class="hero-ctas">
-          <a class="btn btn--lg" href="#quote" data-route="quote">See our availability</a>
-          <a class="link-arrow" href="#how-it-works-teaser">See how it works <span class="arr">→</span></a>
+  <!-- HERO — "Garage Reset" four-stage slider -->
+  <div class="hero-reset" id="heroReset" aria-roledescription="carousel" aria-label="A real garage reset, stage by stage">
+    <div class="hero-reset__bg" id="heroBgA"></div>
+    <div class="hero-reset__bg" id="heroBgB"></div>
+
+    <div class="hero-reset__stage">
+
+      <!-- STAGE 01 — Before -->
+      <div class="slide active" role="group" aria-roledescription="slide" aria-label="1 of 4: Before">
+        <div class="slide__col">
+          <h1 class="anim headline-anim" id="home-h1">Every reset starts here</h1>
+          <div class="scene anim scene-anim">
+            <div class="photo has-img">
+              <img src="assets/photos/before-interior.jpg" alt="A packed Thornhill garage before the reset — shelving full, floor crowded" loading="eager" onerror="this.parentElement.classList.remove('has-img');this.style.display='none';this.nextElementSibling.style.display=''"><span class="photo-label" style="display:none">BEFORE — a packed two-car garage, shelves full, floor crowded</span>
+            </div>
+          </div>
         </div>
-        <div class="hero-stats">
-          <div class="hero-stat"><span class="num">2</span><span class="lbl">Friends. Same two.</span></div>
-          <div class="hero-stat"><span class="num">7</span><span class="lbl">Phases. Every job.</span></div>
-          <div class="hero-stat"><span class="num">1</span><span class="lbl">Written quote.</span></div>
-        </div>
-        <div class="hero-trust">
-          <span><strong>Locally owned · Thornhill.</strong> We're not a franchise. Two guys, one truck, one phone number.</span>
-        </div>
+        <p class="anim promise-anim promise">Packed wall-to-wall? That's our favourite kind of garage.</p>
+        <svg class="tool anim tool-1" aria-hidden="true"><use href="#ic-box"/></svg>
+        <svg class="tool anim tool-2" aria-hidden="true"><use href="#ic-bin"/></svg>
+        <svg class="tool anim tool-3" aria-hidden="true"><use href="#ic-hook"/></svg>
       </div>
 
-      <div class="hero-stack chaos reveal reveal--right">
-        <span class="badge">D &amp; D</span>
-        <div class="photo has-img photo--big">
-          <img src="assets/photos/after-wide.jpg" alt="A fully organized Thornhill garage — tools on wall hooks, labeled bins on shelves, concrete floor visible" loading="lazy" onerror="this.parentElement.classList.remove('has-img');this.style.display='none';this.nextElementSibling.style.display=''"><span class="photo-label" style="display:none">A fully organized Thornhill garage — tools on wall hooks, labeled bins on shelves, concrete floor visible</span>
+      <!-- STAGE 02 — The Sort -->
+      <div class="slide" role="group" aria-roledescription="slide" aria-label="2 of 4: The Sort">
+        <div class="slide__col">
+          <h1 class="anim headline-anim">You make the calls</h1>
+          <div class="scene anim scene-anim">
+            <div class="photo has-img">
+              <img src="assets/photos/sort-driveway.jpg" alt="Items sorted on a tarp in the driveway during a D&amp;D Garage Works job" loading="lazy" onerror="this.parentElement.classList.remove('has-img');this.style.display='none';this.nextElementSibling.style.display=''"><span class="photo-label" style="display:none">THE SORT — everything out on the driveway tarp</span>
+            </div>
+          </div>
         </div>
-        <div class="photo has-img photo--small">
-          <img src="assets/photos/sort-driveway.jpg" alt="D&amp;D Garage Works mid-job: items being sorted on a tarp in the driveway" loading="lazy" onerror="this.parentElement.classList.remove('has-img');this.style.display='none';this.nextElementSibling.style.display=''"><span class="photo-label" style="display:none">D&amp;D Garage Works mid-job: items being sorted on a tarp in the driveway</span>
-        </div>
-        <div class="photo has-img photo--small">
-          <img src="assets/photos/after-tools.jpg" alt="Organized tool wall — shovels, brooms, and rakes hung on a wall-mounted rack" loading="lazy" onerror="this.parentElement.classList.remove('has-img');this.style.display='none';this.nextElementSibling.style.display=''"><span class="photo-label" style="display:none">Organized tool wall — shovels, brooms, and rakes hung on a wall-mounted rack</span>
-        </div>
+        <p class="anim promise-anim promise">Everything comes out onto the driveway — you stay in the room for every keep-or-toss.</p>
+        <svg class="tool anim tool-1" aria-hidden="true"><use href="#ic-tape"/></svg>
+        <svg class="tool anim tool-2 tool--rust" aria-hidden="true"><use href="#ic-wrench"/></svg>
+        <svg class="tool anim tool-3" aria-hidden="true"><use href="#ic-screwdriver"/></svg>
       </div>
+
+      <!-- STAGE 03 — Organized -->
+      <div class="slide" role="group" aria-roledescription="slide" aria-label="3 of 4: Organized">
+        <div class="slide__col">
+          <h1 class="anim headline-anim">We organize, not just empty</h1>
+          <div class="scene anim scene-anim">
+            <div class="photo has-img">
+              <img src="assets/photos/after-wide.jpg" alt="The finished garage — zoned, labeled bins, floor clear enough to park on" loading="lazy" onerror="this.parentElement.classList.remove('has-img');this.style.display='none';this.nextElementSibling.style.display=''"><span class="photo-label" style="display:none">ORGANIZED — zoned, labeled, floor clear</span>
+            </div>
+          </div>
+        </div>
+        <p class="anim promise-anim promise">Clear zones, labelled bins, and a floor you can park on again.</p>
+        <svg class="tool anim tool-1 tool--rust" aria-hidden="true"><use href="#ic-bin"/></svg>
+        <svg class="tool anim tool-2" aria-hidden="true"><use href="#ic-broom"/></svg>
+        <svg class="tool anim tool-3" aria-hidden="true"><use href="#ic-hook"/></svg>
+      </div>
+
+      <!-- STAGE 04 — The Details -->
+      <div class="slide" role="group" aria-roledescription="slide" aria-label="4 of 4: The Details">
+        <div class="slide__col">
+          <h1 class="anim headline-anim">The same two Davids</h1>
+          <div class="scene anim scene-anim">
+            <div class="photo has-img">
+              <img src="assets/photos/after-tools.jpg" alt="Tools hung neatly on a wall-mounted rack — the finishing detail" loading="lazy" onerror="this.parentElement.classList.remove('has-img');this.style.display='none';this.nextElementSibling.style.display=''"><span class="photo-label" style="display:none">THE DETAILS — tools on the wall, finished</span>
+            </div>
+          </div>
+        </div>
+        <p class="anim promise-anim promise">Start to finish, same two people. One honest written number.</p>
+        <svg class="tool anim tool-1 tool--rust" aria-hidden="true"><use href="#ic-sparkle"/></svg>
+        <svg class="tool anim tool-2" aria-hidden="true"><use href="#ic-wrench"/></svg>
+        <svg class="tool anim tool-3" aria-hidden="true"><use href="#ic-bolt"/></svg>
+      </div>
+
+    </div>
+
+    <!-- Persistent chrome -->
+    <div class="hero-reset__chrome">
+      <div class="hero-cta-cluster">
+        <span class="hero-badge">FREE on-site quote</span>
+        <a class="btn btn--lg btn--hero" href="#quote" data-route="quote" data-lead="hero_reset_slider">Book Your Free Quote</a>
+      </div>
+      <div class="hero-controls">
+        <button class="hero-arrow hero-arrow--prev" type="button" aria-label="Previous stage">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+        <span class="hero-counter" id="heroCounter" aria-live="polite">01 / 04</span>
+        <button class="hero-arrow hero-arrow--next" type="button" aria-label="Next stage">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+        </button>
+      </div>
+      <a class="hero-scrollhint" href="#process" data-route="process">See the 7-phase method <span class="chev" aria-hidden="true">↓</span></a>
     </div>
   </div>
 
@@ -3364,6 +3633,7 @@ body.dark .scatter-icon--terra { color: var(--terracotta); opacity: .22; }
         <input type="text" name="_gotcha" tabindex="-1" autocomplete="off"
                style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0;" aria-hidden="true" />
         <input type="hidden" name="_subject" value="New garage quote request — D&amp;D Garage Works" />
+        <input type="hidden" name="lead_source" id="leadSource" value="site" />
 
         <div class="field">
           <label for="f-name">Name <span class="req">*</span></label>
@@ -4104,6 +4374,138 @@ body.dark .scatter-icon--terra { color: var(--terracotta); opacity: .22; }
   }
   if (pull)  pull.addEventListener('click', pullChain);
   if (chain) chain.addEventListener('click', pullChain);
+
+  // ════════════════════════════════════════════════════════════
+  // "GARAGE RESET" HERO SLIDER (Home route only). See HERO-ANIMATION.md.
+  // ════════════════════════════════════════════════════════════
+  (function heroReset() {
+    const root = document.getElementById('heroReset');
+    if (!root) return;
+    const slides = Array.from(root.querySelectorAll('.slide'));
+    if (slides.length < 2) return;
+    const bgA = document.getElementById('heroBgA');
+    const bgB = document.getElementById('heroBgB');
+    const counterEl = document.getElementById('heroCounter');
+
+    const heroBg = [
+      'radial-gradient(ellipse at 50% 45%, #3A5761 0%, #14282B 100%)', // Before  — deep teal
+      'radial-gradient(ellipse at 50% 45%, #8E3B13 0%, #2A1206 100%)', // Sort    — rust
+      'radial-gradient(ellipse at 50% 45%, #3A5761 0%, #102427 100%)', // After   — clean teal
+      'radial-gradient(ellipse at 50% 45%, #C58059 0%, #5A2912 100%)'  // Details — warm terracotta
+    ];
+
+    const AUTO = 5500;
+    let current = 0, animating = false, activeBg = 'a';
+    let timer = null, running = false, bgPrimed = false;
+
+    const pad = n => (n < 10 ? '0' + n : '' + n);
+    function updateCounter(i) {
+      if (counterEl) counterEl.textContent = pad(i + 1) + ' / ' + pad(slides.length);
+    }
+    function setHeroBg(i) {
+      const g = heroBg[i % heroBg.length];
+      if (activeBg === 'a') { bgB.style.background = g; bgB.style.opacity = '1'; bgA.style.opacity = '0'; activeBg = 'b'; }
+      else                  { bgA.style.background = g; bgA.style.opacity = '1'; bgB.style.opacity = '0'; activeBg = 'a'; }
+    }
+    function primeBg() {
+      if (bgPrimed) return;
+      bgA.style.background = heroBg[0];
+      bgA.style.opacity = '1';
+      activeBg = 'a';
+      bgPrimed = true;
+    }
+
+    const nextIdx = () => (current + 1) % slides.length;
+    const prevIdx = () => (current - 1 + slides.length) % slides.length;
+
+    function goTo(next, direction) {
+      if (animating || next === current) return;
+      animating = true;
+      const currSlide = slides[current];
+      const nextSlide = slides[next];
+      const enterClass = direction === 'next' ? 'enter-right' : 'enter-left';
+      const exitClass  = direction === 'next' ? 'exit-left'   : 'exit-right';
+      // 1. Disable transitions, snap incoming to off-screen start
+      const anims = nextSlide.querySelectorAll('.anim');
+      anims.forEach(el => el.style.transition = 'none');
+      nextSlide.classList.remove('active', 'exit-left', 'exit-right');
+      nextSlide.classList.add(enterClass);
+      // 2. Force reflow so the browser registers the start position
+      void nextSlide.offsetHeight;
+      // 3. Re-enable transitions on the next paint, then swap
+      requestAnimationFrame(() => {
+        anims.forEach(el => el.style.transition = '');
+        currSlide.classList.remove('active');
+        currSlide.classList.add(exitClass);
+        nextSlide.classList.remove(enterClass);
+        nextSlide.classList.add('active');
+        setHeroBg(next);
+        updateCounter(next);
+        current = next;
+        setTimeout(() => {
+          currSlide.classList.remove(exitClass);
+          animating = false;
+        }, 850);
+      });
+    }
+
+    function startAuto() {
+      if (reduceMotion) return;
+      stopAuto();
+      timer = setInterval(() => goTo(nextIdx(), 'next'), AUTO);
+    }
+    function stopAuto() { if (timer) { clearInterval(timer); timer = null; } }
+    function bumpAuto() { if (running && !reduceMotion) startAuto(); }
+
+    function onKey(e) {
+      if (e.key === 'ArrowRight') { goTo(nextIdx(), 'next'); bumpAuto(); }
+      else if (e.key === 'ArrowLeft') { goTo(prevIdx(), 'prev'); bumpAuto(); }
+    }
+
+    function activate() {
+      if (running) return;
+      running = true;
+      primeBg();
+      updateCounter(current);
+      document.addEventListener('keydown', onKey);
+      startAuto();
+    }
+    function deactivate() {
+      if (!running) return;
+      running = false;
+      stopAuto();
+      document.removeEventListener('keydown', onKey);
+    }
+
+    // Controls
+    const prevBtn = root.querySelector('.hero-arrow--prev');
+    const nextBtn = root.querySelector('.hero-arrow--next');
+    if (nextBtn) nextBtn.addEventListener('click', () => { goTo(nextIdx(), 'next'); bumpAuto(); });
+    if (prevBtn) prevBtn.addEventListener('click', () => { goTo(prevIdx(), 'prev'); bumpAuto(); });
+
+    // Pause on hover / focus / tab-hidden
+    root.addEventListener('mouseenter', stopAuto);
+    root.addEventListener('mouseleave', bumpAuto);
+    root.addEventListener('focusin', stopAuto);
+    root.addEventListener('focusout', bumpAuto);
+    document.addEventListener('visibilitychange', () => { if (document.hidden) stopAuto(); else bumpAuto(); });
+
+    // Route sync — only run on the Home route so the timer never fights the
+    // booking embed on #quote.
+    function sync() { if (routeFromHash() === 'home') activate(); else deactivate(); }
+    window.addEventListener('hashchange', sync);
+    sync();
+  })();
+
+  // ── Lead-source tagging: when the hero CTA sends someone to the quote
+  //    page, stamp the hidden form field so it shows up in the lead email. ──
+  (function leadSource() {
+    const field = document.getElementById('leadSource');
+    if (!field) return;
+    document.querySelectorAll('[data-lead]').forEach(el => {
+      el.addEventListener('click', () => { field.value = el.getAttribute('data-lead'); });
+    });
+  })();
 
 })();
 </script>
